@@ -1,0 +1,30 @@
+[gd_scene load_steps=6 format=4 uid="uid://bmsd00gckc4m7"]
+
+[ext_resource type="PackedScene" uid="uid://csdluako5yquq" path="res://scenes/entity/player/player.tscn" id="1_ublg5"]
+[ext_resource type="Texture2D" uid="uid://27hwfuugy3k6" path="res://sprites/tile/demo_floor_tile.png" id="2_o1cac"]
+[ext_resource type="PackedScene" uid="uid://b6dy362m4ph6e" path="res://scenes/entity/enemy/flyer_enemy.tscn" id="3_grpga"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_80uj1"]
+texture = ExtResource("2_o1cac")
+texture_region_size = Vector2i(8, 8)
+0:0/0 = 0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-4, -4, 4, -4, 4, -1, -4, -1)
+
+[sub_resource type="TileSet" id="TileSet_wjt6y"]
+tile_size = Vector2i(8, 8)
+physics_layer_0/collision_layer = 1024
+physics_layer_0/collision_mask = 254
+sources/0 = SubResource("TileSetAtlasSource_80uj1")
+
+[node name="DemoStage" type="Node2D"]
+
+[node name="Ground" type="TileMapLayer" parent="."]
+tile_map_data = PackedByteArray("AAD5/wcAAAAAAAAAAAD6/wcAAAAAAAAAAAD7/wcAAAAAAAAAAAD8/wcAAAAAAAAAAAD9/wcAAAAAAAAAAAD+/wcAAAAAAAAAAAD//wcAAAAAAAAAAAD4/wcAAAAAAAAAAAD3/wcAAAAAAAAAAAD2/wcAAAAAAAAAAAAAAAcAAAAAAAAAAAABAAcAAAAAAAAAAAACAAcAAAAAAAAAAAADAAcAAAAAAAAAAAAEAAcAAAAAAAAAAAAFAAcAAAAAAAAAAAAGAAcAAAAAAAAAAAAHAAcAAAAAAAAAAAAIAAcAAAAAAAAAAAAJAAcAAAAAAAAAAAAKAAcAAAAAAAAAAAALAAcAAAAAAAAAAAAMAAcAAAAAAAAAAAANAAcAAAAAAAAAAAAOAAcAAAAAAAAAAAAPAAcAAAAAAAAAAAAQAAcAAAAAAAAAAAARAAcAAAAAAAAAAAASAAcAAAAAAAAAAAATAAcAAAAAAAAAAAAUAAcAAAAAAAAAAAAVAAcAAAAAAAAAAAAWAAcAAAAAAAAAAAAXAAcAAAAAAAAAAAAYAAcAAAAAAAAAAAAZAAcAAAAAAAAAAAAaAAcAAAAAAAAAAAAbAAcAAAAAAAAAAAAcAAcAAAAAAAAAAAAdAAcAAAAAAAAAAAAeAAcAAAAAAAAAAAD1/wcAAAAAAAAAAAD0/wcAAAAAAAAAAADz/wcAAAAAAAAAAADy/wcAAAAAAAAAAADx/wcAAAAAAAAAAADw/wcAAAAAAAAAAADv/wcAAAAAAAAAAADu/wcAAAAAAAAAAADt/wcAAAAAAAAAAADs/wcAAAAAAAAAAADr/wcAAAAAAAAAAAD6/wYAAAAAAAAAAAD2/wUAAAAAAAAAAADz/wQAAAAAAAAAAADw/wMAAAAAAAAAAADt/wIAAAAAAAAAAADq/wEAAAAAAAAAAADn/wAAAAAAAAAAAADq/wcAAAAAAAAAAADp/wcAAAAAAAAAAADo/wcAAAAAAAAAAADn/wcAAAAAAAAAAADm/wcAAAAAAAAAAADl/wcAAAAAAAAAAADk/wcAAAAAAAAAAAADAAMAAAAAAAAAAAAFAP//AAAAAAAAAAAHAPv/AAAAAAAAAAAJAPf/AAAAAAAAAAALAPP/AAAAAAAAAAANAO//AAAAAAAAAAA=")
+tile_set = SubResource("TileSet_wjt6y")
+
+[node name="Player" parent="." instance=ExtResource("1_ublg5")]
+position = Vector2(-1, 26)
+collision_mask = 11328
+
+[node name="FlyerEnemy" parent="." instance=ExtResource("3_grpga")]
+position = Vector2(-31, 8)
