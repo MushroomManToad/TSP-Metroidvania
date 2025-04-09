@@ -147,12 +147,17 @@ var jump_held : bool = false
 # Variable to track how long the jump button has been held for (frames).
 var jumping_time : int = 0
 
+# Variable to track if a double jump is charged
+var double_jump_charged : bool = false
+
 # Core loop running every physics frame for jumping.
 ## 1) If on ceiling, bonk (jump_time = max_jump_time and vertical velocity reset)
 ## 2) If not on the floor, add fall speed, else reset fall speed. (Gravity)
-## 3) If a jump is buffered and on floor, jump and max out coyote time, else
+##		2.1) If on floor, restore double jump charge.
+## 3) If a jump is buffered and on floor, jump and max out coyote timer:
 ## 		3.1) If coyote time less than max, jump and max out coyote timer
-##		3.2) Else increase jump buffer timer.
+##		3.2) Else if double jump is charged, start a double jump
+##		3.3) Else increase jump buffer timer.
 ## 4) If not on floor, increment Coyote Timer, else reset coyote timer.
 ## 5) If jump is held and we haven't jumped too long, keep ascending
 ##		5.1) If player is on the floor, reset jumping time since the jump has ended early
@@ -169,6 +174,7 @@ func jump_physics_process(delta: float) -> void:
 		vel_gravity.y += GRAVITY + (GRAVITY * 0.5 if velocity.y < 0 else 0.0)
 	else:
 		vel_gravity.y = 0.0
+		charge_double_jump()
 
 	# First frame of jump should be shorter, and this sets up the player being
 	# in the air for the rest of the jump listener 
@@ -183,6 +189,17 @@ func jump_physics_process(delta: float) -> void:
 			# Gives a jump the "initial push" needed for the rest of the
 			# jump loop to take over (requires jumping_time > 0.0)
 			jumping_time += 1
+		# If not on the floor but has double jump charge, jump
+		elif is_double_jump_charged():
+			buffer_jump(false)
+			# Must always do this on jump to prevent double-tap shenanigans
+			coyote_time_elapsed = MAX_COYOTE_TIME
+			# Have the first frame lower the player a la Hollow Knight
+			vel_gravity.y = - JUMP_VELOCITY / 4.0
+			# Gives a jump the "initial push" needed for the rest of the
+			# jump loop to take over (requires jumping_time > 0.0)
+			jumping_time += 1
+			double_jump_charged = false
 		# While not on floor, start tracking how long the jump has been
 		# buffered and destroy jump buffer if buffered too long
 		else:
@@ -235,6 +252,15 @@ func buffer_jump(val : bool) -> void:
 ## Call to cancel an ongoing jump
 func cancel_jump() -> void:
 	jumping_time = MAX_JUMP_TIME
+
+## Helper methods for double jump handling
+func charge_double_jump() -> void:
+	double_jump_charged = true
+
+func is_double_jump_charged() -> bool:
+	## TODO: Additional logic for before double jump is unlocked
+	## Or when it is disabled.
+	return double_jump_charged
 
 ###############################################################################
 ##                                                                           ##

@@ -64,7 +64,8 @@ func on_enemy_hit(body : Area2D) -> void:
 	if player.is_dashing():
 		player.cancel_dash()
 	player.charge_dash()
-	## TODO: Refresh double jump
+	# Refresh double jump
+	player.charge_double_jump()
 	
 	# Run any logic from the enemy's side when it gets attacked
 	# Should always be true, but this is a nice Godot cast
