@@ -15,6 +15,8 @@ const PAUSE_SCREEN = preload("res://scenes/ui/pause_screen.tscn")
 func _ready() -> void:
 	# Disable Pausible State Immediately -- we never want this node to be paused
 	process_mode = Node.PROCESS_MODE_ALWAYS
+
+func _delayed_ready():
 	# Initiate each of the sub-system variables (we do this here to prevent
 	# pre-load memory errors)
 	# Additionally, run each of their ready functions in order
@@ -25,9 +27,13 @@ func _ready() -> void:
 	LevelManager = Level_Manager.new()
 	LevelManager.on_ready()
 
-## Physics loop on the global static class
+var frames_elapsed = 0
+## Physics loop on the global static class. Don't use this for much.
 func _physics_process(delta: float) -> void:
-	pass
+	# Delay subclass loading by a frame to ensure game setup runs appropriately
+	if frames_elapsed == 1:
+		_delayed_ready()
+	frames_elapsed += 1
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("Pause"):

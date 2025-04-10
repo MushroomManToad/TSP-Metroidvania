@@ -23,6 +23,11 @@ var i_frames : int = 0
 # NOT Computed using Facing.transform()
 var facing : int = Facing.RIGHT
 
+@export var player_data : PlayerData
+
+# Signals emitted to player data
+signal jumped
+
 ###### Main Physics Loop ######
 func _physics_process(delta: float) -> void:	
 	## Reduce i-frames each frame.
@@ -182,23 +187,10 @@ func jump_physics_process(delta: float) -> void:
 		# First frame of jump should be shorter, and this sets up the player being
 		# in the air for the rest of the jump listener 
 		if is_on_floor() or (not is_on_floor() and coyote_time_elapsed <= MAX_COYOTE_TIME):
-			buffer_jump(false)
-			# Must always do this on jump to prevent double-tap shenanigans
-			coyote_time_elapsed = MAX_COYOTE_TIME
-			vel_gravity.y = JUMP_VELOCITY
-			# Gives a jump the "initial push" needed for the rest of the
-			# jump loop to take over (requires jumping_time > 0.0)
-			jumping_time += 1
+			start_jump(JUMP_VELOCITY)
 		# If not on the floor but has double jump charge, jump
 		elif is_double_jump_charged():
-			buffer_jump(false)
-			# Must always do this on jump to prevent double-tap shenanigans
-			coyote_time_elapsed = MAX_COYOTE_TIME
-			# Have the first frame lower the player a la Hollow Knight
-			vel_gravity.y = - JUMP_VELOCITY / 4.0
-			# Gives a jump the "initial push" needed for the rest of the
-			# jump loop to take over (requires jumping_time > 0.0)
-			jumping_time += 1
+			start_jump(- JUMP_VELOCITY / 4.0)
 			double_jump_charged = false
 		# While not on floor, start tracking how long the jump has been
 		# buffered and destroy jump buffer if buffered too long
@@ -242,6 +234,18 @@ func jump_input(event : InputEvent) -> bool:
 func not_jumped_too_long() -> bool:
 	# Jump is valid if they are mid jump in the air and still have jump time.
 	return jumping_time > 0 and jumping_time < MAX_JUMP_TIME 
+
+func start_jump(velocity_y : float):
+	# Un-buffer jump
+	buffer_jump(false)
+	# Must always do this on jump to prevent double-tap shenanigans
+	coyote_time_elapsed = MAX_COYOTE_TIME
+	# Have the first frame lower the player a la Hollow Knight
+	vel_gravity.y = velocity_y
+	# Gives a jump the "initial push" needed for the rest of the
+	# jump loop to take over (requires jumping_time > 0.0)
+	jumping_time += 1
+	jumped.emit()
 
 # Call to buffer a jump - contains extra reset logic.
 func buffer_jump(val : bool) -> void:
@@ -364,6 +368,7 @@ func walk_input(event : InputEvent) -> bool:
 		consume_flag = true
 	if event.is_action_pressed("Up"):
 		up_held = true
+		on_interacts()
 		# Consume input
 		consume_flag = true
 	if event.is_action_released("Up"):
@@ -822,5 +827,36 @@ func launch_physics_process(delta: float):
 ###############################################################################
 ##                                                                           ##
 ##                              LAUNCH LOGIC                                 ##
+##                                                                           ##
+###############################################################################
+
+
+
+###############################################################################
+##                                                                           ##
+##                             COLLIDER LOGIC                                ##
+##                                                                           ##
+###############################################################################
+
+var interactable_objects = []
+
+## Function called on up button pressed.
+func on_interacts():
+	## TODO: can_interact logic to freeze out potential further interactions
+	# If there are any objects with which to interact, interact with the first
+	# available (i.e. the one longest in interaction range)
+	if interactable_objects.size() > 0:
+		(interactable_objects[0] as IInteractable).on_interact()
+
+## Collisions for the following two methods are handled by the IInteractables.
+func add_interactable_object(obj : IInteractable):
+	interactable_objects.append(obj)
+
+func remove_interactable_object(obj : IInteractable):
+	interactable_objects.erase(obj)
+
+###############################################################################
+##                                                                           ##
+##                             COLLIDER LOGIC                                ##
 ##                                                                           ##
 ###############################################################################

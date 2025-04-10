@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="The Masks of Ash"
-run/main_scene="res://scenes/stage/demo_stage.tscn"
+run/main_scene="uid://ix7cg6fl6a7g"
 config/features=PackedStringArray("4.4", "Forward Plus")
 config/icon="res://icon.svg"
 
