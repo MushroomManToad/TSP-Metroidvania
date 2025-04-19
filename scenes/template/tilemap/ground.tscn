@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://bkuadd8r5dyev"]
+
+[sub_resource type="TileSet" id="TileSet_o4him"]
+physics_layer_0/collision_layer = 1024
+physics_layer_0/collision_mask = 254
+
+[node name="Ground" type="TileMapLayer"]
+tile_set = SubResource("TileSet_o4him")

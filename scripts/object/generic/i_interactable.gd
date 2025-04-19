@@ -6,8 +6,8 @@ extends Area2D
 func _ready() -> void:
 	# Used to connect the body_entered signal (which we know exists by type) to
 	# the corresponding method
-	connect("body_entered", _on_body_entered)
-	connect("body_exited", _on_body_exited)
+	connect("area_entered", _on_area_entered)
+	connect("area_exited", _on_area_exited)
 	on_ready()
 
 func on_interact() -> void:
@@ -16,10 +16,15 @@ func on_interact() -> void:
 func on_ready() -> void:
 	assert(false, "Please override `on_ready()` in the derived script.")
 
-func _on_body_entered(body : Node2D):
-	if body is PlayerController:
-		body.add_interactable_object(self)
+# Override to give a higher/lower priority to this type of interactable.
+# Default 0.
+func get_interact_priority() -> int:
+	return 0
 
-func _on_body_exited(body : Node2D):
-	if body is PlayerController:
-		body.remove_interactable_object(self)
+func _on_area_entered(area : Node2D):
+	if area is PlayerInteractBox:
+		area.add_interactable_object(self)
+
+func _on_area_exited(area : Node2D):
+	if area is PlayerInteractBox:
+		area.remove_interactable_object(self)

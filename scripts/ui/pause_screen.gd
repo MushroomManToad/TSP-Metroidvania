@@ -35,8 +35,8 @@ func _on_resume_pressed() -> void:
 	
 func _on_reload_scene_pressed() -> void:
 	unpause_from_pause_screen()
-	## TODO: Make sure this logic works once level loading is in
-	get_tree().reload_current_scene()
+	# Reload the current scene from lingering variables stored in the Level Manager
+	GameManager.LevelManager.load_scene(GameManager.LevelManager.prev_scene_name, GameManager.LevelManager.prev_player_spawn_pos)
 
 func _on_exit_pressed() -> void:
 	# Exit the game. Eventually exit to menu when that has meaning.

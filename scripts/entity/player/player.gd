@@ -23,7 +23,11 @@ var i_frames : int = 0
 # NOT Computed using Facing.transform()
 var facing : int = Facing.RIGHT
 
+# Import vars from other parts of the player.
+# These may be read from other classes but should NEVER be set.
 @export var player_data : PlayerData
+@export var player_hurtbox : PlayerHurtbox
+@export var player_interact_box : PlayerInteractBox
 
 # Signals emitted to player data
 signal jumped
@@ -136,6 +140,8 @@ const MAX_JUMP_BUFFER_TIME : int = 10
 # const DOWNSCALE_FIRST_JUMP_FRAME : float = 3.0
 # Max coyote time (frames)
 const MAX_COYOTE_TIME : int = 6
+# Maximum fall velocity
+const MAX_FALL_SPEED : float = 1000.0
 
 # True when jump has been pressed and not yet consumed by jump start.
 var jump_buffered : bool = false
@@ -177,6 +183,7 @@ func jump_physics_process(delta: float) -> void:
 	# Add the gravity.
 	if not is_on_floor():
 		vel_gravity.y += GRAVITY + (GRAVITY * 0.5 if velocity.y < 0 else 0.0)
+		vel_gravity.y = min(vel_gravity.y, MAX_FALL_SPEED)
 	else:
 		vel_gravity.y = 0.0
 		charge_double_jump()
@@ -576,6 +583,9 @@ func is_dashing() -> bool:
 func charge_dash() -> void:
 	dash_charged = true
 
+func end_dash_cd() -> void:
+	dash_cooldown = 0
+
 ###############################################################################
 ##                                                                           ##
 ##                               DASH LOGIC                                  ##
@@ -838,22 +848,18 @@ func launch_physics_process(delta: float):
 ##                                                                           ##
 ###############################################################################
 
-var interactable_objects = []
+# Call the interacts of the hurtbox on pressing up.
+func on_interacts() -> void:
+	player_interact_box.on_interacts()
 
-## Function called on up button pressed.
-func on_interacts():
-	## TODO: can_interact logic to freeze out potential further interactions
-	# If there are any objects with which to interact, interact with the first
-	# available (i.e. the one longest in interaction range)
-	if interactable_objects.size() > 0:
-		(interactable_objects[0] as IInteractable).on_interact()
+# Called on current health reaching zero.
+func die() -> void:
+	## TODO: Death Logic
+	pass
 
-## Collisions for the following two methods are handled by the IInteractables.
-func add_interactable_object(obj : IInteractable):
-	interactable_objects.append(obj)
-
-func remove_interactable_object(obj : IInteractable):
-	interactable_objects.erase(obj)
+func on_damaged() -> void:
+	## TODO: On Damaged animation/state handler
+	pass
 
 ###############################################################################
 ##                                                                           ##

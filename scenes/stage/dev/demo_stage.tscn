@@ -1,11 +1,11 @@
 [gd_scene load_steps=6 format=4 uid="uid://bmsd00gckc4m7"]
 
-[ext_resource type="Texture2D" uid="uid://27hwfuugy3k6" path="res://sprites/tile/demo_floor_tile.png" id="2_o1cac"]
-[ext_resource type="PackedScene" uid="uid://i3hv5ygany10" path="res://scenes/object/dev/dev_door.tscn" id="2_x4216"]
-[ext_resource type="PackedScene" uid="uid://b6dy362m4ph6e" path="res://scenes/entity/enemy/flyer_enemy.tscn" id="3_grpga"]
+[ext_resource type="Texture2D" uid="uid://27hwfuugy3k6" path="res://sprites/tile/demo_floor_tile.png" id="1_lauy8"]
+[ext_resource type="PackedScene" uid="uid://i3hv5ygany10" path="res://scenes/object/dev/dev_door.tscn" id="2_dqr1d"]
+[ext_resource type="PackedScene" uid="uid://b6dy362m4ph6e" path="res://scenes/entity/enemy/flyer_enemy.tscn" id="3_3nqlq"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_80uj1"]
-texture = ExtResource("2_o1cac")
+texture = ExtResource("1_lauy8")
 texture_region_size = Vector2i(8, 8)
 0:0/0 = 0
 0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-4, -4, 4, -4, 4, -1, -4, -1)
@@ -22,10 +22,10 @@ sources/0 = SubResource("TileSetAtlasSource_80uj1")
 tile_map_data = PackedByteArray("AAD5/wcAAAAAAAAAAAD6/wcAAAAAAAAAAAD7/wcAAAAAAAAAAAD8/wcAAAAAAAAAAAD9/wcAAAAAAAAAAAD+/wcAAAAAAAAAAAD//wcAAAAAAAAAAAD4/wcAAAAAAAAAAAD3/wcAAAAAAAAAAAD2/wcAAAAAAAAAAAAAAAcAAAAAAAAAAAABAAcAAAAAAAAAAAACAAcAAAAAAAAAAAADAAcAAAAAAAAAAAAEAAcAAAAAAAAAAAAFAAcAAAAAAAAAAAAGAAcAAAAAAAAAAAAHAAcAAAAAAAAAAAAIAAcAAAAAAAAAAAAJAAcAAAAAAAAAAAAKAAcAAAAAAAAAAAALAAcAAAAAAAAAAAAMAAcAAAAAAAAAAAANAAcAAAAAAAAAAAAOAAcAAAAAAAAAAAAPAAcAAAAAAAAAAAAQAAcAAAAAAAAAAAARAAcAAAAAAAAAAAASAAcAAAAAAAAAAAATAAcAAAAAAAAAAAAUAAcAAAAAAAAAAAAVAAcAAAAAAAAAAAAWAAcAAAAAAAAAAAAXAAcAAAAAAAAAAAAYAAcAAAAAAAAAAAAZAAcAAAAAAAAAAAAaAAcAAAAAAAAAAAAbAAcAAAAAAAAAAAAcAAcAAAAAAAAAAAAdAAcAAAAAAAAAAAAeAAcAAAAAAAAAAAD1/wcAAAAAAAAAAAD0/wcAAAAAAAAAAADz/wcAAAAAAAAAAADy/wcAAAAAAAAAAADx/wcAAAAAAAAAAADw/wcAAAAAAAAAAADv/wcAAAAAAAAAAADu/wcAAAAAAAAAAADt/wcAAAAAAAAAAADs/wcAAAAAAAAAAADr/wcAAAAAAAAAAAD6/wYAAAAAAAAAAAD2/wUAAAAAAAAAAADz/wQAAAAAAAAAAADw/wMAAAAAAAAAAADt/wIAAAAAAAAAAADq/wEAAAAAAAAAAADn/wAAAAAAAAAAAADq/wcAAAAAAAAAAADp/wcAAAAAAAAAAADo/wcAAAAAAAAAAADn/wcAAAAAAAAAAADm/wcAAAAAAAAAAADl/wcAAAAAAAAAAADk/wcAAAAAAAAAAAADAAMAAAAAAAAAAAAFAP//AAAAAAAAAAAHAPv/AAAAAAAAAAAJAPf/AAAAAAAAAAALAPP/AAAAAAAAAAANAO//AAAAAAAAAAA5AAcAAAAAAAAAAAA6AAcAAAAAAAAAAAA7AAcAAAAAAAAAAAA8AAcAAAAAAAAAAAA9AAcAAAAAAAAAAAA+AAcAAAAAAAAAAAA/AAcAAAAAAAAAAABAAAcAAAAAAAAAAABBAAcAAAAAAAAAAABCAAcAAAAAAAAAAABDAAcAAAAAAAAAAABEAAcAAAAAAAAAAAA=")
 tile_set = SubResource("TileSet_wjt6y")
 
-[node name="dev_door" parent="." instance=ExtResource("2_x4216")]
+[node name="dev_door" parent="." instance=ExtResource("2_dqr1d")]
 position = Vector2(55, 40)
-scene_to_load = "demo_stage"
-player_spawn_position = Vector2(20, -80)
+scene_to_load = "dev/platformer_demo"
+player_spawn_position = Vector2(-33, -16)
 
-[node name="FlyerEnemy" parent="." instance=ExtResource("3_grpga")]
+[node name="FlyerEnemy" parent="." instance=ExtResource("3_3nqlq")]
 position = Vector2(-31, 8)

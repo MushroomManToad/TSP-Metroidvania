@@ -3,6 +3,7 @@ class_name PlayerAttackBox
 extends Area2D
 
 var attack_direction : int = CardinalDirections.RIGHT
+var attack_damage : float = 0.0
 
 @export var player : PlayerController
 @onready var attack_collision_shape: CollisionShape2D = $AttackCollisionShape
@@ -18,9 +19,15 @@ var PK_RIGHT_AIR : Vector2 = Vector2(-140.0, -70.0)
 var PK_UP_AIR : Vector2 = Vector2(0.0, 70.0)
 var PK_DOWN_AIR : Vector2 = Vector2(0.0, -200.0)
 
+var GROUND_KNOCKBACK_SCALAR : float = 0.5
+
 # Variable used to track what has been hit so far
 # Primarily used to ensure nothing is hit repeatedly.
 var hit_list = []
+
+# Var is "true" if has knocked back. Cannot knockback off of 2 enemies on the
+# same attack (though damage and visual are still applied).
+var knockback_lock = false
 
 ## Function that handles all attack box effects on the player during collisions with bodies
 # Effects on the body colliding should be handled locally in that body's collision code.
@@ -57,13 +64,16 @@ func _on_area_shape_entered(body_rid: RID, body: Area2D, body_shape_index: int, 
 
 ## Helper function for when an attack successfully lands on an enemy or enemy-like object (i.e. spikes)
 func on_enemy_hit(body : Area2D) -> void:
-	# The knockback
-	player.enqueue_attack_launch(get_player_knockback_velocity_by_direction())
+	# The knockback - only if this box has not already knocked back
+	if not knockback_lock:
+		player.enqueue_attack_launch(get_player_knockback_velocity_by_direction())
+		knockback_lock = true
 	
 	# Cancel on going dashes and add another dash charge on attack landing
 	if player.is_dashing():
 		player.cancel_dash()
 	player.charge_dash()
+	player.end_dash_cd()
 	# Refresh double jump
 	player.charge_double_jump()
 	
@@ -79,13 +89,19 @@ func on_ground_hit():
 	# A little back on horizontal
 	# Nothing on down.
 	var dir : Vector2 = get_player_knockback_velocity_by_direction()
-	player.enqueue_attack_launch(Vector2(-dir.x * Facing.transform(player.facing), 0.0 if attack_direction == CardinalDirections.DOWN else dir.y))
+	player.enqueue_attack_launch(Vector2(GROUND_KNOCKBACK_SCALAR * dir.x , 0.0 if attack_direction == CardinalDirections.DOWN else dir.y))
 
 func set_attack_direction(direction : int):
 	attack_direction = direction
 
 func get_attack_direction() -> int:
 	return attack_direction
+
+func set_attack_damage(damage : float):
+	attack_damage = damage
+
+func get_attack_damage() -> float:
+	return attack_damage
 
 func get_player_knockback_velocity_by_direction() -> Vector2:
 	# Var(s) to track which knockback type(s) should be used
@@ -149,8 +165,11 @@ func set_player_knockback_from_attack(new_strength : Vector2, direction : int, a
 ## Helper method for spawning an attack box. [br]
 ## Spawns the box and sets its direction.
 func start_new_attack():
-	# Update attack direction.
+	# Reset knockback lock
+	knockback_lock = false
+	# Update attack direction and damage.
 	set_attack_direction(player.attack_direction)
+	set_attack_damage(player.player_data.attack_damage)
 	# First, parameterize the position of the attack box by direction.
 	# Yes, these are hard-coded. There are only four of them, and I'll have to
 	# adjust them from somewhere, so why not here in the spawn function.

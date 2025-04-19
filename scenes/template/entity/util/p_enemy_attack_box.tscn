@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://b5j4sb1plxd2u"]
+
+[ext_resource type="Script" uid="uid://bof60m2qwecdx" path="res://scripts/entity/enemy/enemy_attack_box.gd" id="1_l7714"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0843t"]
+
+[node name="EnemyAttackBoxParryable" type="Area2D"]
+collision_layer = 128
+collision_mask = 20
+script = ExtResource("1_l7714")
+is_parryable = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_0843t")
+debug_color = Color(1, 0.00895287, 0.0391134, 0.42)

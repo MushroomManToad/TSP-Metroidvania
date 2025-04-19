@@ -2,12 +2,18 @@ class_name Level_Manager
 
 var player : PlayerController
 
+# Variables for scene reloading - track the variables passed to load scene for
+# later reloading
+var prev_player_spawn_pos : Vector2 = Vector2(0.0, 0.0)
+var prev_scene_name : String = ""
+
 const PLAYER = preload("res://scenes/entity/player/player.tscn")
+
 
 func on_ready():
 	## TODO: Obviously this is just for testing, level manager should do 
 	## nothing on startup - as the title screen will be loaded i.e. no level.
-	load_scene("demo_stage", Vector2(0.0, 26.0))
+	load_scene("dev/demo_stage", Vector2(0.0, 26.0))
 	pass
 
 ## TODO: Eventually the "total unload" logic here will be passed onto the
@@ -34,4 +40,7 @@ func load_scene(scene_name : String, player_spawn_pos : Vector2):
 	# Add as child to tree
 	GameManager.get_tree().root.add_child(player)
 	## TODO: Pass scene appropriate scene semi-persistent data
-	pass
+	
+	## Store spawn pos for usage in scene reloader
+	prev_player_spawn_pos = player_spawn_pos
+	prev_scene_name = scene_name
