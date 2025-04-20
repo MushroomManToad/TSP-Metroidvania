@@ -13,3 +13,5 @@ is_parryable = true
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_0843t")
 debug_color = Color(1, 0.00895287, 0.0391134, 0.42)
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]

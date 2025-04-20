@@ -663,7 +663,7 @@ func attack_physics_process(delta : float):
 		# Increment attack timer
 		attack_duration += 1
 		## TODO: on the first frame, start the attack animation.
-		if attack_duration == 1:
+		if attack_duration == 2:
 			pass
 		# If on the first frame after windup, spawn the attack hitbox
 		if attack_duration == ATTACK_WINDUP_FRAMES + 2:
@@ -739,8 +739,112 @@ func end_attack():
 ##                                                                           ##
 ###############################################################################
 
+const PARRY_MAX_COOLDOWN : int = 60
+const PARRY_MAX_DURATION : int = 8
+const PARRY_MAX_BUFFER : int = 2
+
+# Is the parry input held
+var parry_held : bool = false
+
+# Variables to track if the player is in a parrying state and in which direction
+var parry_direction : int = ParryDirections.NONE
+# Tracks parry direction to make sure player does not turn. Not transformed.
+var parry_facing_direction : int
+
+# Variables for parry buffer - if buffered and for how long respectively
+var parry_buffered : bool = false
+var parry_buffered_duration : int = 0
+
+# Current parry duration
+var parry_duration : int = 0
+
+# Current parry cooldown
+var parry_cooldown : int = 0
+
 func parry_physics_process(delta : float):
-	pass
+	# Tick down parry cooldown if applicable
+	parry_cooldown = max(0, parry_cooldown - 1)
+	
+	# If an parry is valid and the parry is buffered, then parry.
+	if parry_buffered and can_parry():
+		# Set parry variables
+		start_parry()
+		
+	# If an parry is buffered but invalid, increment buffer timer
+	elif parry_buffered:
+		parry_buffered_duration += 1
+		# If buffer timer exceeds max, then unbuffer the attack.
+		if parry_buffered_duration > PARRY_MAX_BUFFER:
+			buffer_parry(false)
+	
+	# Loop runs when a parry is currently happening.
+	if parry_duration > 0:
+		# Increment parry timer
+		parry_duration += 1
+		## TODO: on the first frame, start the parry animation.
+		if parry_duration == 2:
+			pass
+		# End the parry once the full duration has elapsed.
+		if parry_duration > PARRY_MAX_DURATION + 1:
+			# This function contains all parry ending logic, set aside
+			# in case a parry ever needs to be cancelled for other reasons
+			# (i.e. taking damage)
+			end_parry()
+
+# Capture parry input
+func parry_input(event : InputEvent) -> bool:
+	if event.is_action_pressed("Parry"):
+		parry_held = true
+		# Buffer a parry on input given
+		buffer_parry(true)
+		# Consume input
+		return true
+	if event.is_action_released("Parry"):
+		parry_held = false
+		# Consume input
+		return true
+	return false
+
+func buffer_parry(state : bool):
+	parry_buffered = state
+	parry_buffered_duration = 0
+
+# Function to check if parry input can be consumed this frame.
+func can_parry() -> bool:
+	# Can parry when parry is off cooldown
+	if parry_cooldown <= 0:
+		return true
+	# Return false otherwise.
+	return false
+
+# Called to set the parry state
+func start_parry() -> void:
+	# Unbuffer parry
+	buffer_parry(false)
+	# Lock parry facing direction
+	parry_facing_direction = facing
+	# Find parry direction (ParryDirections)
+	parry_direction = ParryDirections.LEFT if facing == Facing.LEFT else ParryDirections.RIGHT
+	# Start parry timer (tells the rest of the loop to update)
+	parry_duration = 1
+	# Set cooldown to max since parry was just used.
+	parry_cooldown = PARRY_MAX_COOLDOWN
+
+func end_parry() -> void:
+	parry_duration = 0
+	parry_direction = ParryDirections.NONE
+
+## Function returns true if player is currently parrying, false otherwise.
+func is_parrying() -> bool:
+	# A parry is happening if the duration is over 0
+	return parry_duration > 0
+
+## Called when a parry lands
+func on_successful_parry() -> void:
+	end_parry()
+	parry_cooldown = 0
+	## TODO: Launch knockback
+	add_i_frames(5)
 
 ###############################################################################
 ##                                                                           ##

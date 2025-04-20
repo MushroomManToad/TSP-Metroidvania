@@ -20,7 +20,7 @@ var curr_health : int
 ######### GENERAL LOAD / COMPRESS METHODS #########
 func load_data_from_packet(player_data_packet : PlayerDataPacket) -> void:
 	self.times_jumped = player_data_packet.times_jumped
-	self.attack_damage = player_data_packet.attack_damages
+	self.attack_damage = player_data_packet.attack_damage
 	self.max_health = player_data_packet.max_health
 	self.curr_health = player_data_packet.curr_health
 
@@ -39,14 +39,16 @@ func compress_data_to_packet() -> PlayerDataPacket:
 func _on_player_jumped() -> void:
 	times_jumped += 1
 
-func _on_take_damage(amount: int) -> void:
-	# Reduce health by damage, and if health hits zero, die.
-	curr_health = max(curr_health - amount, 0)
-	# Animate appropriately based on PlayerController functions
-	if curr_health == 0:
-		player.die()
-	else:
-		player.on_damaged()
+func _on_take_damage(amount: int, ignores_i_frames : bool) -> void:
+	# I frames check
+	if ignores_i_frames or (not ignores_i_frames and player.i_frames <= 0):
+		# Reduce health by damage, and if health hits zero, die.
+		curr_health = max(curr_health - amount, 0)
+		# Animate appropriately based on PlayerController functions
+		if curr_health == 0:
+			player.die()
+		else:
+			player.on_damaged()
 
 
 ######################################################################

@@ -62,10 +62,11 @@ player_interact_box = NodePath("InteractBox")
 position = Vector2(0, 4.5)
 shape = SubResource("RectangleShape2D_wnwc1")
 
-[node name="HurtBox" type="Area2D" parent="."]
+[node name="HurtBox" type="Area2D" parent="." node_paths=PackedStringArray("player")]
 collision_layer = 4
 collision_mask = 384
 script = ExtResource("5_njr5w")
+player = NodePath("..")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
 position = Vector2(0, 4.5)

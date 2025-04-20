@@ -2,4 +2,6 @@ class_name PlayerHurtbox
 
 extends Area2D
 
-signal take_damage(amount : int)
+@export var player : PlayerController
+
+signal take_damage(amount : int, ignores_i_frames : bool)

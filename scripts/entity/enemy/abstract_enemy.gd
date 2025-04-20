@@ -22,3 +22,8 @@ func die():
 	queue_free()
 	## TODO: Drop "currency"
 	pass
+
+# Called when an attack is parried (handled via signal)
+func on_parried():
+	print_debug("Warning: Enemy", self.name, "has no behavior on being parried.")
+	pass
