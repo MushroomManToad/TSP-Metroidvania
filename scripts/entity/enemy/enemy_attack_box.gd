@@ -7,6 +7,10 @@ extends Area2D
 @export var does_hitstun : bool = true
 @export var damage_amount : int = 1
 @export var ignores_i_frames : bool = false
+@export var hit_grounded_knockback : Vector2
+@export var hit_aerial_knockback : Vector2
+@export var parry_grounded_knockback : Vector2
+@export var parry_aerial_knockback : Vector2
 
 # Current attack direction (used for knockback and parries) (CardinalDirections)
 var attack_direction : int
@@ -25,7 +29,24 @@ func on_attack_parried() -> void:
 func setup_box(enemy : AbstractEnemy, direction : int):
 	if is_parryable:
 		enemy.connect("on_parried", enemy.on_parried())
-	attack_direction
+	attack_direction = direction
+
+## Alternative setup variant for varying knockback
+func setup_box_np_knockback(enemy : AbstractEnemy, direction : int, 
+		ground_knockback : Vector2, aerial_knockback: Vector2):
+	setup_box_parryable(enemy, direction, \
+	ground_knockback, aerial_knockback, \
+	Vector2(0.0, 0.0), Vector2(0.0, 0.0))
+
+## Alternative setup variant for varying parry knockback
+func setup_box_parryable(enemy : AbstractEnemy, direction : int, 
+		ground_knockback : Vector2, aerial_knockback: Vector2,
+		ground_parry_knockback : Vector2, aerial_parry_knockback: Vector2):
+	setup_box(enemy, direction)
+	hit_aerial_knockback = aerial_knockback
+	hit_grounded_knockback = ground_knockback
+	parry_aerial_knockback = aerial_parry_knockback
+	parry_grounded_knockback = ground_parry_knockback
 
 ## Collision code
 func _on_area_entered(area: Area2D) -> void:
@@ -38,13 +59,13 @@ func _on_area_entered(area: Area2D) -> void:
 		and area.player.is_parrying() \
 		and is_correct_parry_direction(area.player.parry_direction):
 			# Player side of the parry
-			area.player.on_successful_parry()
+			area.player.on_successful_parry(parry_grounded_knockback if area.player.is_on_floor() else parry_grounded_knockback)
 			# This object side of the parry
 			on_attack_parried()
 		# Otherwise it's just doing damage!
 		else:
-			# Deal the damage_amount to the player, 
-			# ignoring i_frames if it's a hazard respawn or otherwise ignores i_frames
+			# Deal the damage_amount to the player, ignoring i_frames 
+			# if it's a hazard respawn or otherwise ignores i_frames
 			area.take_damage.emit(damage_amount, ignores_i_frames or is_hazard_respawn)
 
 # Check if the player is parrying in the correct direction to absorb this attack

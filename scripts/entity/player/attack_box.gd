@@ -31,7 +31,7 @@ var knockback_lock = false
 
 ## Function that handles all attack box effects on the player during collisions with bodies
 # Effects on the body colliding should be handled locally in that body's collision code.
-func _on_body_shape_entered(body_rid: RID, body: Node2D, body_shape_index: int, local_shape_index: int) -> void:
+func _on_body_shape_entered(body_rid: RID, body: Node2D, _body_shape_index: int, _local_shape_index: int) -> void:
 	if not hit_list.has(body):
 		## Knockback handler for body collisions.
 		# Variable to store the bitmap for the colliding body's physics layers
@@ -52,7 +52,7 @@ func _on_body_shape_entered(body_rid: RID, body: Node2D, body_shape_index: int, 
 
 ## Function that handles all attack box effects on the player during collisions with areas
 # Effects on the body colliding should be handled locally in that body's collision code.
-func _on_area_shape_entered(body_rid: RID, body: Area2D, body_shape_index: int, local_shape_index: int) -> void:
+func _on_area_shape_entered(_body_rid: RID, body: Area2D, _body_shape_index: int, _local_shape_index: int) -> void:
 	if not hit_list.has(body):
 		# Shoutouts to Area2D for not needing several cases to get this value
 		var body_collision_layer_map : int = body.collision_layer

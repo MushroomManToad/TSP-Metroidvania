@@ -29,7 +29,7 @@ func _delayed_ready():
 
 var frames_elapsed = 0
 ## Physics loop on the global static class. Don't use this for much.
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	# Delay subclass loading by a frame to ensure game setup runs appropriately
 	if frames_elapsed == 1:
 		_delayed_ready()

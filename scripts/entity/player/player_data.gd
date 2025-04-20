@@ -63,16 +63,16 @@ class PlayerDataPacket:
 	var curr_health : int
 	
 	static func create(
-		times_jumped : int,
-		attack_damage : float,
-		max_health : int,
-		curr_health : int
+		_times_jumped : int,
+		_attack_damage : float,
+		_max_health : int,
+		_curr_health : int
 	):
 		var packet : PlayerDataPacket = PlayerDataPacket.new()
-		packet.times_jumped = times_jumped
-		packet.attack_damage = attack_damage
-		packet.max_health = max_health
-		packet.curr_health = curr_health
+		packet.times_jumped = _times_jumped
+		packet.attack_damage = _attack_damage
+		packet.max_health = _max_health
+		packet.curr_health = _curr_health
 		return packet
 	
 	static func create_with_defaults() -> PlayerDataPacket:

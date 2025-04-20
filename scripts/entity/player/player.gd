@@ -174,7 +174,7 @@ var double_jump_charged : bool = false
 ##		5.1) If player is on the floor, reset jumping time since the jump has ended early
 ##		5.2) Increment jumping_timer by 1
 ##		5.3) If player has been jumping too long, reset jumping_time to end jump.
-func jump_physics_process(delta: float) -> void:	
+func jump_physics_process(_delta: float) -> void:
 	# "Ceiling Bonks" by setting jump time to max. Could technically animate here too.
 	if is_on_ceiling():
 		jumping_time = MAX_JUMP_TIME
@@ -191,12 +191,11 @@ func jump_physics_process(delta: float) -> void:
 	# First frame of jump should be shorter, and this sets up the player being
 	# in the air for the rest of the jump listener 
 	if jump_buffered:
-		# First frame of jump should be shorter, and this sets up the player being
-		# in the air for the rest of the jump listener 
-		if is_on_floor() or (not is_on_floor() and coyote_time_elapsed <= MAX_COYOTE_TIME):
+		# Jump if all jump criteria are met
+		if can_standard_jump():
 			start_jump(JUMP_VELOCITY)
 		# If not on the floor but has double jump charge, jump
-		elif is_double_jump_charged():
+		elif can_double_jump():
 			start_jump(- JUMP_VELOCITY / 4.0)
 			double_jump_charged = false
 		# While not on floor, start tracking how long the jump has been
@@ -273,6 +272,17 @@ func is_double_jump_charged() -> bool:
 	## Or when it is disabled.
 	return double_jump_charged
 
+func can_standard_jump() -> bool:
+	# True if the player is on the floor or has coyote time
+	var floor_or_coyote : bool = is_on_floor() or (not is_on_floor() and coyote_time_elapsed <= MAX_COYOTE_TIME)
+	# Can jump if above is met AND we are not in a parry
+	return floor_or_coyote and not is_parrying()
+
+func can_double_jump() -> bool:
+	# Can double jump if the above condition fails, 
+	# but not because of the parrying
+	return is_double_jump_charged() and not is_parrying()
+
 ###############################################################################
 ##                                                                           ##
 ##                               JUMP LOGIC                                  ##
@@ -307,7 +317,7 @@ var down_held : bool = false
 var sprint_direction : int = 0
 
 # Core loop running every physics frame for walking/running.
-func walk_physics_process(delta : float):
+func walk_physics_process(_delta : float):
 	# No walking logic should run while a dash is ongoing
 	if can_walk():
 		# Get the input direction and handle the movement/deceleration.
@@ -324,8 +334,8 @@ func walk_physics_process(delta : float):
 		else:
 			walking_affect = WALK_ACCEL_AIRBORN
 		
-		# Runs if any input is given.
-		if stick_strength:
+		# Runs if any input is given and we are not in a parry stance
+		if stick_strength and not is_parrying():
 			# If input is given, adjust the accel affect to correspond to amount
 			# joystick is moved. -- Actually, don't do this, leads to friction bug.
 			##walking_affect *= abs(stick_strength)
@@ -342,6 +352,7 @@ func walk_physics_process(delta : float):
 				else:
 					turn_player(Facing.RIGHT)
 		# Runs when neither left nor right is held (over deadzone threshold)
+		# Also runs when in parry state (to stop the player)
 		else:
 			# Decelerate towards 0 speed
 			vel_walking.x = move_toward(previous_frame_vel.x, 0, walking_affect)
@@ -482,7 +493,7 @@ var dash_direction : int
 ## 5) If we are currently dashing and dash hasn't lasted too long, then:
 ## 5.1) Increment dash timer, and adjust relevant velocities.
 ## 5.2) Otherwise, end the dash (duration -> 0) and set the final frame velocity
-func dash_physics_process(delta : float) -> void:
+func dash_physics_process(_delta : float) -> void:
 	# Charge dash if on the floor
 	if !dash_charged and is_on_floor():
 		charge_dash()
@@ -501,6 +512,9 @@ func dash_physics_process(delta : float) -> void:
 	# If a dash has been buffered and dash is off cooldown and dash is charged, 
 	# then start a dash.
 	if can_dash():
+		# Cancel any ongoing parry
+		if is_parrying():
+			end_parry()
 		# Set this variable to 1 to begin the dash. (Timer counts up to 
 		# dash max duration inclusive, so this says we are in the first frame.)
 		dash_duration_elapsed = 1
@@ -629,12 +643,15 @@ var attack_facing_direction : int
 # Tracks the direction of the attack for attack box calculation and knockback purposes
 var attack_direction : int
 
-func attack_physics_process(delta : float):
+func attack_physics_process(_delta : float):
 	# Tick down attack cooldown if applicable
 	attack_cooldown = max(0, attack_cooldown - 1)
 	
 	# If an attack is valid and the attack is buffered, then attack.
 	if attack_buffered and can_attack():
+		# Cancel any ongoing parry
+		if is_parrying():
+			end_parry()
 		# Unbuffer attack
 		buffer_attack(false)
 		# Lock attack facing direction
@@ -761,7 +778,7 @@ var parry_duration : int = 0
 # Current parry cooldown
 var parry_cooldown : int = 0
 
-func parry_physics_process(delta : float):
+func parry_physics_process(_delta : float):
 	# Tick down parry cooldown if applicable
 	parry_cooldown = max(0, parry_cooldown - 1)
 	
@@ -840,10 +857,11 @@ func is_parrying() -> bool:
 	return parry_duration > 0
 
 ## Called when a parry lands
-func on_successful_parry() -> void:
+func on_successful_parry(knockback : Vector2) -> void:
 	end_parry()
 	parry_cooldown = 0
-	## TODO: Launch knockback
+	## TODO: Make sure standard launch feels right here
+	enqueue_launch(knockback)
 	add_i_frames(5)
 
 ###############################################################################
@@ -896,7 +914,7 @@ func enqueue_override_launch(direction : Vector2):
 	override_launches_list.append(direction)
 
 
-func launch_physics_process(delta: float):
+func launch_physics_process(_delta: float):
 	# First, do the override launches
 	# If there are any, cancel all previous velocities
 	if not override_launches_list.is_empty():

@@ -14,7 +14,7 @@ func on_interacts():
 
 func get_highest_priority_interactable() -> IInteractable:
 	var best : IInteractable
-	var best_priority : int = -INF
+	var best_priority : int = -100000
 	
 	for obj in interactable_objects:
 		var interactable : IInteractable = obj as IInteractable
