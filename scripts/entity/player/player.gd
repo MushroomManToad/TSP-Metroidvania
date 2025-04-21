@@ -15,9 +15,9 @@ var previous_frame_vel : Vector2 = Vector2(0.0, 0.0)
 var i_frames : int = 0
 
 # Import Vars
-@onready var player_sprite : AnimatedSprite2D = $PlayerSprite
-@onready var attack_box: PlayerAttackBox = $AttackBox
-@onready var attack_collision_shape: CollisionShape2D = $AttackBox/AttackCollisionShape
+@export var player_sprite : PlayerSprite
+@export var attack_box: PlayerAttackBox
+@export var attack_collision_shape: CollisionShape2D
 
 # Variable to track player facing direction for movement, dash, and render.
 # NOT Computed using Facing.transform()
@@ -29,7 +29,7 @@ var facing : int = Facing.RIGHT
 @export var player_hurtbox : PlayerHurtbox
 @export var player_interact_box : PlayerInteractBox
 
-# Signals emitted to player data
+# Signals emitted
 signal jumped
 
 ###### Main Physics Loop ######
@@ -316,6 +316,10 @@ var down_held : bool = false
 # Reset when sprint is released
 var sprint_direction : int = 0
 
+# Used to track whether input is being continuously given and consumed
+# This is primarily used for animation, and is queried with is_walking()
+var is_giving_walking_input : bool = false
+
 # Core loop running every physics frame for walking/running.
 func walk_physics_process(_delta : float):
 	# No walking logic should run while a dash is ongoing
@@ -344,7 +348,8 @@ func walk_physics_process(_delta : float):
 			# for "sprinting" and stick strength) by the previously calculated
 			# delta, called "walking_affect"
 			vel_walking.x = move_toward(previous_frame_vel.x, walk_speed(stick_strength), walking_affect)
-			player_sprite.play("player_run")
+			# When moving WITH INPUT, set flag
+			is_giving_walking_input = true
 			# Turn the player if and only if they are not attacking
 			if not is_attacking():
 				if stick_strength < 0:
@@ -356,7 +361,8 @@ func walk_physics_process(_delta : float):
 		else:
 			# Decelerate towards 0 speed
 			vel_walking.x = move_toward(previous_frame_vel.x, 0, walking_affect)
-			player_sprite.play("player_idle")
+			# When decelerating or not moving, set flag
+			is_giving_walking_input = false
 
 ## Function to check if walking logic should be used this frame
 func can_walk() -> bool:
@@ -385,8 +391,9 @@ func walk_input(event : InputEvent) -> bool:
 		# Consume input
 		consume_flag = true
 	if event.is_action_pressed("Up"):
+		if not up_held:
+			on_interacts()
 		up_held = true
-		on_interacts()
 		# Consume input
 		consume_flag = true
 	if event.is_action_released("Up"):
@@ -436,6 +443,9 @@ func walk_speed(stick_strength : float) -> float:
 	else:
 		sprint_direction = 0
 	return vel
+
+func is_walking() -> bool:
+	return is_giving_walking_input
 
 ###############################################################################
 ##                                                                           ##

@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://csdluako5yquq"]
+[gd_scene load_steps=22 format=3 uid="uid://csdluako5yquq"]
 
 [ext_resource type="Script" uid="uid://dukb5t3wlyl3p" path="res://scripts/entity/player/player.gd" id="1_bnb2f"]
 [ext_resource type="Texture2D" uid="uid://vyq5yjl7u0px" path="res://sprites/entity/player/player.png" id="2_fhcb0"]
@@ -6,12 +6,81 @@
 [ext_resource type="Script" uid="uid://ckx37frvrae4g" path="res://scripts/entity/player/player_interact_box.gd" id="3_qpw6s"]
 [ext_resource type="Script" uid="uid://crwi6bbtcnpux" path="res://scripts/entity/player/player_data.gd" id="4_4fs46"]
 [ext_resource type="Script" uid="uid://d1kykym85lg4y" path="res://scripts/entity/player/player_hurt_box.gd" id="5_njr5w"]
+[ext_resource type="Script" uid="uid://pn31uq1r2dh5" path="res://scripts/entity/player/player_sprite.gd" id="6_bu3a2"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wnwc1"]
 size = Vector2(4, 23)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_njr5w"]
 size = Vector2(4, 23)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_r5jcu"]
+size = Vector2(16, 14)
+
+[sub_resource type="AnimationNodeOneShot" id="AnimationNodeOneShot_bu3a2"]
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_jhnb8"]
+animation = &"player_run"
+
+[sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_jhnb8"]
+graph_offset = Vector2(-632.997, 119.94)
+nodes/OneShot/node = SubResource("AnimationNodeOneShot_bu3a2")
+nodes/OneShot/position = Vector2(100, 200)
+nodes/Run/node = SubResource("AnimationNodeAnimation_jhnb8")
+nodes/Run/position = Vector2(-180, 240)
+node_connections = [&"OneShot", 0, &"Run", &"output", 0, &"OneShot"]
+
+[sub_resource type="Animation" id="Animation_jo4e4"]
+resource_name = "player_idle"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PlayerSpriteMain:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"player_idle"]
+}
+
+[sub_resource type="Animation" id="Animation_ih27x"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PlayerSpriteMain:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"player_idle"]
+}
+
+[sub_resource type="Animation" id="Animation_bu3a2"]
+resource_name = "player_run"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PlayerSpriteMain:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"player_run"]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_q5dhb"]
+_data = {
+&"RESET": SubResource("Animation_ih27x"),
+&"player_idle": SubResource("Animation_jo4e4"),
+&"player_run": SubResource("Animation_bu3a2")
+}
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_5b4hi"]
 atlas = ExtResource("2_fhcb0")
@@ -47,19 +116,22 @@ animations = [{
 "speed": 10.0
 }]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_r5jcu"]
-size = Vector2(16, 14)
-
-[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("player_data", "player_hurtbox", "player_interact_box")]
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("player_sprite", "attack_box", "attack_collision_shape", "player_data", "player_hurtbox", "player_interact_box")]
 collision_layer = 2
 collision_mask = 11264
 script = ExtResource("1_bnb2f")
+player_sprite = NodePath("PlayerSprite")
+attack_box = NodePath("AttackBox")
+attack_collision_shape = NodePath("AttackBox/AttackCollisionShape")
 player_data = NodePath("PlayerData")
 player_hurtbox = NodePath("HurtBox")
 player_interact_box = NodePath("InteractBox")
 
+[node name="PlayerData" type="Node2D" parent="."]
+script = ExtResource("4_4fs46")
+
 [node name="PlayerCollisionShape" type="CollisionShape2D" parent="."]
-position = Vector2(0, 4.5)
+position = Vector2(0, -11.5)
 shape = SubResource("RectangleShape2D_wnwc1")
 
 [node name="HurtBox" type="Area2D" parent="." node_paths=PackedStringArray("player")]
@@ -69,7 +141,7 @@ script = ExtResource("5_njr5w")
 player = NodePath("..")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
-position = Vector2(0, 4.5)
+position = Vector2(0, -11.5)
 shape = SubResource("RectangleShape2D_njr5w")
 debug_color = Color(0.880117, 0.000361751, 0.822753, 0.42)
 
@@ -79,21 +151,9 @@ collision_mask = 4096
 script = ExtResource("3_qpw6s")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="InteractBox"]
-position = Vector2(0, 4.5)
+position = Vector2(0, -11.5)
 shape = SubResource("RectangleShape2D_njr5w")
 debug_color = Color(0, 0.642452, 0.317494, 0.42)
-
-[node name="PlayerSprite" type="AnimatedSprite2D" parent="."]
-sprite_frames = SubResource("SpriteFrames_x2cqc")
-animation = &"player_idle"
-autoplay = "player_idle"
-
-[node name="PlayerCamera" type="Camera2D" parent="."]
-zoom = Vector2(2, 2)
-process_callback = 0
-limit_bottom = 64
-position_smoothing_enabled = true
-position_smoothing_speed = 8.0
 
 [node name="AttackBox" type="Area2D" parent="." node_paths=PackedStringArray("player")]
 visible = false
@@ -108,8 +168,33 @@ player = NodePath("..")
 position = Vector2(0, 16)
 shape = SubResource("RectangleShape2D_r5jcu")
 
-[node name="PlayerData" type="Node2D" parent="."]
-script = ExtResource("4_4fs46")
+[node name="PlayerSprite" type="Node2D" parent="."]
+script = ExtResource("6_bu3a2")
+
+[node name="PlayerSpriteAnimationTree" type="AnimationTree" parent="PlayerSprite"]
+tree_root = SubResource("AnimationNodeBlendTree_jhnb8")
+anim_player = NodePath("../PlayerSpriteAnimPlayer")
+parameters/OneShot/active = false
+parameters/OneShot/internal_active = false
+parameters/OneShot/request = 0
+
+[node name="PlayerSpriteAnimPlayer" type="AnimationPlayer" parent="PlayerSprite"]
+libraries = {
+&"": SubResource("AnimationLibrary_q5dhb")
+}
+
+[node name="PlayerSpriteMain" type="AnimatedSprite2D" parent="PlayerSprite"]
+position = Vector2(0, -16)
+sprite_frames = SubResource("SpriteFrames_x2cqc")
+animation = &"player_idle"
+autoplay = "player_idle"
+
+[node name="PlayerCamera" type="Camera2D" parent="."]
+zoom = Vector2(2, 2)
+process_callback = 0
+limit_bottom = 64
+position_smoothing_enabled = true
+position_smoothing_speed = 8.0
 
 [connection signal="jumped" from="." to="PlayerData" method="_on_player_jumped"]
 [connection signal="take_damage" from="HurtBox" to="PlayerData" method="_on_take_damage"]
