@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://csdluako5yquq"]
+[gd_scene load_steps=19 format=3 uid="uid://csdluako5yquq"]
 
 [ext_resource type="Script" uid="uid://dukb5t3wlyl3p" path="res://scripts/entity/player/player.gd" id="1_bnb2f"]
 [ext_resource type="Texture2D" uid="uid://vyq5yjl7u0px" path="res://sprites/entity/player/player.png" id="2_fhcb0"]
@@ -17,34 +17,6 @@ size = Vector2(4, 23)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_r5jcu"]
 size = Vector2(16, 14)
 
-[sub_resource type="AnimationNodeOneShot" id="AnimationNodeOneShot_bu3a2"]
-
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_jhnb8"]
-animation = &"player_run"
-
-[sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_jhnb8"]
-graph_offset = Vector2(-632.997, 119.94)
-nodes/OneShot/node = SubResource("AnimationNodeOneShot_bu3a2")
-nodes/OneShot/position = Vector2(100, 200)
-nodes/Run/node = SubResource("AnimationNodeAnimation_jhnb8")
-nodes/Run/position = Vector2(-180, 240)
-node_connections = [&"OneShot", 0, &"Run", &"output", 0, &"OneShot"]
-
-[sub_resource type="Animation" id="Animation_jo4e4"]
-resource_name = "player_idle"
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("PlayerSpriteMain:animation")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [&"player_idle"]
-}
-
 [sub_resource type="Animation" id="Animation_ih27x"]
 length = 0.001
 tracks/0/type = "value"
@@ -60,8 +32,25 @@ tracks/0/keys = {
 "values": [&"player_idle"]
 }
 
+[sub_resource type="Animation" id="Animation_jo4e4"]
+resource_name = "player_idle"
+step = 0.0166667
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PlayerSpriteMain:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"player_idle"]
+}
+
 [sub_resource type="Animation" id="Animation_bu3a2"]
 resource_name = "player_run"
+step = 0.0166667
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -157,6 +146,7 @@ debug_color = Color(0, 0.642452, 0.317494, 0.42)
 
 [node name="AttackBox" type="Area2D" parent="." node_paths=PackedStringArray("player")]
 visible = false
+position = Vector2(0, -16)
 collision_layer = 8
 collision_mask = 11328
 monitoring = false
@@ -168,20 +158,17 @@ player = NodePath("..")
 position = Vector2(0, 16)
 shape = SubResource("RectangleShape2D_r5jcu")
 
-[node name="PlayerSprite" type="Node2D" parent="."]
+[node name="PlayerSprite" type="Node2D" parent="." node_paths=PackedStringArray("player", "sprite_main", "anim_player")]
 script = ExtResource("6_bu3a2")
-
-[node name="PlayerSpriteAnimationTree" type="AnimationTree" parent="PlayerSprite"]
-tree_root = SubResource("AnimationNodeBlendTree_jhnb8")
-anim_player = NodePath("../PlayerSpriteAnimPlayer")
-parameters/OneShot/active = false
-parameters/OneShot/internal_active = false
-parameters/OneShot/request = 0
+player = NodePath("..")
+sprite_main = NodePath("PlayerSpriteMain")
+anim_player = NodePath("PlayerSpriteAnimPlayer")
 
 [node name="PlayerSpriteAnimPlayer" type="AnimationPlayer" parent="PlayerSprite"]
 libraries = {
 &"": SubResource("AnimationLibrary_q5dhb")
 }
+autoplay = "player_idle"
 
 [node name="PlayerSpriteMain" type="AnimatedSprite2D" parent="PlayerSprite"]
 position = Vector2(0, -16)
@@ -190,6 +177,7 @@ animation = &"player_idle"
 autoplay = "player_idle"
 
 [node name="PlayerCamera" type="Camera2D" parent="."]
+position = Vector2(0, -16)
 zoom = Vector2(2, 2)
 process_callback = 0
 limit_bottom = 64

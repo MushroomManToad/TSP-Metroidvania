@@ -105,6 +105,9 @@ func _unhandled_input(event: InputEvent) -> void:
 	if attack_input(event):
 		get_viewport().set_input_as_handled()
 		pass
+	if parry_input(event):
+		get_viewport().set_input_as_handled()
+		pass
 
 ## Used to set Invulnerability Frames. Ensures that adding I-Frames only
 ## affects total I-Frame counter if new amount would be greater than current
@@ -339,7 +342,7 @@ func walk_physics_process(_delta : float):
 			walking_affect = WALK_ACCEL_AIRBORN
 		
 		# Runs if any input is given and we are not in a parry stance
-		if stick_strength and not is_parrying():
+		if stick_strength and not is_parrying() and player_sprite.can_current_state_move():
 			# If input is given, adjust the accel affect to correspond to amount
 			# joystick is moved. -- Actually, don't do this, leads to friction bug.
 			##walking_affect *= abs(stick_strength)
@@ -359,10 +362,11 @@ func walk_physics_process(_delta : float):
 		# Runs when neither left nor right is held (over deadzone threshold)
 		# Also runs when in parry state (to stop the player)
 		else:
-			# Decelerate towards 0 speed
-			vel_walking.x = move_toward(previous_frame_vel.x, 0, walking_affect)
-			# When decelerating or not moving, set flag
-			is_giving_walking_input = false
+			if not should_drift():
+				# Decelerate towards 0 speed
+				vel_walking.x = move_toward(previous_frame_vel.x, 0, walking_affect)
+				# When decelerating or not moving, set flag
+				is_giving_walking_input = false
 
 ## Function to check if walking logic should be used this frame
 func can_walk() -> bool:
@@ -446,6 +450,11 @@ func walk_speed(stick_strength : float) -> float:
 
 func is_walking() -> bool:
 	return is_giving_walking_input
+
+# Returns true when the player shouldn't be slowed (i.e. ice floors, 
+# parrying in air, etc.)
+func should_drift() -> bool:
+	return (not is_on_floor() and is_parrying())
 
 ###############################################################################
 ##                                                                           ##
