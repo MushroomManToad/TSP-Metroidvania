@@ -20,7 +20,7 @@ var animation_states : Dictionary
 # State Tracking Variables
 var is_running : bool = false
 
-func _ready() -> void:
+func register_states():
 	animation_states.get_or_add(PLAYER_IDLE, \
 		AnimationState.new([
 				AnimationState.Transition.new(
@@ -33,6 +33,9 @@ func _ready() -> void:
 				PLAYER_IDLE, 
 				func() : return not is_running)
 		]))
+
+func _ready() -> void:
+	register_states()
 	set_state_by_name(PLAYER_IDLE)
 
 func _process(_delta: float) -> void:
