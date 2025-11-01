@@ -66,6 +66,10 @@ func _on_area_shape_entered(_body_rid: RID, body: Area2D, _body_shape_index: int
 func on_enemy_hit(body : Area2D) -> void:
 	# The knockback - only if this box has not already knocked back
 	if not knockback_lock:
+		# Pogos stop an ongoing jump to prevent some weird double-height pogos
+		if attack_direction == CardinalDirections.DOWN:
+			player.set_clear_y(true)
+			player.cancel_jump()
 		player.enqueue_attack_launch(get_player_knockback_velocity_by_direction())
 		knockback_lock = true
 	

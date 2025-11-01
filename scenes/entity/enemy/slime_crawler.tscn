@@ -1,0 +1,106 @@
+[gd_scene load_steps=16 format=3 uid="uid://desh8eqdth02q"]
+
+[ext_resource type="Texture2D" uid="uid://bwnstamgmjvku" path="res://sprites/entity/enemy/lab/slime_crawler.png" id="1_egtoc"]
+[ext_resource type="Script" uid="uid://bgntl0i4hnv3k" path="res://scripts/entity/enemy/slime_crawler.gd" id="1_llqhx"]
+[ext_resource type="Script" uid="uid://dpg4m48o2dkqs" path="res://scripts/entity/enemy/_abstract/abstract_brain.gd" id="3_mcec7"]
+[ext_resource type="Script" uid="uid://cm1pckxnch68p" path="res://scripts/entity/enemy/_generic/Behavior/wait_behavior.gd" id="4_6qxa3"]
+[ext_resource type="Script" uid="uid://cwo12v53kr8k3" path="res://scripts/entity/enemy/_generic/Behavior/walk_edge_behavior.gd" id="5_6fnbk"]
+[ext_resource type="Script" uid="uid://vomvxrsh7vjc" path="res://scripts/entity/enemy/_generic/Condition/chance_condition.gd" id="6_6fnbk"]
+[ext_resource type="Script" uid="uid://cyhnm5gy4ntnw" path="res://scripts/entity/enemy/_generic/Condition/on_ground_condition.gd" id="7_3bcjl"]
+[ext_resource type="Script" uid="uid://bkbbtaeskht3o" path="res://scripts/entity/enemy/_generic/Interrupt/in_air_interrupt.gd" id="8_3bcjl"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_llqhx"]
+atlas = ExtResource("1_egtoc")
+region = Rect2(0, 0, 16, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2fc2e"]
+atlas = ExtResource("1_egtoc")
+region = Rect2(0, 8, 16, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lprbq"]
+atlas = ExtResource("1_egtoc")
+region = Rect2(0, 16, 16, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mcec7"]
+atlas = ExtResource("1_egtoc")
+region = Rect2(0, 24, 16, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6qxa3"]
+atlas = ExtResource("1_egtoc")
+region = Rect2(0, 32, 16, 8)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_egtoc"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_llqhx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2fc2e")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lprbq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mcec7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6qxa3")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_nhpn2"]
+size = Vector2(14, 5)
+
+[node name="SlimeCrawler" type="CharacterBody2D" node_paths=PackedStringArray("brain", "sprite_for_facing")]
+collision_layer = 32
+collision_mask = 11264
+script = ExtResource("1_llqhx")
+brain = NodePath("Brain")
+max_hp = 10.0
+sprite_for_facing = NodePath("AnimatedSprite2D")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(0, -4)
+sprite_frames = SubResource("SpriteFrames_egtoc")
+autoplay = "default"
+frame_progress = 0.868209
+
+[node name="RayCast2D" type="RayCast2D" parent="AnimatedSprite2D"]
+position = Vector2(7, 4)
+target_position = Vector2(0, 1)
+collision_mask = 1024
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -2.5)
+shape = SubResource("RectangleShape2D_nhpn2")
+
+[node name="Brain" type="Node2D" parent="." node_paths=PackedStringArray("behaviors")]
+script = ExtResource("3_mcec7")
+behaviors = [NodePath("WalkBehavior"), NodePath("WaitBehavior")]
+
+[node name="WaitBehavior" type="Node2D" parent="Brain"]
+script = ExtResource("4_6qxa3")
+default_max_timer = 30
+
+[node name="WalkBehavior" type="Node2D" parent="Brain" node_paths=PackedStringArray("character_body_2d", "edge_detection", "conditions", "interrupts")]
+script = ExtResource("5_6fnbk")
+character_body_2d = NodePath("../..")
+edge_detection = NodePath("../../AnimatedSprite2D/RayCast2D")
+conditions = [NodePath("ChanceCondition"), NodePath("OnGroundCondition")]
+interrupts = [NodePath("InAirInterrupt")]
+default_max_timer = 60
+
+[node name="ChanceCondition" type="Node2D" parent="Brain/WalkBehavior"]
+script = ExtResource("6_6fnbk")
+
+[node name="OnGroundCondition" type="Node2D" parent="Brain/WalkBehavior" node_paths=PackedStringArray("floor_colliding_body")]
+script = ExtResource("7_3bcjl")
+floor_colliding_body = NodePath("../../..")
+
+[node name="InAirInterrupt" type="Node2D" parent="Brain/WalkBehavior" node_paths=PackedStringArray("character_body_2d")]
+script = ExtResource("8_3bcjl")
+character_body_2d = NodePath("../../..")

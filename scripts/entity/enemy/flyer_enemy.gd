@@ -4,9 +4,11 @@ var internal_velocity : Vector2 = Vector2(0.0, 0.0)
 
 var knockback_amount : Vector2 = Vector2(500.0, 500.0)
 
-func _physics_process(_delta: float) -> void:
+func _sub_physics_process(_delta: float) -> void:
 	# Perma-heal the flyer
 	current_hp = max_hp
+	# Disable iframes
+	current_i_frames = 0
 	# Knockback!
 	if internal_velocity.length_squared() > 0.0:
 		internal_velocity /= 1.2

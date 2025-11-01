@@ -911,6 +911,11 @@ var launches_list = []
 # Ticks down once every frame AFTER launches are calculated
 var launch_stun_timer : int = 0
 
+## Clear flags for old x and y velocities
+# When true, clears the old velocity on this frame.
+var clear_x = false
+var clear_y = false
+
 ## For launches that add to all other launches. Applies last.
 # Enqueues a launch for this frame.
 func enqueue_launch(direction : Vector2):
@@ -933,7 +938,24 @@ func enqueue_override_launch(direction : Vector2):
 	override_launches_list.append(direction)
 
 
+func set_clear_x(val : bool):
+	clear_x = val
+
+func set_clear_y(val : bool):
+	clear_y = val
+
+
 func launch_physics_process(_delta: float):
+	# Clear x and y by flag
+	if clear_x:
+		vel_walking.x = 0
+		vel_gravity.x = 0
+		clear_x = false
+	if clear_y:
+		vel_walking.y = 0
+		vel_gravity.y = 0
+		clear_y = false
+	
 	# First, do the override launches
 	# If there are any, cancel all previous velocities
 	if not override_launches_list.is_empty():
