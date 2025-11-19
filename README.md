@@ -1,2 +1,2 @@
-# The Masks of Ash
- Version Control for my gamedev project
+# TSP Upcoming Game
+ Version Control for TheStuckPixel's upcoming game.
