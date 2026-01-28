@@ -58,6 +58,9 @@ func die():
 	## TODO: Play Death Animation
 	queue_free()
 	## TODO: Drop "currency"
+	
+	## Update Beastiary
+	GameManager.PersistentInventory.Beastiary.add_kill(get_beastiary_id())
 	pass
 
 func turn():
@@ -78,3 +81,6 @@ func base_i_frames() -> int:
 
 func set_i_frames(amount : int) -> void:
 	current_i_frames = amount
+
+func get_beastiary_id() -> String:
+	return PI_Beastiary.CONSCIOUS_ECHO

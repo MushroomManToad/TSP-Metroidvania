@@ -28,6 +28,7 @@ var facing : int = Facing.RIGHT
 @export var player_data : PlayerData
 @export var player_hurtbox : PlayerHurtbox
 @export var player_interact_box : PlayerInteractBox
+@export var camera : Camera2D
 
 # Signals emitted
 signal jumped

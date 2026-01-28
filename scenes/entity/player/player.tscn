@@ -105,7 +105,7 @@ animations = [{
 "speed": 10.0
 }]
 
-[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("player_sprite", "attack_box", "attack_collision_shape", "player_data", "player_hurtbox", "player_interact_box")]
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("player_sprite", "attack_box", "attack_collision_shape", "player_data", "player_hurtbox", "player_interact_box", "camera")]
 collision_layer = 2
 collision_mask = 11264
 script = ExtResource("1_bnb2f")
@@ -115,6 +115,7 @@ attack_collision_shape = NodePath("AttackBox/AttackCollisionShape")
 player_data = NodePath("PlayerData")
 player_hurtbox = NodePath("HurtBox")
 player_interact_box = NodePath("InteractBox")
+camera = NodePath("PlayerCamera")
 
 [node name="PlayerData" type="Node2D" parent="."]
 script = ExtResource("4_4fs46")

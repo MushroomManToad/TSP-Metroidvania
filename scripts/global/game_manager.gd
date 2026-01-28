@@ -1,9 +1,14 @@
 extends Node
 
 ## Global GameManager Sub-Systems
+# THIS CLASS HANDLES OPTIONS MENU VALUES
 var GameSettings : Game_Settings
+# THIS CLASS HANDLES ALL TRANSLATION FILES
 var LanguageDirectory : Language_Directory
+# THIS CLASS MANAGES THE ACTIVE STAGE AND STAGE SWITCHING
 var LevelManager : Level_Manager
+# THIS CLASS MANAGES THE SAVE FILE SYSTEM. ALL SAVED FILES GO HERE.
+var PersistentInventory: Persistent_Inventory
 
 ## Game State Tracker
 var game_state : int = GameStates.STATES.IN_GAME
@@ -26,6 +31,8 @@ func _delayed_ready():
 	LanguageDirectory.on_ready()
 	LevelManager = Level_Manager.new()
 	LevelManager.on_ready()
+	PersistentInventory = Persistent_Inventory.new()
+	PersistentInventory.on_ready()
 
 var frames_elapsed = 0
 ## Physics loop on the global static class. Don't use this for much.
@@ -41,6 +48,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		match game_state:
 			GameStates.STATES.IN_GAME:
 				if !get_tree().paused:
+					PersistentInventory.save_game(1)
 					# Set Pause State on Escape Pressed
 					get_tree().paused = true
 					# Enable Pause Screen
