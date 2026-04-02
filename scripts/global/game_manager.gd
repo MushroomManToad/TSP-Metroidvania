@@ -9,6 +9,8 @@ var LanguageDirectory : Language_Directory
 var LevelManager : Level_Manager
 # THIS CLASS MANAGES THE SAVE FILE SYSTEM. ALL SAVED FILES GO HERE.
 var PersistentInventory: Persistent_Inventory
+# THIS CLASS MANAGES RUNTIME STATE SWITCHES. GAME LAUNCH MODE HERE.
+var RuntimeStateHandler : Runtime_State_Handler
 
 ## Game State Tracker
 var game_state : int = GameStates.STATES.IN_GAME
@@ -33,6 +35,8 @@ func _delayed_ready():
 	LevelManager.on_ready()
 	PersistentInventory = Persistent_Inventory.new()
 	PersistentInventory.on_ready()
+	RuntimeStateHandler = Runtime_State_Handler.new()
+	RuntimeStateHandler._on_ready()
 
 var frames_elapsed = 0
 ## Physics loop on the global static class. Don't use this for much.

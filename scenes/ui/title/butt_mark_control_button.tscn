@@ -1,0 +1,27 @@
+[gd_scene format=3 uid="uid://bnkhl5kie24cb"]
+
+[ext_resource type="Script" uid="uid://d2srl6clsggss" path="res://scripts/ui/color_picker/butt_mark_control_button.gd" id="1_16xsp"]
+[ext_resource type="Texture2D" uid="uid://b3j2u7p2bhsdj" path="res://sprites/menu/character_creator/manetailbutton.png" id="1_o01a7"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8uipy"]
+atlas = ExtResource("1_o01a7")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ptm88"]
+atlas = ExtResource("1_o01a7")
+region = Rect2(0, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8kjoy"]
+atlas = ExtResource("1_o01a7")
+region = Rect2(0, 64, 32, 32)
+
+[node name="ButtMarkControlButton" type="TextureButton" unique_id=1178499605]
+offset_right = 32.0
+offset_bottom = 32.0
+toggle_mode = true
+texture_normal = SubResource("AtlasTexture_8uipy")
+texture_pressed = SubResource("AtlasTexture_ptm88")
+texture_focused = SubResource("AtlasTexture_8kjoy")
+script = ExtResource("1_16xsp")
+
+[connection signal="toggled" from="." to="." method="_on_toggled"]

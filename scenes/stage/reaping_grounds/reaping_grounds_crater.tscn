@@ -1,7 +1,7 @@
-[gd_scene load_steps=8 format=4 uid="uid://cg4o1m4lofr1g"]
+[gd_scene format=4 uid="uid://cg4o1m4lofr1g"]
 
 [ext_resource type="Script" uid="uid://daeep7ef6oyjf" path="res://scripts/common/stage_data.gd" id="1_17ind"]
-[ext_resource type="Shader" uid="uid://begkm0d84tmx5" path="res://shaders/global_materials/ground_tilemap_shader.gdshader" id="1_o78in"]
+[ext_resource type="Shader" uid="uid://begkm0d84tmx5" path="res://assets/shader/global_materials/ground_tilemap_shader.gdshader" id="1_o78in"]
 [ext_resource type="Texture2D" uid="uid://day26a8raco8r" path="res://sprites/tile/dev/collision_tiles.png" id="1_vnm0x"]
 [ext_resource type="Script" uid="uid://cb68cav5l1tkn" path="res://scripts/object/generic/ground_collision_map.gd" id="2_uwskf"]
 

@@ -1,0 +1,90 @@
+[gd_scene format=3 uid="uid://dk732yc8p21id"]
+
+[ext_resource type="Texture2D" uid="uid://dpfvv06swvhf4" path="res://sprites/menu/character_creator/color-picker.png" id="1_3bmyb"]
+[ext_resource type="Script" uid="uid://cqxhj5p42cicc" path="res://scripts/ui/color_picker/color_picker_button.gd" id="2_a44wv"]
+[ext_resource type="Texture2D" uid="uid://bgup20kuyl10j" path="res://sprites/menu/character_creator/color_picker_lock.png" id="3_42id8"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_a44wv"]
+atlas = ExtResource("1_3bmyb")
+region = Rect2(0, 48, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_42id8"]
+atlas = ExtResource("1_3bmyb")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_do3i5"]
+atlas = ExtResource("1_3bmyb")
+region = Rect2(0, 32, 16, 16)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_pp5tm"]
+load_path = "res://.godot/imported/color-picker.png-a37f9b36b2e4af6e78171141bb23a0fa.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ti14f"]
+atlas = SubResource("CompressedTexture2D_pp5tm")
+region = Rect2(0, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_88tyr"]
+atlas = ExtResource("3_42id8")
+region = Rect2(0, 0, 7, 7)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pp5tm"]
+atlas = ExtResource("3_42id8")
+region = Rect2(0, 7, 7, 7)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_240h7"]
+atlas = ExtResource("3_42id8")
+region = Rect2(0, 14, 7, 7)
+
+[node name="ColorPickerButton" type="TextureRect" unique_id=689424247]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -8.0
+offset_top = -20.0
+offset_right = 8.0
+offset_bottom = -4.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = SubResource("AtlasTexture_a44wv")
+stretch_mode = 2
+script = ExtResource("2_a44wv")
+
+[node name="TextureButton" type="TextureButton" parent="." unique_id=942255502]
+layout_mode = 0
+offset_right = 16.0
+offset_bottom = 16.0
+texture_normal = SubResource("AtlasTexture_42id8")
+texture_pressed = SubResource("AtlasTexture_do3i5")
+texture_focused = SubResource("AtlasTexture_ti14f")
+
+[node name="LockButton" type="TextureButton" parent="." unique_id=1581759766]
+process_mode = 4
+visible = false
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -6.0
+offset_top = -6.0
+offset_right = 1.0
+offset_bottom = 1.0
+grow_horizontal = 0
+grow_vertical = 0
+toggle_mode = true
+texture_normal = SubResource("AtlasTexture_88tyr")
+texture_pressed = SubResource("AtlasTexture_pp5tm")
+texture_focused = SubResource("AtlasTexture_240h7")
+
+[node name="BoxContainer" type="BoxContainer" parent="." unique_id=1288151991]
+custom_minimum_size = Vector2(17, 17)
+layout_mode = 1
+offset_right = 17.0
+mouse_filter = 2
+
+[connection signal="pressed" from="TextureButton" to="." method="_on_texture_button_pressed"]
+[connection signal="toggled" from="LockButton" to="." method="_on_lock_button_toggled"]

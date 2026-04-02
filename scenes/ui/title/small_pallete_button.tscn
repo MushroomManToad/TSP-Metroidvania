@@ -1,0 +1,13 @@
+[gd_scene format=3 uid="uid://cng3wvs4bbq14"]
+
+[ext_resource type="Texture2D" uid="uid://duoklkjxtbqb1" path="res://sprites/menu/character_creator/small_color_pick_box.png" id="1_jpr5d"]
+[ext_resource type="Script" uid="uid://iq1e1hau4qwb" path="res://scripts/ui/color_picker/small_pallete_button.gd" id="2_3b4mu"]
+
+[node name="SmallPalleteButton" type="TextureButton" unique_id=94745964]
+offset_right = 8.0
+offset_bottom = 8.0
+action_mode = 0
+texture_normal = ExtResource("1_jpr5d")
+script = ExtResource("2_3b4mu")
+
+[connection signal="pressed" from="." to="." method="_on_pressed"]

@@ -1,0 +1,265 @@
+[gd_scene format=3 uid="uid://dkw0lys2somur"]
+
+[ext_resource type="Script" uid="uid://dqhl6h50yk0ad" path="res://scripts/ui/title/file_select_screen.gd" id="1_lt2xf"]
+[ext_resource type="Texture2D" uid="uid://br884ipalrlah" path="res://sprites/ui/title/file_select/file_select_bg.png" id="1_we4cb"]
+[ext_resource type="Texture2D" uid="uid://btyi0uxrb64qs" path="res://sprites/ui/title/file_select/FileButtons.png" id="2_c36w0"]
+[ext_resource type="Script" uid="uid://qs8k0dx41iti" path="res://scripts/ui/title/file_select_button.gd" id="4_oc50i"]
+[ext_resource type="FontFile" uid="uid://clcf81yqudpak" path="res://assets/font/m5x7.ttf" id="5_7et63"]
+[ext_resource type="PackedScene" path="res://scenes/entity/master/pony_base.tscn" id="6_b7ktr"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_c36w0"]
+atlas = ExtResource("2_c36w0")
+region = Rect2(0, 0, 512, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wn5ll"]
+atlas = ExtResource("2_c36w0")
+region = Rect2(0, 96, 512, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7et63"]
+atlas = ExtResource("2_c36w0")
+region = Rect2(0, 0, 512, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b7ktr"]
+atlas = ExtResource("2_c36w0")
+region = Rect2(0, 0, 512, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jdf40"]
+atlas = ExtResource("2_c36w0")
+region = Rect2(0, 96, 512, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_smbjx"]
+atlas = ExtResource("2_c36w0")
+region = Rect2(0, 0, 512, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_87bi7"]
+atlas = ExtResource("2_c36w0")
+region = Rect2(0, 96, 512, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w7303"]
+atlas = ExtResource("2_c36w0")
+region = Rect2(0, 0, 512, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_m1rf7"]
+atlas = ExtResource("2_c36w0")
+region = Rect2(0, 0, 512, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2hhju"]
+atlas = ExtResource("2_c36w0")
+region = Rect2(0, 96, 512, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lt2xf"]
+atlas = ExtResource("2_c36w0")
+region = Rect2(0, 0, 512, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_oc50i"]
+atlas = ExtResource("2_c36w0")
+region = Rect2(0, 96, 512, 96)
+
+[node name="FileSelectScreen" type="CanvasLayer" unique_id=515294741]
+script = ExtResource("1_lt2xf")
+
+[node name="BG" type="TextureRect" parent="." unique_id=1564850089]
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("1_we4cb")
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=246488145]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 22
+theme_override_constants/margin_top = 22
+theme_override_constants/margin_right = 22
+theme_override_constants/margin_bottom = 22
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer" unique_id=1947795299]
+layout_mode = 2
+theme_override_constants/separation = -8
+
+[node name="File1" type="TextureButton" parent="MarginContainer/VBoxContainer" unique_id=1439192582]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
+texture_normal = SubResource("AtlasTexture_c36w0")
+texture_pressed = SubResource("AtlasTexture_wn5ll")
+texture_hover = SubResource("AtlasTexture_7et63")
+texture_disabled = SubResource("AtlasTexture_b7ktr")
+texture_focused = SubResource("AtlasTexture_jdf40")
+script = ExtResource("4_oc50i")
+
+[node name="NewFile" type="MarginContainer" parent="MarginContainer/VBoxContainer/File1" unique_id=2125914029]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -2.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="MarginContainer/VBoxContainer/File1/NewFile" unique_id=1169237987]
+layout_mode = 2
+mouse_filter = 2
+theme_override_fonts/normal_font = ExtResource("5_7et63")
+theme_override_font_sizes/normal_font_size = 48
+text = "NEW GAME"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SaveDisplay" type="MarginContainer" parent="MarginContainer/VBoxContainer/File1" unique_id=578187471]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/File1/SaveDisplay" unique_id=1272326026]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="MarginContainer2" type="MarginContainer" parent="MarginContainer/VBoxContainer/File1/SaveDisplay/VBoxContainer" unique_id=1411032663]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 4
+
+[node name="Name" type="RichTextLabel" parent="MarginContainer/VBoxContainer/File1/SaveDisplay/VBoxContainer/MarginContainer2" unique_id=192289918]
+custom_minimum_size = Vector2(0, 24)
+layout_mode = 2
+mouse_filter = 2
+text = "NAME"
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer/File1/SaveDisplay/VBoxContainer" unique_id=254005330]
+layout_mode = 2
+size_flags_vertical = 3
+mouse_filter = 2
+
+[node name="PonyBase" parent="MarginContainer/VBoxContainer/File1/SaveDisplay/VBoxContainer/MarginContainer" unique_id=2035334340 instance=ExtResource("6_b7ktr")]
+position = Vector2(41, 59)
+
+[node name="File2" type="TextureButton" parent="MarginContainer/VBoxContainer" unique_id=1365709057]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
+texture_normal = SubResource("AtlasTexture_smbjx")
+texture_pressed = SubResource("AtlasTexture_87bi7")
+texture_hover = SubResource("AtlasTexture_w7303")
+texture_disabled = SubResource("AtlasTexture_m1rf7")
+texture_focused = SubResource("AtlasTexture_2hhju")
+script = ExtResource("4_oc50i")
+file_num = 1
+
+[node name="NewFile" type="MarginContainer" parent="MarginContainer/VBoxContainer/File2" unique_id=15904611]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="MarginContainer/VBoxContainer/File2/NewFile" unique_id=1480091199]
+layout_mode = 2
+mouse_filter = 2
+theme_override_fonts/normal_font = ExtResource("5_7et63")
+theme_override_font_sizes/normal_font_size = 48
+text = "NEW GAME"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SaveDisplay" type="MarginContainer" parent="MarginContainer/VBoxContainer/File2" unique_id=1177110568]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/File2/SaveDisplay" unique_id=2074130170]
+layout_mode = 2
+
+[node name="MarginContainer2" type="MarginContainer" parent="MarginContainer/VBoxContainer/File2/SaveDisplay/VBoxContainer" unique_id=107559569]
+layout_mode = 2
+theme_override_constants/margin_left = 4
+
+[node name="Name" type="RichTextLabel" parent="MarginContainer/VBoxContainer/File2/SaveDisplay/VBoxContainer/MarginContainer2" unique_id=2098809237]
+custom_minimum_size = Vector2(0, 24)
+layout_mode = 2
+text = "NAME"
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer/File2/SaveDisplay/VBoxContainer" unique_id=1537217269]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="PonyBase" parent="MarginContainer/VBoxContainer/File2/SaveDisplay/VBoxContainer/MarginContainer" unique_id=383406721 instance=ExtResource("6_b7ktr")]
+position = Vector2(41, 59)
+
+[node name="File3" type="TextureButton" parent="MarginContainer/VBoxContainer" unique_id=1214342773]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
+texture_normal = SubResource("AtlasTexture_lt2xf")
+texture_pressed = SubResource("AtlasTexture_oc50i")
+texture_hover = SubResource("AtlasTexture_lt2xf")
+texture_disabled = SubResource("AtlasTexture_lt2xf")
+texture_focused = SubResource("AtlasTexture_oc50i")
+script = ExtResource("4_oc50i")
+file_num = 2
+
+[node name="NewFile" type="MarginContainer" parent="MarginContainer/VBoxContainer/File3" unique_id=1202859160]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="MarginContainer/VBoxContainer/File3/NewFile" unique_id=589742085]
+layout_mode = 2
+mouse_filter = 2
+theme_override_fonts/normal_font = ExtResource("5_7et63")
+theme_override_font_sizes/normal_font_size = 48
+text = "NEW GAME"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SaveDisplay" type="MarginContainer" parent="MarginContainer/VBoxContainer/File3" unique_id=1154522315]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/File3/SaveDisplay" unique_id=1936481839]
+layout_mode = 2
+
+[node name="MarginContainer2" type="MarginContainer" parent="MarginContainer/VBoxContainer/File3/SaveDisplay/VBoxContainer" unique_id=1356969282]
+layout_mode = 2
+theme_override_constants/margin_left = 4
+
+[node name="Name" type="RichTextLabel" parent="MarginContainer/VBoxContainer/File3/SaveDisplay/VBoxContainer/MarginContainer2" unique_id=1083140854]
+custom_minimum_size = Vector2(0, 24)
+layout_mode = 2
+text = "NAME"
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer/File3/SaveDisplay/VBoxContainer" unique_id=1203856070]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="PonyBase" parent="MarginContainer/VBoxContainer/File3/SaveDisplay/VBoxContainer/MarginContainer" unique_id=1533944535 instance=ExtResource("6_b7ktr")]
+position = Vector2(41, 59)
+
+[connection signal="mouse_entered" from="MarginContainer/VBoxContainer/File1" to="MarginContainer/VBoxContainer/File1" method="_on_mouse_entered"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/File1" to="MarginContainer/VBoxContainer/File1" method="_on_pressed"]
+[connection signal="mouse_entered" from="MarginContainer/VBoxContainer/File2" to="MarginContainer/VBoxContainer/File2" method="_on_mouse_entered"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/File2" to="MarginContainer/VBoxContainer/File2" method="_on_pressed"]
+[connection signal="mouse_entered" from="MarginContainer/VBoxContainer/File3" to="MarginContainer/VBoxContainer/File3" method="_on_mouse_entered"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/File3" to="MarginContainer/VBoxContainer/File3" method="_on_pressed"]

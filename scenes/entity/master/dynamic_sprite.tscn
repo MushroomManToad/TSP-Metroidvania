@@ -1,0 +1,15 @@
+[gd_scene format=4 uid="uid://d7yyj4rtkxn0"]
+
+[ext_resource type="Shader" uid="uid://df4mipo4jm4u" path="res://assets/shader/dynamic_sprite/dynamic_color_sprite.gdshader" id="1_5irxn"]
+[ext_resource type="Script" uid="uid://dp2bp88sscp25" path="res://scripts/common/dynamic_sprite.gd" id="2_5irxn"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_2c35y"]
+resource_local_to_scene = true
+shader = ExtResource("1_5irxn")
+shader_parameter/active_colors = 1
+shader_parameter/in_color = PackedVector4Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+shader_parameter/out_color = PackedVector4Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+
+[node name="DynamicSprite" type="Sprite2D" unique_id=599260341]
+material = SubResource("ShaderMaterial_2c35y")
+script = ExtResource("2_5irxn")

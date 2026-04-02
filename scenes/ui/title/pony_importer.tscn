@@ -1,0 +1,23 @@
+[gd_scene format=3 uid="uid://wb46pov585u1"]
+
+[ext_resource type="Script" uid="uid://c8vjpramj1m4q" path="res://scripts/ui/color_picker/pony_importer.gd" id="1_l76m3"]
+
+[node name="PonyImporter" type="FileDialog" unique_id=1270004664]
+oversampling_override = 1.0
+title = "Open a File"
+position = Vector2i(0, 36)
+size = Vector2i(616, 312)
+visible = true
+unresizable = true
+file_mode = 0
+display_mode = 1
+access = 1
+root_subfolder = "characters"
+folder_creation_enabled = false
+favorites_enabled = false
+recent_list_enabled = false
+layout_toggle_enabled = false
+deleting_enabled = false
+script = ExtResource("1_l76m3")
+
+[connection signal="file_selected" from="." to="." method="_on_file_selected"]

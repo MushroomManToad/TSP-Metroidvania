@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://ccvdjml5pjtp5"]
+
+[ext_resource type="Script" uid="uid://gu4hl8hf8xn8" path="res://scripts/ui/color_picker/butt_mark_color_grid_button.gd" id="2_3vdvq"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_j3lff"]
+load_path = "res://.godot/imported/butt_mark_color_buttons.png-d37b9ccd9f776237bc212c0d6483bf7a.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3vdvq"]
+resource_local_to_scene = true
+atlas = SubResource("CompressedTexture2D_j3lff")
+region = Rect2(0, 16, 16, 16)
+
+[node name="ButtMarkColorGridButton" type="TextureButton" unique_id=687301784]
+offset_right = 16.0
+offset_bottom = 16.0
+action_mode = 0
+texture_normal = SubResource("AtlasTexture_3vdvq")
+script = ExtResource("2_3vdvq")
+
+[connection signal="pressed" from="." to="." method="_on_pressed"]

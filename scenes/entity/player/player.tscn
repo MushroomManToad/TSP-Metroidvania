@@ -1,18 +1,21 @@
-[gd_scene load_steps=19 format=3 uid="uid://csdluako5yquq"]
+[gd_scene format=3 uid="uid://csdluako5yquq"]
 
 [ext_resource type="Script" uid="uid://dukb5t3wlyl3p" path="res://scripts/entity/player/player.gd" id="1_bnb2f"]
-[ext_resource type="Texture2D" uid="uid://vyq5yjl7u0px" path="res://sprites/entity/player/player.png" id="2_fhcb0"]
 [ext_resource type="Script" uid="uid://d372t85ub53c6" path="res://scripts/entity/player/attack_box.gd" id="3_n66fu"]
 [ext_resource type="Script" uid="uid://ckx37frvrae4g" path="res://scripts/entity/player/player_interact_box.gd" id="3_qpw6s"]
 [ext_resource type="Script" uid="uid://crwi6bbtcnpux" path="res://scripts/entity/player/player_data.gd" id="4_4fs46"]
 [ext_resource type="Script" uid="uid://d1kykym85lg4y" path="res://scripts/entity/player/player_hurt_box.gd" id="5_njr5w"]
 [ext_resource type="Script" uid="uid://pn31uq1r2dh5" path="res://scripts/entity/player/player_sprite.gd" id="6_bu3a2"]
+[ext_resource type="Texture2D" uid="uid://dhu5v1oc854ds" path="res://sprites/entity/player/player_t_pose.png" id="7_bu3a2"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wnwc1"]
-size = Vector2(4, 23)
+size = Vector2(18, 45)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_njr5w"]
-size = Vector2(4, 23)
+size = Vector2(16, 43)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bu3a2"]
+size = Vector2(18, 45)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_r5jcu"]
 size = Vector2(16, 14)
@@ -71,23 +74,15 @@ _data = {
 &"player_run": SubResource("Animation_bu3a2")
 }
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_5b4hi"]
-atlas = ExtResource("2_fhcb0")
-region = Rect2(0, 0, 16, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_6lxa7"]
-atlas = ExtResource("2_fhcb0")
-region = Rect2(0, 0, 16, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_loqhs"]
-atlas = ExtResource("2_fhcb0")
-region = Rect2(16, 0, 16, 32)
+[sub_resource type="AtlasTexture" id="AtlasTexture_jhnb8"]
+atlas = ExtResource("7_bu3a2")
+region = Rect2(0, 0, 50, 54)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_x2cqc"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_5b4hi")
+"texture": SubResource("AtlasTexture_jhnb8")
 }],
 "loop": true,
 "name": &"player_idle",
@@ -95,17 +90,14 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_6lxa7")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_loqhs")
+"texture": SubResource("AtlasTexture_jhnb8")
 }],
 "loop": true,
 "name": &"player_run",
 "speed": 10.0
 }]
 
-[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("player_sprite", "attack_box", "attack_collision_shape", "player_data", "player_hurtbox", "player_interact_box", "camera")]
+[node name="Player" type="CharacterBody2D" unique_id=1377581810 node_paths=PackedStringArray("player_sprite", "attack_box", "attack_collision_shape", "player_data", "player_hurtbox", "player_interact_box")]
 collision_layer = 2
 collision_mask = 11264
 script = ExtResource("1_bnb2f")
@@ -115,37 +107,36 @@ attack_collision_shape = NodePath("AttackBox/AttackCollisionShape")
 player_data = NodePath("PlayerData")
 player_hurtbox = NodePath("HurtBox")
 player_interact_box = NodePath("InteractBox")
-camera = NodePath("PlayerCamera")
 
-[node name="PlayerData" type="Node2D" parent="."]
+[node name="PlayerData" type="Node2D" parent="." unique_id=1282015072]
 script = ExtResource("4_4fs46")
 
-[node name="PlayerCollisionShape" type="CollisionShape2D" parent="."]
-position = Vector2(0, -11.5)
+[node name="PlayerCollisionShape" type="CollisionShape2D" parent="." unique_id=1046406412]
+position = Vector2(0, -22.5)
 shape = SubResource("RectangleShape2D_wnwc1")
 
-[node name="HurtBox" type="Area2D" parent="." node_paths=PackedStringArray("player")]
+[node name="HurtBox" type="Area2D" parent="." unique_id=1261567084 node_paths=PackedStringArray("player")]
 collision_layer = 4
 collision_mask = 384
 script = ExtResource("5_njr5w")
 player = NodePath("..")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
-position = Vector2(0, -11.5)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox" unique_id=1898536131]
+position = Vector2(0, -21.5)
 shape = SubResource("RectangleShape2D_njr5w")
 debug_color = Color(0.880117, 0.000361751, 0.822753, 0.42)
 
-[node name="InteractBox" type="Area2D" parent="."]
+[node name="InteractBox" type="Area2D" parent="." unique_id=1669479609]
 collision_layer = 16384
 collision_mask = 4096
 script = ExtResource("3_qpw6s")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractBox"]
-position = Vector2(0, -11.5)
-shape = SubResource("RectangleShape2D_njr5w")
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractBox" unique_id=1444020206]
+position = Vector2(0, -22.5)
+shape = SubResource("RectangleShape2D_bu3a2")
 debug_color = Color(0, 0.642452, 0.317494, 0.42)
 
-[node name="AttackBox" type="Area2D" parent="." node_paths=PackedStringArray("player")]
+[node name="AttackBox" type="Area2D" parent="." unique_id=224319453 node_paths=PackedStringArray("player")]
 visible = false
 position = Vector2(0, -16)
 collision_layer = 8
@@ -155,35 +146,25 @@ monitorable = false
 script = ExtResource("3_n66fu")
 player = NodePath("..")
 
-[node name="AttackCollisionShape" type="CollisionShape2D" parent="AttackBox"]
+[node name="AttackCollisionShape" type="CollisionShape2D" parent="AttackBox" unique_id=874120211]
 position = Vector2(0, 16)
 shape = SubResource("RectangleShape2D_r5jcu")
 
-[node name="PlayerSprite" type="Node2D" parent="." node_paths=PackedStringArray("player", "sprite_main", "anim_player")]
+[node name="PlayerSprite" type="Node2D" parent="." unique_id=834224101 node_paths=PackedStringArray("player", "sprite_main", "anim_player")]
 script = ExtResource("6_bu3a2")
 player = NodePath("..")
 sprite_main = NodePath("PlayerSpriteMain")
 anim_player = NodePath("PlayerSpriteAnimPlayer")
 
-[node name="PlayerSpriteAnimPlayer" type="AnimationPlayer" parent="PlayerSprite"]
-libraries = {
-&"": SubResource("AnimationLibrary_q5dhb")
-}
-autoplay = "player_idle"
+[node name="PlayerSpriteAnimPlayer" type="AnimationPlayer" parent="PlayerSprite" unique_id=1822684522]
+libraries/ = SubResource("AnimationLibrary_q5dhb")
+autoplay = &"player_idle"
 
-[node name="PlayerSpriteMain" type="AnimatedSprite2D" parent="PlayerSprite"]
-position = Vector2(0, -16)
+[node name="PlayerSpriteMain" type="AnimatedSprite2D" parent="PlayerSprite" unique_id=996815277]
+position = Vector2(0, -27)
 sprite_frames = SubResource("SpriteFrames_x2cqc")
 animation = &"player_idle"
 autoplay = "player_idle"
-
-[node name="PlayerCamera" type="Camera2D" parent="."]
-position = Vector2(0, -16)
-zoom = Vector2(2, 2)
-process_callback = 0
-limit_bottom = 64
-position_smoothing_enabled = true
-position_smoothing_speed = 8.0
 
 [connection signal="jumped" from="." to="PlayerData" method="_on_player_jumped"]
 [connection signal="take_damage" from="HurtBox" to="PlayerData" method="_on_take_damage"]

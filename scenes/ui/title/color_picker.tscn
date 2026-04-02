@@ -1,0 +1,759 @@
+[gd_scene format=3 uid="uid://ys5fiq47d4uw"]
+
+[ext_resource type="Script" uid="uid://bxh5f7g2kdknq" path="res://scripts/ui/color_picker/color_picker_master.gd" id="1_m72sh"]
+[ext_resource type="Texture2D" uid="uid://bckjq6r567ahe" path="res://sprites/menu/character_creator/color_picker_widget_bg.png" id="1_whswq"]
+[ext_resource type="Texture2D" uid="uid://b3hhbcre6t7og" path="res://sprites/menu/character_creator/ColorPickerWidgetLayout.png" id="2_34uc3"]
+[ext_resource type="Texture2D" uid="uid://ddrufdbbh77jb" path="res://sprites/menu/character_creator/ColorPickerWidgetSVSelector.png" id="4_7pliq"]
+[ext_resource type="Script" uid="uid://bk8x5q8q6m0fv" path="res://scripts/ui/color_picker/sv_picker_continaer.gd" id="4_r4a2l"]
+[ext_resource type="Shader" uid="uid://b830gcb7fa2y6" path="res://assets/shader/ui/color_picker_h.gdshader" id="5_dmdmu"]
+[ext_resource type="Texture2D" uid="uid://df868ctm6irua" path="res://sprites/menu/character_creator/ColorPickerWidgetHSelector.png" id="6_m72sh"]
+[ext_resource type="Texture2D" uid="uid://b8x4mu3rvgx8j" path="res://sprites/menu/character_creator/sv_cursor.png" id="7_8hduw"]
+[ext_resource type="Script" uid="uid://dx2ft6kxr7cwc" path="res://scripts/ui/color_picker/color_picker_selector.gd" id="8_pha7f"]
+[ext_resource type="Texture2D" uid="uid://k8orqvvyqr4l" path="res://sprites/menu/character_creator/plus_button.png" id="9_1h3a0"]
+[ext_resource type="Texture2D" uid="uid://trn65bbqeol5" path="res://sprites/menu/character_creator/standard_num_indicator.png" id="10_4et0h"]
+[ext_resource type="Texture2D" uid="uid://3qx1dd81hkyu" path="res://sprites/menu/character_creator/h_selector.png" id="10_kkehj"]
+[ext_resource type="FontFile" uid="uid://cdevywtdixy04" path="res://assets/font/m5x7.ttf" id="11_r4a2l"]
+[ext_resource type="Texture2D" uid="uid://d20l532vu0nco" path="res://sprites/menu/character_creator/minus_button.png" id="12_8hduw"]
+[ext_resource type="Script" uid="uid://bwoef7bgoeirn" path="res://scripts/ui/color_picker/dropper_button.gd" id="15_kkehj"]
+[ext_resource type="Texture2D" uid="uid://caad08e2aixq" path="res://sprites/menu/character_creator/hex_button.png" id="16_mavxm"]
+[ext_resource type="Script" uid="uid://ee65ekns6ol0" path="res://scripts/ui/color_picker/hex_button.gd" id="17_dc7rk"]
+[ext_resource type="Texture2D" uid="uid://bpwy8mlpn28p0" path="res://sprites/menu/character_creator/dec_button.png" id="18_lndf6"]
+[ext_resource type="Texture2D" uid="uid://s6sv2mmjgvlo" path="res://sprites/menu/character_creator/check_button.png" id="19_4f5nc"]
+[ext_resource type="Script" uid="uid://d87bvq8ie0le" path="res://scripts/ui/color_picker/dec_button.gd" id="19_qdupk"]
+[ext_resource type="Script" uid="uid://bptt84xbxahwy" path="res://scripts/ui/color_picker/check_button.gd" id="20_4f5nc"]
+
+[sub_resource type="Shader" id="Shader_8hduw"]
+code = "shader_type canvas_item;
+
+uniform int hue : hint_range(0, 359);
+
+void fragment() {
+	vec2 uv = UV;
+	// Invert y so that it renders upside-right
+	uv.y = 1. - uv.y;
+	
+	// Define, hue, saturation, value
+	float h = float(hue);
+	float s = uv.x;
+	float v = uv.y;
+	
+	// Chroma
+	float c = v * s;
+	// H' to get HSV region
+	float h_1 = h / 60.;
+	
+	// Idk if this has a name but we need this value
+	float x = c * float((1. - abs(mod(h_1, 2) - 1.)));
+	
+	// Calc temp values that will be adjusted up for final result
+	vec3 rgb_prime = vec3(0., 0., 0.);
+	     if(0. <= h_1 && h_1 < 1.){rgb_prime = vec3(c, x, 0.);}
+	else if(1. <= h_1 && h_1 < 2.){rgb_prime = vec3(x, c, 0.);}
+	else if(2. <= h_1 && h_1 < 3.){rgb_prime = vec3(0., c, x);}
+	else if(3. <= h_1 && h_1 < 4.){rgb_prime = vec3(0., x, c);}
+	else if(4. <= h_1 && h_1 < 5.){rgb_prime = vec3(x, 0., c);}
+	else if(5. <= h_1 && h_1 < 6.){rgb_prime = vec3(c, 0., x);}
+	
+	// Finalls solve for rgb with m
+	float m = v - c;
+	
+	vec3 final_color = vec3(rgb_prime.r + m, rgb_prime.g + m, rgb_prime.b + m);
+	
+	// Draw SV selector
+	COLOR = vec4(final_color.r, final_color.g, final_color.b, 1.0);
+}
+
+//void light() {
+//	// Called for every pixel for every light affecting the CanvasItem.
+//	// Uncomment to replace the default light processing function with this one.
+//}
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_kkehj"]
+shader = SubResource("Shader_8hduw")
+shader_parameter/hue = 0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_elelt"]
+shader = ExtResource("5_dmdmu")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hf5e4"]
+atlas = ExtResource("9_1h3a0")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_pha7f"]
+load_path = "res://.godot/imported/plus_button.png-ef7fce22ee01654f0c207a0749b87cff.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1h3a0"]
+atlas = SubResource("CompressedTexture2D_pha7f")
+region = Rect2(0, 32, 16, 16)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_hf5e4"]
+load_path = "res://.godot/imported/plus_button.png-ef7fce22ee01654f0c207a0749b87cff.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4et0h"]
+atlas = SubResource("CompressedTexture2D_hf5e4")
+region = Rect2(0, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kkehj"]
+atlas = ExtResource("10_4et0h")
+region = Rect2(0, 0, 0, 16)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_mavxm"]
+load_path = "res://.godot/imported/standard_num_indicator.png-b2b8c465a710dcd4cdb7048e86b329a8.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dc7rk"]
+atlas = SubResource("CompressedTexture2D_mavxm")
+region = Rect2(0, 16, 0, 16)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_hglfs"]
+load_path = "res://.godot/imported/standard_num_indicator.png-b2b8c465a710dcd4cdb7048e86b329a8.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lndf6"]
+atlas = SubResource("CompressedTexture2D_hglfs")
+region = Rect2(0, 32, 0, 16)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_4f5nc"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_qdupk"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_i0sjw"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wjr1s"]
+atlas = ExtResource("12_8hduw")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_1y3hs"]
+load_path = "res://.godot/imported/minus_button.png-38bed722ac618de650c4371551c8474c.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qqlb8"]
+atlas = SubResource("CompressedTexture2D_1y3hs")
+region = Rect2(0, 32, 16, 16)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_1k5u2"]
+load_path = "res://.godot/imported/minus_button.png-38bed722ac618de650c4371551c8474c.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_m5xnn"]
+atlas = SubResource("CompressedTexture2D_1k5u2")
+region = Rect2(0, 16, 16, 16)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_8hduw"]
+load_path = "res://.godot/imported/dropper_button.png-9cb86463ef1034f623c881fe6e4a200d.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mavxm"]
+atlas = SubResource("CompressedTexture2D_8hduw")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_kkehj"]
+load_path = "res://.godot/imported/dropper_button.png-9cb86463ef1034f623c881fe6e4a200d.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hglfs"]
+atlas = SubResource("CompressedTexture2D_kkehj")
+region = Rect2(0, 32, 16, 16)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_lndf6"]
+load_path = "res://.godot/imported/dropper_button.png-9cb86463ef1034f623c881fe6e4a200d.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4f5nc"]
+atlas = SubResource("CompressedTexture2D_lndf6")
+region = Rect2(0, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qdupk"]
+atlas = ExtResource("16_mavxm")
+region = Rect2(0, 0, 0, 16)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_dc7rk"]
+load_path = "res://.godot/imported/hex_button.png-9c96fb4fbb7ad0663cc3fad8c4d709ff.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_i0sjw"]
+atlas = SubResource("CompressedTexture2D_dc7rk")
+region = Rect2(0, 32, 0, 16)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_wjr1s"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_1y3hs"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_qqlb8"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1y3hs"]
+atlas = ExtResource("18_lndf6")
+region = Rect2(0, 0, 0, 16)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_qdupk"]
+load_path = "res://.godot/imported/dec_button.png-bed63e27887b7ae7917aed7fb5544f4a.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5pn3b"]
+atlas = SubResource("CompressedTexture2D_qdupk")
+region = Rect2(0, 16, 0, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1k5u2"]
+atlas = ExtResource("19_4f5nc")
+region = Rect2(0, 0, 0, 16)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_m5xnn"]
+load_path = "res://.godot/imported/check_button.png-29b20ffc7506a5fc5e36cf9aaad6cec7.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rxfbh"]
+atlas = SubResource("CompressedTexture2D_m5xnn")
+region = Rect2(0, 32, 0, 16)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_5pn3b"]
+load_path = "res://.godot/imported/check_button.png-29b20ffc7506a5fc5e36cf9aaad6cec7.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tbd4r"]
+atlas = SubResource("CompressedTexture2D_5pn3b")
+region = Rect2(0, 16, 0, 16)
+
+[node name="ColorPicker" type="CanvasLayer" unique_id=1101189681]
+script = ExtResource("1_m72sh")
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=23411789]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 2.0
+offset_top = -6.0
+offset_right = 2.0
+offset_bottom = -6.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 0
+theme_override_constants/margin_left = 192
+theme_override_constants/margin_top = 96
+theme_override_constants/margin_right = 178
+theme_override_constants/margin_bottom = 104
+
+[node name="ColorPickerBG" type="TextureRect" parent="MarginContainer" unique_id=1826538893]
+layout_mode = 2
+texture = ExtResource("1_whswq")
+
+[node name="LayoutMap" type="TextureRect" parent="MarginContainer/ColorPickerBG" unique_id=280988233]
+layout_mode = 0
+offset_right = 270.0
+offset_bottom = 160.0
+texture = ExtResource("2_34uc3")
+
+[node name="SVPickerContainer" type="MarginContainer" parent="MarginContainer/ColorPickerBG/LayoutMap" unique_id=265358307]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 6
+theme_override_constants/margin_top = 6
+theme_override_constants/margin_right = 136
+theme_override_constants/margin_bottom = 26
+script = ExtResource("4_r4a2l")
+
+[node name="SVPickerRect" type="TextureRect" parent="MarginContainer/ColorPickerBG/LayoutMap/SVPickerContainer" unique_id=2567733]
+material = SubResource("ShaderMaterial_kkehj")
+layout_mode = 2
+mouse_filter = 0
+texture = ExtResource("4_7pliq")
+
+[node name="SVIndicatorContainer" type="MarginContainer" parent="MarginContainer/ColorPickerBG/LayoutMap" unique_id=1835568862]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 3
+theme_override_constants/margin_top = 3
+theme_override_constants/margin_right = 133
+theme_override_constants/margin_bottom = 23
+
+[node name="SVIndicator" type="TextureRect" parent="MarginContainer/ColorPickerBG/LayoutMap/SVIndicatorContainer" unique_id=849654926]
+layout_mode = 2
+mouse_filter = 2
+texture = ExtResource("7_8hduw")
+stretch_mode = 2
+
+[node name="HMapContainer" type="MarginContainer" parent="MarginContainer/ColorPickerBG/LayoutMap" unique_id=1080495177]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 140
+theme_override_constants/margin_top = 6
+theme_override_constants/margin_right = 122
+theme_override_constants/margin_bottom = 26
+
+[node name="HPickerRect" type="TextureRect" parent="MarginContainer/ColorPickerBG/LayoutMap/HMapContainer" unique_id=1230747900]
+material = SubResource("ShaderMaterial_elelt")
+layout_mode = 2
+texture = ExtResource("6_m72sh")
+
+[node name="HIndicatorContainer" type="MarginContainer" parent="MarginContainer/ColorPickerBG/LayoutMap" unique_id=1955214628]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 136
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 118
+theme_override_constants/margin_bottom = 24
+
+[node name="HIndicator" type="TextureRect" parent="MarginContainer/ColorPickerBG/LayoutMap/HIndicatorContainer" unique_id=2058972789]
+layout_mode = 2
+mouse_filter = 2
+texture = ExtResource("10_kkehj")
+stretch_mode = 2
+
+[node name="RightSideButtons" type="MarginContainer" parent="MarginContainer/ColorPickerBG/LayoutMap" unique_id=768356277]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 161
+theme_override_constants/margin_top = 6
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 26
+
+[node name="ButtonsAlign" type="VBoxContainer" parent="MarginContainer/ColorPickerBG/LayoutMap/RightSideButtons" unique_id=799800799]
+layout_mode = 2
+
+[node name="HSelector" type="HBoxContainer" parent="MarginContainer/ColorPickerBG/LayoutMap/RightSideButtons/ButtonsAlign" unique_id=187499635]
+layout_mode = 2
+script = ExtResource("8_pha7f")
+bounds = Vector2i(0, 359)
+
+[node name="Plus" type="TextureButton" parent="MarginContainer/ColorPickerBG/LayoutMap/RightSideButtons/ButtonsAlign/HSelector" unique_id=2018578627]
+layout_mode = 2
+texture_normal = SubResource("AtlasTexture_hf5e4")
+texture_pressed = SubResource("AtlasTexture_1h3a0")
+texture_focused = SubResource("AtlasTexture_4et0h")
+
+[node name="TextButtonBG" type="TextureButton" parent="MarginContainer/ColorPickerBG/LayoutMap/RightSideButtons/ButtonsAlign/HSelector" unique_id=899879840]
+layout_mode = 2
+toggle_mode = true
+texture_normal = SubResource("AtlasTexture_kkehj")
+texture_pressed = SubResource("AtlasTexture_dc7rk")
+texture_focused = SubResource("AtlasTexture_lndf6")
+
+[node name="Text" type="LineEdit" parent="MarginContainer/ColorPickerBG/LayoutMap/RightSideButtons/ButtonsAlign/HSelector/TextButtonBG" unique_id=1341244405]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -64.0
+offset_top = 1.0
+offset_bottom = 14.0
+grow_horizontal = 0
+mouse_filter = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("11_r4a2l")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_4f5nc")
+theme_override_styles/read_only = SubResource("StyleBoxEmpty_qdupk")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_i0sjw")
+text = "0"
+alignment = 1
+context_menu_enabled = false
+emoji_menu_enabled = false
+middle_mouse_paste_enabled = false
+virtual_keyboard_type = 2
+
+[node name="Minus" type="TextureButton" parent="MarginContainer/ColorPickerBG/LayoutMap/RightSideButtons/ButtonsAlign/HSelector" unique_id=615853128]
+layout_mode = 2
+texture_normal = SubResource("AtlasTexture_wjr1s")
+texture_pressed = SubResource("AtlasTexture_qqlb8")
+texture_focused = SubResource("AtlasTexture_m5xnn")
+
+[node name="SSelector" type="HBoxContainer" parent="MarginContainer/ColorPickerBG/LayoutMap/RightSideButtons/ButtonsAlign" unique_id=1252837468]
+layout_mode = 2
+script = ExtResource("8_pha7f")
+
+[node name="Plus" type="TextureButton" parent="MarginContainer/ColorPickerBG/LayoutMap/RightSideButtons/ButtonsAlign/SSelector" unique_id=1204606594]
+layout_mode = 2
+texture_normal = SubResource("AtlasTexture_hf5e4")
+texture_pressed = SubResource("AtlasTexture_1h3a0")
+texture_focused = SubResource("AtlasTexture_4et0h")
+
+[node name="TextButtonBG" type="TextureButton" parent="MarginContainer/ColorPickerBG/LayoutMap/RightSideButtons/ButtonsAlign/SSelector" unique_id=537302811]
+layout_mode = 2
+toggle_mode = true
+texture_normal = SubResource("AtlasTexture_kkehj")
+texture_pressed = SubResource("AtlasTexture_dc7rk")
+texture_focused = SubResource("AtlasTexture_lndf6")
+
+[node name="Text" type="LineEdit" parent="MarginContainer/ColorPickerBG/LayoutMap/RightSideButtons/ButtonsAlign/SSelector/TextButtonBG" unique_id=1050443407]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -64.0
+offset_top = 1.0
+offset_bottom = 14.0
+grow_horizontal = 0
+mouse_filter = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("11_r4a2l")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_4f5nc")
+theme_override_styles/read_only = SubResource("StyleBoxEmpty_qdupk")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_i0sjw")
+text = "0"
+alignment = 1
+context_menu_enabled = false
+emoji_menu_enabled = false
+middle_mouse_paste_enabled = false
+virtual_keyboard_type = 2
+
+[node name="Minus" type="TextureButton" parent="MarginContainer/ColorPickerBG/LayoutMap/RightSideButtons/ButtonsAlign/SSelector" unique_id=408896346]
+layout_mode = 2
+texture_normal = SubResource("AtlasTexture_wjr1s")
+texture_pressed = SubResource("AtlasTexture_qqlb8")
+texture_focused = SubResource("AtlasTexture_m5xnn")
+
+[node name="VSelector" type="HBoxContainer" parent="MarginContainer/ColorPickerBG/LayoutMap/RightSideButtons/ButtonsAlign" unique_id=1232305695]
+layout_mode = 2
+script = ExtResource("8_pha7f")
+
+[node name="Plus" type="TextureButton" parent="MarginContainer/ColorPickerBG/LayoutMap/RightSideButtons/ButtonsAlign/VSelector" unique_id=1054351705]
+layout_mode = 2
+texture_normal = SubResource("AtlasTexture_hf5e4")
+texture_pressed = SubResource("AtlasTexture_1h3a0")
+texture_focused = SubResource("AtlasTexture_4et0h")
+
+[node name="TextButtonBG" type="TextureButton" parent="MarginContainer/ColorPickerBG/LayoutMap/RightSideButtons/ButtonsAlign/VSelector" unique_id=147691316]
+layout_mode = 2
+toggle_mode = true
+texture_normal = SubResource("AtlasTexture_kkehj")
+texture_pressed = SubResource("AtlasTexture_dc7rk")
+texture_focused = SubResource("AtlasTexture_lndf6")
+
+[node name="Text" type="LineEdit" parent="MarginContainer/ColorPickerBG/LayoutMap/RightSideButtons/ButtonsAlign/VSelector/TextButtonBG" unique_id=703483735]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -64.0
+offset_top = 1.0
+offset_bottom = 14.0
+grow_horizontal = 0
+mouse_filter = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("11_r4a2l")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_4f5nc")
+theme_override_styles/read_only = SubResource("StyleBoxEmpty_qdupk")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_i0sjw")
+text = "0"
+alignment = 1
+context_menu_enabled = false
+emoji_menu_enabled = false
+middle_mouse_paste_enabled = false
+virtual_keyboard_type = 2
+
+[node name="Minus" type="TextureButton" parent="MarginContainer/ColorPickerBG/LayoutMap/RightSideButtons/ButtonsAlign/VSelector" unique_id=1695850795]
+layout_mode = 2
+texture_normal = SubResource("AtlasTexture_wjr1s")
+texture_pressed = SubResource("AtlasTexture_qqlb8")
+texture_focused = SubResource("AtlasTexture_m5xnn")
+
+[node name="DisplayAlignment" type="MarginContainer" parent="MarginContainer/ColorPickerBG/LayoutMap/RightSideButtons/ButtonsAlign" unique_id=58853270]
+custom_minimum_size = Vector2(0, 8)
+layout_mode = 2
+
+[node name="RSelector" type="HBoxContainer" parent="MarginContainer/ColorPickerBG/LayoutMap/RightSideButtons/ButtonsAlign" unique_id=1366888116]
+layout_mode = 2
+script = ExtResource("8_pha7f")
+propogation_type = 1
+
+[node name="Plus" type="TextureButton" parent="MarginContainer/ColorPickerBG/LayoutMap/RightSideButtons/ButtonsAlign/RSelector" unique_id=891299009]
+layout_mode = 2
+texture_normal = SubResource("AtlasTexture_hf5e4")
+texture_pressed = SubResource("AtlasTexture_1h3a0")
+texture_focused = SubResource("AtlasTexture_4et0h")
+
+[node name="TextButtonBG" type="TextureButton" parent="MarginContainer/ColorPickerBG/LayoutMap/RightSideButtons/ButtonsAlign/RSelector" unique_id=41883809]
+layout_mode = 2
+toggle_mode = true
+texture_normal = SubResource("AtlasTexture_kkehj")
+texture_pressed = SubResource("AtlasTexture_dc7rk")
+texture_focused = SubResource("AtlasTexture_lndf6")
+
+[node name="Text" type="LineEdit" parent="MarginContainer/ColorPickerBG/LayoutMap/RightSideButtons/ButtonsAlign/RSelector/TextButtonBG" unique_id=1067104868]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -64.0
+offset_top = 1.0
+offset_bottom = 14.0
+grow_horizontal = 0
+mouse_filter = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("11_r4a2l")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_4f5nc")
+theme_override_styles/read_only = SubResource("StyleBoxEmpty_qdupk")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_i0sjw")
+text = "0"
+alignment = 1
+context_menu_enabled = false
+emoji_menu_enabled = false
+middle_mouse_paste_enabled = false
+virtual_keyboard_type = 2
+
+[node name="Minus" type="TextureButton" parent="MarginContainer/ColorPickerBG/LayoutMap/RightSideButtons/ButtonsAlign/RSelector" unique_id=650765089]
+layout_mode = 2
+texture_normal = SubResource("AtlasTexture_wjr1s")
+texture_pressed = SubResource("AtlasTexture_qqlb8")
+texture_focused = SubResource("AtlasTexture_m5xnn")
+
+[node name="GSelector" type="HBoxContainer" parent="MarginContainer/ColorPickerBG/LayoutMap/RightSideButtons/ButtonsAlign" unique_id=1936382600]
+layout_mode = 2
+script = ExtResource("8_pha7f")
+propogation_type = 1
+
+[node name="Plus" type="TextureButton" parent="MarginContainer/ColorPickerBG/LayoutMap/RightSideButtons/ButtonsAlign/GSelector" unique_id=2057066117]
+layout_mode = 2
+texture_normal = SubResource("AtlasTexture_hf5e4")
+texture_pressed = SubResource("AtlasTexture_1h3a0")
+texture_focused = SubResource("AtlasTexture_4et0h")
+
+[node name="TextButtonBG" type="TextureButton" parent="MarginContainer/ColorPickerBG/LayoutMap/RightSideButtons/ButtonsAlign/GSelector" unique_id=1565343879]
+layout_mode = 2
+toggle_mode = true
+texture_normal = SubResource("AtlasTexture_kkehj")
+texture_pressed = SubResource("AtlasTexture_dc7rk")
+texture_focused = SubResource("AtlasTexture_lndf6")
+
+[node name="Text" type="LineEdit" parent="MarginContainer/ColorPickerBG/LayoutMap/RightSideButtons/ButtonsAlign/GSelector/TextButtonBG" unique_id=758104896]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -64.0
+offset_top = 1.0
+offset_bottom = 14.0
+grow_horizontal = 0
+mouse_filter = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("11_r4a2l")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_4f5nc")
+theme_override_styles/read_only = SubResource("StyleBoxEmpty_qdupk")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_i0sjw")
+text = "0"
+alignment = 1
+context_menu_enabled = false
+emoji_menu_enabled = false
+middle_mouse_paste_enabled = false
+virtual_keyboard_type = 2
+
+[node name="Minus" type="TextureButton" parent="MarginContainer/ColorPickerBG/LayoutMap/RightSideButtons/ButtonsAlign/GSelector" unique_id=1519394532]
+layout_mode = 2
+texture_normal = SubResource("AtlasTexture_wjr1s")
+texture_pressed = SubResource("AtlasTexture_qqlb8")
+texture_focused = SubResource("AtlasTexture_m5xnn")
+
+[node name="BSelector" type="HBoxContainer" parent="MarginContainer/ColorPickerBG/LayoutMap/RightSideButtons/ButtonsAlign" unique_id=613944330]
+layout_mode = 2
+script = ExtResource("8_pha7f")
+propogation_type = 1
+
+[node name="Plus" type="TextureButton" parent="MarginContainer/ColorPickerBG/LayoutMap/RightSideButtons/ButtonsAlign/BSelector" unique_id=310375991]
+layout_mode = 2
+texture_normal = SubResource("AtlasTexture_hf5e4")
+texture_pressed = SubResource("AtlasTexture_1h3a0")
+texture_focused = SubResource("AtlasTexture_4et0h")
+
+[node name="TextButtonBG" type="TextureButton" parent="MarginContainer/ColorPickerBG/LayoutMap/RightSideButtons/ButtonsAlign/BSelector" unique_id=430933865]
+layout_mode = 2
+toggle_mode = true
+texture_normal = SubResource("AtlasTexture_kkehj")
+texture_pressed = SubResource("AtlasTexture_dc7rk")
+texture_focused = SubResource("AtlasTexture_lndf6")
+
+[node name="Text" type="LineEdit" parent="MarginContainer/ColorPickerBG/LayoutMap/RightSideButtons/ButtonsAlign/BSelector/TextButtonBG" unique_id=636403250]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -64.0
+offset_top = 1.0
+offset_bottom = 14.0
+grow_horizontal = 0
+mouse_filter = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("11_r4a2l")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_4f5nc")
+theme_override_styles/read_only = SubResource("StyleBoxEmpty_qdupk")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_i0sjw")
+text = "0"
+alignment = 1
+context_menu_enabled = false
+emoji_menu_enabled = false
+middle_mouse_paste_enabled = false
+virtual_keyboard_type = 2
+
+[node name="Minus" type="TextureButton" parent="MarginContainer/ColorPickerBG/LayoutMap/RightSideButtons/ButtonsAlign/BSelector" unique_id=527693410]
+layout_mode = 2
+texture_normal = SubResource("AtlasTexture_wjr1s")
+texture_pressed = SubResource("AtlasTexture_qqlb8")
+texture_focused = SubResource("AtlasTexture_m5xnn")
+
+[node name="BottomButtons" type="MarginContainer" parent="MarginContainer/ColorPickerBG/LayoutMap" unique_id=1499784804]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 139
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/ColorPickerBG/LayoutMap/BottomButtons" unique_id=1928615917]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="DropperButton" type="TextureButton" parent="MarginContainer/ColorPickerBG/LayoutMap/BottomButtons/HBoxContainer" unique_id=12774770]
+layout_mode = 2
+texture_normal = SubResource("AtlasTexture_mavxm")
+texture_pressed = SubResource("AtlasTexture_hglfs")
+texture_focused = SubResource("AtlasTexture_4f5nc")
+script = ExtResource("15_kkehj")
+
+[node name="BoxContainer" type="BoxContainer" parent="MarginContainer/ColorPickerBG/LayoutMap/BottomButtons/HBoxContainer" unique_id=751787611]
+custom_minimum_size = Vector2(18, 0)
+layout_mode = 2
+mouse_filter = 2
+
+[node name="HexButton" type="TextureButton" parent="MarginContainer/ColorPickerBG/LayoutMap/BottomButtons/HBoxContainer" unique_id=1724714288]
+layout_mode = 2
+focus_mode = 0
+mouse_filter = 1
+toggle_mode = true
+texture_normal = SubResource("AtlasTexture_qdupk")
+texture_pressed = SubResource("AtlasTexture_i0sjw")
+script = ExtResource("17_dc7rk")
+
+[node name="HexText" type="LineEdit" parent="MarginContainer/ColorPickerBG/LayoutMap/BottomButtons/HBoxContainer/HexButton" unique_id=340463533]
+layout_mode = 0
+offset_right = 88.0
+offset_bottom = 16.0
+mouse_filter = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("11_r4a2l")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_wjr1s")
+theme_override_styles/read_only = SubResource("StyleBoxEmpty_1y3hs")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_qqlb8")
+text = "#ffffff"
+alignment = 1
+context_menu_enabled = false
+emoji_menu_enabled = false
+select_all_on_focus = true
+
+[node name="BoxContainer2" type="BoxContainer" parent="MarginContainer/ColorPickerBG/LayoutMap/BottomButtons/HBoxContainer" unique_id=4604500]
+custom_minimum_size = Vector2(18, 0)
+layout_mode = 2
+
+[node name="DecButton" type="TextureButton" parent="MarginContainer/ColorPickerBG/LayoutMap/BottomButtons/HBoxContainer" unique_id=336899312]
+layout_mode = 2
+toggle_mode = true
+texture_normal = SubResource("AtlasTexture_1y3hs")
+texture_pressed = SubResource("AtlasTexture_5pn3b")
+script = ExtResource("19_qdupk")
+
+[node name="DecText" type="LineEdit" parent="MarginContainer/ColorPickerBG/LayoutMap/BottomButtons/HBoxContainer/DecButton" unique_id=1711236564]
+layout_mode = 0
+offset_right = 84.0
+offset_bottom = 16.0
+mouse_filter = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("11_r4a2l")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_wjr1s")
+theme_override_styles/read_only = SubResource("StyleBoxEmpty_1y3hs")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_qqlb8")
+text = "#ffffff"
+alignment = 1
+context_menu_enabled = false
+emoji_menu_enabled = false
+select_all_on_focus = true
+
+[node name="CheckButton" type="TextureButton" parent="MarginContainer/ColorPickerBG/LayoutMap/BottomButtons/HBoxContainer" unique_id=691765707]
+layout_mode = 2
+texture_normal = SubResource("AtlasTexture_1k5u2")
+texture_pressed = SubResource("AtlasTexture_rxfbh")
+texture_focused = SubResource("AtlasTexture_tbd4r")
+script = ExtResource("20_4f5nc")
+
+[connection signal="gui_input" from="MarginContainer/ColorPickerBG/LayoutMap/SVPickerContainer/SVPickerRect" to="MarginContainer/ColorPickerBG/LayoutMap/SVPickerContainer" method="_on_sv_picker_rect_gui_input"]
+[connection signal="gui_input" from="MarginContainer/ColorPickerBG/LayoutMap/HMapContainer/HPickerRect" to="MarginContainer/ColorPickerBG/LayoutMap/SVPickerContainer" method="_on_h_picker_rect_gui_input"]
+[connection signal="mouse_entered" from="MarginContainer/ColorPickerBG/LayoutMap/RightSideButtons/ButtonsAlign/HSelector/Plus" to="MarginContainer/ColorPickerBG/LayoutMap/RightSideButtons/ButtonsAlign/HSelector" method="_on_plus_mouse_entered"]
+[connection signal="mouse_exited" from="MarginContainer/ColorPickerBG/LayoutMap/RightSideButtons/ButtonsAlign/HSelector/Plus" to="MarginContainer/ColorPickerBG/LayoutMap/RightSideButtons/ButtonsAlign/HSelector" method="_on_plus_mouse_exited"]
+[connection signal="pressed" from="MarginContainer/ColorPickerBG/LayoutMap/RightSideButtons/ButtonsAlign/HSelector/Plus" to="MarginContainer/ColorPickerBG/LayoutMap/RightSideButtons/ButtonsAlign/HSelector" method="_on_plus_pressed"]
+[connection signal="toggled" from="MarginContainer/ColorPickerBG/LayoutMap/RightSideButtons/ButtonsAlign/HSelector/TextButtonBG" to="MarginContainer/ColorPickerBG/LayoutMap/RightSideButtons/ButtonsAlign/HSelector" method="_on_text_button_bg_toggled"]
+[connection signal="focus_exited" from="MarginContainer/ColorPickerBG/LayoutMap/RightSideButtons/ButtonsAlign/HSelector/TextButtonBG/Text" to="MarginContainer/ColorPickerBG/LayoutMap/RightSideButtons/ButtonsAlign/HSelector" method="_on_text_focus_exited"]
+[connection signal="text_submitted" from="MarginContainer/ColorPickerBG/LayoutMap/RightSideButtons/ButtonsAlign/HSelector/TextButtonBG/Text" to="MarginContainer/ColorPickerBG/LayoutMap/RightSideButtons/ButtonsAlign/HSelector" method="_on_text_text_submitted"]
+[connection signal="mouse_entered" from="MarginContainer/ColorPickerBG/LayoutMap/RightSideButtons/ButtonsAlign/HSelector/Minus" to="MarginContainer/ColorPickerBG/LayoutMap/RightSideButtons/ButtonsAlign/HSelector" method="_on_minus_mouse_entered"]
+[connection signal="mouse_exited" from="MarginContainer/ColorPickerBG/LayoutMap/RightSideButtons/ButtonsAlign/HSelector/Minus" to="MarginContainer/ColorPickerBG/LayoutMap/RightSideButtons/ButtonsAlign/HSelector" method="_on_minus_mouse_exited"]
+[connection signal="pressed" from="MarginContainer/ColorPickerBG/LayoutMap/RightSideButtons/ButtonsAlign/HSelector/Minus" to="MarginContainer/ColorPickerBG/LayoutMap/RightSideButtons/ButtonsAlign/HSelector" method="_on_minus_pressed"]
+[connection signal="mouse_entered" from="MarginContainer/ColorPickerBG/LayoutMap/RightSideButtons/ButtonsAlign/SSelector/Plus" to="MarginContainer/ColorPickerBG/LayoutMap/RightSideButtons/ButtonsAlign/SSelector" method="_on_plus_mouse_entered"]
+[connection signal="mouse_exited" from="MarginContainer/ColorPickerBG/LayoutMap/RightSideButtons/ButtonsAlign/SSelector/Plus" to="MarginContainer/ColorPickerBG/LayoutMap/RightSideButtons/ButtonsAlign/SSelector" method="_on_plus_mouse_exited"]
+[connection signal="pressed" from="MarginContainer/ColorPickerBG/LayoutMap/RightSideButtons/ButtonsAlign/SSelector/Plus" to="MarginContainer/ColorPickerBG/LayoutMap/RightSideButtons/ButtonsAlign/SSelector" method="_on_plus_pressed"]
+[connection signal="toggled" from="MarginContainer/ColorPickerBG/LayoutMap/RightSideButtons/ButtonsAlign/SSelector/TextButtonBG" to="MarginContainer/ColorPickerBG/LayoutMap/RightSideButtons/ButtonsAlign/SSelector" method="_on_text_button_bg_toggled"]
+[connection signal="focus_exited" from="MarginContainer/ColorPickerBG/LayoutMap/RightSideButtons/ButtonsAlign/SSelector/TextButtonBG/Text" to="MarginContainer/ColorPickerBG/LayoutMap/RightSideButtons/ButtonsAlign/SSelector" method="_on_text_focus_exited"]
+[connection signal="text_submitted" from="MarginContainer/ColorPickerBG/LayoutMap/RightSideButtons/ButtonsAlign/SSelector/TextButtonBG/Text" to="MarginContainer/ColorPickerBG/LayoutMap/RightSideButtons/ButtonsAlign/SSelector" method="_on_text_text_submitted"]
+[connection signal="mouse_entered" from="MarginContainer/ColorPickerBG/LayoutMap/RightSideButtons/ButtonsAlign/SSelector/Minus" to="MarginContainer/ColorPickerBG/LayoutMap/RightSideButtons/ButtonsAlign/SSelector" method="_on_minus_mouse_entered"]
+[connection signal="mouse_exited" from="MarginContainer/ColorPickerBG/LayoutMap/RightSideButtons/ButtonsAlign/SSelector/Minus" to="MarginContainer/ColorPickerBG/LayoutMap/RightSideButtons/ButtonsAlign/SSelector" method="_on_minus_mouse_exited"]
+[connection signal="pressed" from="MarginContainer/ColorPickerBG/LayoutMap/RightSideButtons/ButtonsAlign/SSelector/Minus" to="MarginContainer/ColorPickerBG/LayoutMap/RightSideButtons/ButtonsAlign/SSelector" method="_on_minus_pressed"]
+[connection signal="mouse_entered" from="MarginContainer/ColorPickerBG/LayoutMap/RightSideButtons/ButtonsAlign/VSelector/Plus" to="MarginContainer/ColorPickerBG/LayoutMap/RightSideButtons/ButtonsAlign/VSelector" method="_on_plus_mouse_entered"]
+[connection signal="mouse_exited" from="MarginContainer/ColorPickerBG/LayoutMap/RightSideButtons/ButtonsAlign/VSelector/Plus" to="MarginContainer/ColorPickerBG/LayoutMap/RightSideButtons/ButtonsAlign/VSelector" method="_on_plus_mouse_exited"]
+[connection signal="pressed" from="MarginContainer/ColorPickerBG/LayoutMap/RightSideButtons/ButtonsAlign/VSelector/Plus" to="MarginContainer/ColorPickerBG/LayoutMap/RightSideButtons/ButtonsAlign/VSelector" method="_on_plus_pressed"]
+[connection signal="toggled" from="MarginContainer/ColorPickerBG/LayoutMap/RightSideButtons/ButtonsAlign/VSelector/TextButtonBG" to="MarginContainer/ColorPickerBG/LayoutMap/RightSideButtons/ButtonsAlign/VSelector" method="_on_text_button_bg_toggled"]
+[connection signal="focus_exited" from="MarginContainer/ColorPickerBG/LayoutMap/RightSideButtons/ButtonsAlign/VSelector/TextButtonBG/Text" to="MarginContainer/ColorPickerBG/LayoutMap/RightSideButtons/ButtonsAlign/VSelector" method="_on_text_focus_exited"]
+[connection signal="text_submitted" from="MarginContainer/ColorPickerBG/LayoutMap/RightSideButtons/ButtonsAlign/VSelector/TextButtonBG/Text" to="MarginContainer/ColorPickerBG/LayoutMap/RightSideButtons/ButtonsAlign/VSelector" method="_on_text_text_submitted"]
+[connection signal="mouse_entered" from="MarginContainer/ColorPickerBG/LayoutMap/RightSideButtons/ButtonsAlign/VSelector/Minus" to="MarginContainer/ColorPickerBG/LayoutMap/RightSideButtons/ButtonsAlign/VSelector" method="_on_minus_mouse_entered"]
+[connection signal="mouse_exited" from="MarginContainer/ColorPickerBG/LayoutMap/RightSideButtons/ButtonsAlign/VSelector/Minus" to="MarginContainer/ColorPickerBG/LayoutMap/RightSideButtons/ButtonsAlign/VSelector" method="_on_minus_mouse_exited"]
+[connection signal="pressed" from="MarginContainer/ColorPickerBG/LayoutMap/RightSideButtons/ButtonsAlign/VSelector/Minus" to="MarginContainer/ColorPickerBG/LayoutMap/RightSideButtons/ButtonsAlign/VSelector" method="_on_minus_pressed"]
+[connection signal="mouse_entered" from="MarginContainer/ColorPickerBG/LayoutMap/RightSideButtons/ButtonsAlign/RSelector/Plus" to="MarginContainer/ColorPickerBG/LayoutMap/RightSideButtons/ButtonsAlign/RSelector" method="_on_plus_mouse_entered"]
+[connection signal="mouse_exited" from="MarginContainer/ColorPickerBG/LayoutMap/RightSideButtons/ButtonsAlign/RSelector/Plus" to="MarginContainer/ColorPickerBG/LayoutMap/RightSideButtons/ButtonsAlign/RSelector" method="_on_plus_mouse_exited"]
+[connection signal="pressed" from="MarginContainer/ColorPickerBG/LayoutMap/RightSideButtons/ButtonsAlign/RSelector/Plus" to="MarginContainer/ColorPickerBG/LayoutMap/RightSideButtons/ButtonsAlign/RSelector" method="_on_plus_pressed"]
+[connection signal="toggled" from="MarginContainer/ColorPickerBG/LayoutMap/RightSideButtons/ButtonsAlign/RSelector/TextButtonBG" to="MarginContainer/ColorPickerBG/LayoutMap/RightSideButtons/ButtonsAlign/RSelector" method="_on_text_button_bg_toggled"]
+[connection signal="focus_exited" from="MarginContainer/ColorPickerBG/LayoutMap/RightSideButtons/ButtonsAlign/RSelector/TextButtonBG/Text" to="MarginContainer/ColorPickerBG/LayoutMap/RightSideButtons/ButtonsAlign/RSelector" method="_on_text_focus_exited"]
+[connection signal="text_submitted" from="MarginContainer/ColorPickerBG/LayoutMap/RightSideButtons/ButtonsAlign/RSelector/TextButtonBG/Text" to="MarginContainer/ColorPickerBG/LayoutMap/RightSideButtons/ButtonsAlign/RSelector" method="_on_text_text_submitted"]
+[connection signal="mouse_entered" from="MarginContainer/ColorPickerBG/LayoutMap/RightSideButtons/ButtonsAlign/RSelector/Minus" to="MarginContainer/ColorPickerBG/LayoutMap/RightSideButtons/ButtonsAlign/RSelector" method="_on_minus_mouse_entered"]
+[connection signal="mouse_exited" from="MarginContainer/ColorPickerBG/LayoutMap/RightSideButtons/ButtonsAlign/RSelector/Minus" to="MarginContainer/ColorPickerBG/LayoutMap/RightSideButtons/ButtonsAlign/RSelector" method="_on_minus_mouse_exited"]
+[connection signal="pressed" from="MarginContainer/ColorPickerBG/LayoutMap/RightSideButtons/ButtonsAlign/RSelector/Minus" to="MarginContainer/ColorPickerBG/LayoutMap/RightSideButtons/ButtonsAlign/RSelector" method="_on_minus_pressed"]
+[connection signal="mouse_entered" from="MarginContainer/ColorPickerBG/LayoutMap/RightSideButtons/ButtonsAlign/GSelector/Plus" to="MarginContainer/ColorPickerBG/LayoutMap/RightSideButtons/ButtonsAlign/GSelector" method="_on_plus_mouse_entered"]
+[connection signal="mouse_exited" from="MarginContainer/ColorPickerBG/LayoutMap/RightSideButtons/ButtonsAlign/GSelector/Plus" to="MarginContainer/ColorPickerBG/LayoutMap/RightSideButtons/ButtonsAlign/GSelector" method="_on_plus_mouse_exited"]
+[connection signal="pressed" from="MarginContainer/ColorPickerBG/LayoutMap/RightSideButtons/ButtonsAlign/GSelector/Plus" to="MarginContainer/ColorPickerBG/LayoutMap/RightSideButtons/ButtonsAlign/GSelector" method="_on_plus_pressed"]
+[connection signal="toggled" from="MarginContainer/ColorPickerBG/LayoutMap/RightSideButtons/ButtonsAlign/GSelector/TextButtonBG" to="MarginContainer/ColorPickerBG/LayoutMap/RightSideButtons/ButtonsAlign/GSelector" method="_on_text_button_bg_toggled"]
+[connection signal="focus_exited" from="MarginContainer/ColorPickerBG/LayoutMap/RightSideButtons/ButtonsAlign/GSelector/TextButtonBG/Text" to="MarginContainer/ColorPickerBG/LayoutMap/RightSideButtons/ButtonsAlign/GSelector" method="_on_text_focus_exited"]
+[connection signal="text_submitted" from="MarginContainer/ColorPickerBG/LayoutMap/RightSideButtons/ButtonsAlign/GSelector/TextButtonBG/Text" to="MarginContainer/ColorPickerBG/LayoutMap/RightSideButtons/ButtonsAlign/GSelector" method="_on_text_text_submitted"]
+[connection signal="mouse_entered" from="MarginContainer/ColorPickerBG/LayoutMap/RightSideButtons/ButtonsAlign/GSelector/Minus" to="MarginContainer/ColorPickerBG/LayoutMap/RightSideButtons/ButtonsAlign/GSelector" method="_on_minus_mouse_entered"]
+[connection signal="mouse_exited" from="MarginContainer/ColorPickerBG/LayoutMap/RightSideButtons/ButtonsAlign/GSelector/Minus" to="MarginContainer/ColorPickerBG/LayoutMap/RightSideButtons/ButtonsAlign/GSelector" method="_on_minus_mouse_exited"]
+[connection signal="pressed" from="MarginContainer/ColorPickerBG/LayoutMap/RightSideButtons/ButtonsAlign/GSelector/Minus" to="MarginContainer/ColorPickerBG/LayoutMap/RightSideButtons/ButtonsAlign/GSelector" method="_on_minus_pressed"]
+[connection signal="mouse_entered" from="MarginContainer/ColorPickerBG/LayoutMap/RightSideButtons/ButtonsAlign/BSelector/Plus" to="MarginContainer/ColorPickerBG/LayoutMap/RightSideButtons/ButtonsAlign/BSelector" method="_on_plus_mouse_entered"]
+[connection signal="mouse_exited" from="MarginContainer/ColorPickerBG/LayoutMap/RightSideButtons/ButtonsAlign/BSelector/Plus" to="MarginContainer/ColorPickerBG/LayoutMap/RightSideButtons/ButtonsAlign/BSelector" method="_on_plus_mouse_exited"]
+[connection signal="pressed" from="MarginContainer/ColorPickerBG/LayoutMap/RightSideButtons/ButtonsAlign/BSelector/Plus" to="MarginContainer/ColorPickerBG/LayoutMap/RightSideButtons/ButtonsAlign/BSelector" method="_on_plus_pressed"]
+[connection signal="toggled" from="MarginContainer/ColorPickerBG/LayoutMap/RightSideButtons/ButtonsAlign/BSelector/TextButtonBG" to="MarginContainer/ColorPickerBG/LayoutMap/RightSideButtons/ButtonsAlign/BSelector" method="_on_text_button_bg_toggled"]
+[connection signal="focus_exited" from="MarginContainer/ColorPickerBG/LayoutMap/RightSideButtons/ButtonsAlign/BSelector/TextButtonBG/Text" to="MarginContainer/ColorPickerBG/LayoutMap/RightSideButtons/ButtonsAlign/BSelector" method="_on_text_focus_exited"]
+[connection signal="text_submitted" from="MarginContainer/ColorPickerBG/LayoutMap/RightSideButtons/ButtonsAlign/BSelector/TextButtonBG/Text" to="MarginContainer/ColorPickerBG/LayoutMap/RightSideButtons/ButtonsAlign/BSelector" method="_on_text_text_submitted"]
+[connection signal="mouse_entered" from="MarginContainer/ColorPickerBG/LayoutMap/RightSideButtons/ButtonsAlign/BSelector/Minus" to="MarginContainer/ColorPickerBG/LayoutMap/RightSideButtons/ButtonsAlign/BSelector" method="_on_minus_mouse_entered"]
+[connection signal="mouse_exited" from="MarginContainer/ColorPickerBG/LayoutMap/RightSideButtons/ButtonsAlign/BSelector/Minus" to="MarginContainer/ColorPickerBG/LayoutMap/RightSideButtons/ButtonsAlign/BSelector" method="_on_minus_mouse_exited"]
+[connection signal="pressed" from="MarginContainer/ColorPickerBG/LayoutMap/RightSideButtons/ButtonsAlign/BSelector/Minus" to="MarginContainer/ColorPickerBG/LayoutMap/RightSideButtons/ButtonsAlign/BSelector" method="_on_minus_pressed"]
+[connection signal="mouse_entered" from="MarginContainer/ColorPickerBG/LayoutMap/BottomButtons/HBoxContainer/DropperButton" to="MarginContainer/ColorPickerBG/LayoutMap/BottomButtons/HBoxContainer/DropperButton" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="MarginContainer/ColorPickerBG/LayoutMap/BottomButtons/HBoxContainer/DropperButton" to="MarginContainer/ColorPickerBG/LayoutMap/BottomButtons/HBoxContainer/DropperButton" method="_on_mouse_exited"]
+[connection signal="toggled" from="MarginContainer/ColorPickerBG/LayoutMap/BottomButtons/HBoxContainer/HexButton" to="MarginContainer/ColorPickerBG/LayoutMap/BottomButtons/HBoxContainer/HexButton" method="_on_toggled"]
+[connection signal="focus_exited" from="MarginContainer/ColorPickerBG/LayoutMap/BottomButtons/HBoxContainer/HexButton/HexText" to="MarginContainer/ColorPickerBG/LayoutMap/BottomButtons/HBoxContainer/HexButton" method="_on_hex_text_focus_exited"]
+[connection signal="text_submitted" from="MarginContainer/ColorPickerBG/LayoutMap/BottomButtons/HBoxContainer/HexButton/HexText" to="MarginContainer/ColorPickerBG/LayoutMap/BottomButtons/HBoxContainer/HexButton" method="_on_hex_text_text_submitted"]
+[connection signal="toggled" from="MarginContainer/ColorPickerBG/LayoutMap/BottomButtons/HBoxContainer/DecButton" to="MarginContainer/ColorPickerBG/LayoutMap/BottomButtons/HBoxContainer/DecButton" method="_on_toggled"]
+[connection signal="focus_exited" from="MarginContainer/ColorPickerBG/LayoutMap/BottomButtons/HBoxContainer/DecButton/DecText" to="MarginContainer/ColorPickerBG/LayoutMap/BottomButtons/HBoxContainer/DecButton" method="_on_dec_text_focus_exited"]
+[connection signal="text_submitted" from="MarginContainer/ColorPickerBG/LayoutMap/BottomButtons/HBoxContainer/DecButton/DecText" to="MarginContainer/ColorPickerBG/LayoutMap/BottomButtons/HBoxContainer/DecButton" method="_on_dec_text_text_submitted"]
+[connection signal="mouse_entered" from="MarginContainer/ColorPickerBG/LayoutMap/BottomButtons/HBoxContainer/CheckButton" to="MarginContainer/ColorPickerBG/LayoutMap/BottomButtons/HBoxContainer/CheckButton" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="MarginContainer/ColorPickerBG/LayoutMap/BottomButtons/HBoxContainer/CheckButton" to="MarginContainer/ColorPickerBG/LayoutMap/BottomButtons/HBoxContainer/CheckButton" method="_on_mouse_exited"]
+[connection signal="pressed" from="MarginContainer/ColorPickerBG/LayoutMap/BottomButtons/HBoxContainer/CheckButton" to="MarginContainer/ColorPickerBG/LayoutMap/BottomButtons/HBoxContainer/CheckButton" method="_on_pressed"]

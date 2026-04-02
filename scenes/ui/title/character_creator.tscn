@@ -1,0 +1,1504 @@
+[gd_scene format=3 uid="uid://ffgxxwp41f22"]
+
+[ext_resource type="Script" uid="uid://s48o80k0mmpe" path="res://scripts/ui/title/character_creator.gd" id="1_0crb5"]
+[ext_resource type="Texture2D" uid="uid://b5dyl5e1ciopw" path="res://sprites/ui/title/file_select/file_create_screen.png" id="1_8pase"]
+[ext_resource type="PackedScene" path="res://scenes/entity/master/pony_base.tscn" id="3_34nin"]
+[ext_resource type="FontFile" uid="uid://clcf81yqudpak" path="res://assets/font/m5x7.ttf" id="3_r3hxq"]
+[ext_resource type="Texture2D" uid="uid://vo87kc8xo47" path="res://sprites/ui/title/character_creator/character_creator_buttons.png" id="3_t8xqi"]
+[ext_resource type="Script" uid="uid://djq4hrwywx1j8" path="res://scripts/ui/title/cc_main_ui_controller.gd" id="5_jbhjl"]
+[ext_resource type="Script" uid="uid://cmbeacfmf063m" path="res://scripts/ui/title/color_picker/pony_export_button.gd" id="6_3yy12"]
+[ext_resource type="Script" uid="uid://reppw7lce6ri" path="res://scripts/ui/title/color_picker/pony_import_button.gd" id="6_70lj6"]
+[ext_resource type="Texture2D" uid="uid://crb2pv6u8lnvl" path="res://sprites/ui/title/character_creator/picker_tabs.png" id="6_jbhjl"]
+[ext_resource type="Texture2D" uid="uid://bc86c4ii2fvps" path="res://sprites/ui/title/character_creator/import.png" id="6_yqqgk"]
+[ext_resource type="Texture2D" uid="uid://cxmbb0nau7axe" path="res://sprites/ui/title/character_creator/mainbg.png" id="7_34nin"]
+[ext_resource type="Texture2D" uid="uid://dj04dfeiwn5ls" path="res://sprites/ui/title/character_creator/randomize.png" id="7_70lj6"]
+[ext_resource type="Texture2D" uid="uid://bilffa6q57632" path="res://sprites/ui/title/character_creator/tab_icon/body_icon.png" id="8_6n0ge"]
+[ext_resource type="Texture2D" uid="uid://cdrtvcjcma8ey" path="res://sprites/ui/title/character_creator/checkmark.png" id="8_eyesa"]
+[ext_resource type="Script" uid="uid://sccae3dnygmx" path="res://scripts/ui/title/color_picker/create_button.gd" id="9_aypou"]
+[ext_resource type="Texture2D" uid="uid://duwj4sqd6jle4" path="res://sprites/ui/title/character_creator/tab_icon/head_icon.png" id="9_e2h3m"]
+[ext_resource type="Texture2D" uid="uid://dtiw7wyk1rs26" path="res://sprites/ui/title/character_creator/mono_row_demarkator.png" id="9_w3r4t"]
+[ext_resource type="PackedScene" path="res://scenes/ui/title/color_picker_button.tscn" id="10_73kj5"]
+[ext_resource type="Texture2D" uid="uid://c38p2uo8j35a" path="res://sprites/ui/title/character_creator/tab_icon/mane_icon.png" id="10_e2h3m"]
+[ext_resource type="Texture2D" uid="uid://dxy0j8frtudi3" path="res://sprites/ui/title/character_creator/export.png" id="10_ylawx"]
+[ext_resource type="Texture2D" uid="uid://cbhoy5xp6q43i" path="res://sprites/ui/title/character_creator/tab_icon/tail_icon.png" id="11_48xhy"]
+[ext_resource type="Script" uid="uid://cyb21yjq23act" path="res://scripts/ui/title/color_picker/mane_tab_manager.gd" id="11_ndns6"]
+[ext_resource type="Texture2D" uid="uid://dchixtrlf8iv1" path="res://sprites/ui/title/character_creator/full_area_rect.png" id="12_nt8ke"]
+[ext_resource type="Script" uid="uid://de7t50lcxuat" path="res://scripts/ui/title/color_picker/tail_tab_manager.gd" id="17_edmsy"]
+[ext_resource type="Script" uid="uid://bqsq84x7olxgr" path="res://scripts/ui/title/color_picker/butt_mark_tab_manager.gd" id="18_urhmi"]
+[ext_resource type="Script" uid="uid://r4wf814hxot" path="res://scripts/ui/title/color_picker/body_tab_manager.gd" id="19_eyesa"]
+[ext_resource type="Texture2D" uid="uid://cj1y01r7h7wls" path="res://sprites/ui/title/character_creator/butt_mark_bg.png" id="19_ugrll"]
+[ext_resource type="Texture2D" uid="uid://gkrexlqu5y08" path="res://sprites/ui/title/character_creator/buttmarkgrid.png" id="20_a61om"]
+[ext_resource type="PackedScene" path="res://scenes/ui/title/butt_mark_color_grid_button.tscn" id="20_ugrll"]
+[ext_resource type="PackedScene" path="res://scenes/ui/title/butt_mark_control_button.tscn" id="22_a61om"]
+[ext_resource type="Script" uid="uid://bic4e8divor87" path="res://scripts/ui/title/color_picker/head_tab_manager.gd" id="22_ylawx"]
+[ext_resource type="Texture2D" uid="uid://518rvtj6pldd" path="res://sprites/ui/title/character_creator/butt_mark_control_icons.png" id="23_j165o"]
+[ext_resource type="Texture2D" uid="uid://chr616ho6iw7p" path="res://sprites/ui/title/character_creator/grid_button.png" id="24_2gb1e"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_0crb5"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_t8xqi"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_r3hxq"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_r3hxq"]
+load_path = "res://.godot/imported/character_creator_buttons.png-ce255ce569edb8ab68d257a24e134f86.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sgvix"]
+atlas = SubResource("CompressedTexture2D_r3hxq")
+region = Rect2(0, 0, 139, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_le3id"]
+atlas = ExtResource("3_t8xqi")
+region = Rect2(0, 32, 139, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jbhjl"]
+atlas = ExtResource("3_t8xqi")
+region = Rect2(0, 0, 139, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_34nin"]
+atlas = ExtResource("3_t8xqi")
+region = Rect2(0, 64, 139, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w3r4t"]
+atlas = ExtResource("6_jbhjl")
+region = Rect2(0, 0, 0, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_73kj5"]
+atlas = ExtResource("6_jbhjl")
+region = Rect2(0, 32, 0, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ndns6"]
+atlas = ExtResource("6_jbhjl")
+region = Rect2(0, 64, 0, 32)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_j3lff"]
+load_path = "res://.godot/imported/butt_mark_color_buttons.png-d37b9ccd9f776237bc212c0d6483bf7a.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_aypou"]
+resource_local_to_scene = true
+atlas = SubResource("CompressedTexture2D_j3lff")
+region = Rect2(0, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j6rhv"]
+resource_local_to_scene = true
+atlas = SubResource("CompressedTexture2D_j3lff")
+region = Rect2(0, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_u8yp3"]
+resource_local_to_scene = true
+atlas = SubResource("CompressedTexture2D_j3lff")
+region = Rect2(0, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hk5h0"]
+resource_local_to_scene = true
+atlas = SubResource("CompressedTexture2D_j3lff")
+region = Rect2(0, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ghtwt"]
+resource_local_to_scene = true
+atlas = SubResource("CompressedTexture2D_j3lff")
+region = Rect2(0, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_olvhj"]
+resource_local_to_scene = true
+atlas = SubResource("CompressedTexture2D_j3lff")
+region = Rect2(0, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pk28r"]
+resource_local_to_scene = true
+atlas = SubResource("CompressedTexture2D_j3lff")
+region = Rect2(0, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dw0df"]
+resource_local_to_scene = true
+atlas = SubResource("CompressedTexture2D_j3lff")
+region = Rect2(0, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fgqi0"]
+resource_local_to_scene = true
+atlas = SubResource("CompressedTexture2D_j3lff")
+region = Rect2(0, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w1gre"]
+resource_local_to_scene = true
+atlas = SubResource("CompressedTexture2D_j3lff")
+region = Rect2(0, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e8m35"]
+resource_local_to_scene = true
+atlas = SubResource("CompressedTexture2D_j3lff")
+region = Rect2(0, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1mneu"]
+resource_local_to_scene = true
+atlas = SubResource("CompressedTexture2D_j3lff")
+region = Rect2(0, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_52p8k"]
+resource_local_to_scene = true
+atlas = SubResource("CompressedTexture2D_j3lff")
+region = Rect2(0, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ctnym"]
+resource_local_to_scene = true
+atlas = SubResource("CompressedTexture2D_j3lff")
+region = Rect2(0, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3xqjc"]
+resource_local_to_scene = true
+atlas = SubResource("CompressedTexture2D_j3lff")
+region = Rect2(0, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_y3vdy"]
+resource_local_to_scene = true
+atlas = SubResource("CompressedTexture2D_j3lff")
+region = Rect2(0, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xu4wc"]
+resource_local_to_scene = true
+atlas = SubResource("CompressedTexture2D_j3lff")
+region = Rect2(0, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_oecxi"]
+resource_local_to_scene = true
+atlas = SubResource("CompressedTexture2D_j3lff")
+region = Rect2(0, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f33fv"]
+resource_local_to_scene = true
+atlas = SubResource("CompressedTexture2D_j3lff")
+region = Rect2(0, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_14xjq"]
+resource_local_to_scene = true
+atlas = SubResource("CompressedTexture2D_j3lff")
+region = Rect2(0, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lxu10"]
+resource_local_to_scene = true
+atlas = SubResource("CompressedTexture2D_j3lff")
+region = Rect2(0, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jl1nd"]
+resource_local_to_scene = true
+atlas = SubResource("CompressedTexture2D_j3lff")
+region = Rect2(0, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tj7bx"]
+resource_local_to_scene = true
+atlas = SubResource("CompressedTexture2D_j3lff")
+region = Rect2(0, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vbqis"]
+resource_local_to_scene = true
+atlas = SubResource("CompressedTexture2D_j3lff")
+region = Rect2(0, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2teah"]
+resource_local_to_scene = true
+atlas = SubResource("CompressedTexture2D_j3lff")
+region = Rect2(0, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fhodr"]
+resource_local_to_scene = true
+atlas = SubResource("CompressedTexture2D_j3lff")
+region = Rect2(0, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hmnra"]
+resource_local_to_scene = true
+atlas = SubResource("CompressedTexture2D_j3lff")
+region = Rect2(0, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_iw8lp"]
+resource_local_to_scene = true
+atlas = SubResource("CompressedTexture2D_j3lff")
+region = Rect2(0, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_srivw"]
+resource_local_to_scene = true
+atlas = SubResource("CompressedTexture2D_j3lff")
+region = Rect2(0, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2xxac"]
+resource_local_to_scene = true
+atlas = SubResource("CompressedTexture2D_j3lff")
+region = Rect2(0, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jfve2"]
+resource_local_to_scene = true
+atlas = SubResource("CompressedTexture2D_j3lff")
+region = Rect2(0, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_msryn"]
+resource_local_to_scene = true
+atlas = SubResource("CompressedTexture2D_j3lff")
+region = Rect2(0, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qlu23"]
+resource_local_to_scene = true
+atlas = SubResource("CompressedTexture2D_j3lff")
+region = Rect2(0, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_knwfx"]
+resource_local_to_scene = true
+atlas = SubResource("CompressedTexture2D_j3lff")
+region = Rect2(0, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ihmby"]
+resource_local_to_scene = true
+atlas = SubResource("CompressedTexture2D_j3lff")
+region = Rect2(0, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r0nj3"]
+resource_local_to_scene = true
+atlas = SubResource("CompressedTexture2D_j3lff")
+region = Rect2(0, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_21usg"]
+resource_local_to_scene = true
+atlas = SubResource("CompressedTexture2D_j3lff")
+region = Rect2(0, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kwntt"]
+resource_local_to_scene = true
+atlas = SubResource("CompressedTexture2D_j3lff")
+region = Rect2(0, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2baa0"]
+resource_local_to_scene = true
+atlas = SubResource("CompressedTexture2D_j3lff")
+region = Rect2(0, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_aikix"]
+resource_local_to_scene = true
+atlas = SubResource("CompressedTexture2D_j3lff")
+region = Rect2(0, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ic7f8"]
+resource_local_to_scene = true
+atlas = SubResource("CompressedTexture2D_j3lff")
+region = Rect2(0, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vxjan"]
+resource_local_to_scene = true
+atlas = SubResource("CompressedTexture2D_j3lff")
+region = Rect2(0, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pfqoj"]
+resource_local_to_scene = true
+atlas = SubResource("CompressedTexture2D_j3lff")
+region = Rect2(0, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lb7fd"]
+resource_local_to_scene = true
+atlas = SubResource("CompressedTexture2D_j3lff")
+region = Rect2(0, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ca352"]
+resource_local_to_scene = true
+atlas = SubResource("CompressedTexture2D_j3lff")
+region = Rect2(0, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5y0qm"]
+resource_local_to_scene = true
+atlas = SubResource("CompressedTexture2D_j3lff")
+region = Rect2(0, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nfxyi"]
+resource_local_to_scene = true
+atlas = SubResource("CompressedTexture2D_j3lff")
+region = Rect2(0, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pgxf0"]
+resource_local_to_scene = true
+atlas = SubResource("CompressedTexture2D_j3lff")
+region = Rect2(0, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qkhvp"]
+resource_local_to_scene = true
+atlas = SubResource("CompressedTexture2D_j3lff")
+region = Rect2(0, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vqa4a"]
+atlas = ExtResource("23_j165o")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_ic7f8"]
+load_path = "res://.godot/imported/butt_mark_control_icons.png-2672e69d24af15eb4721de0efe9cb3dd.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_unvh5"]
+atlas = SubResource("CompressedTexture2D_ic7f8")
+region = Rect2(0, 32, 32, 32)
+
+[node name="CharacterCreator" type="CanvasLayer" unique_id=522544429]
+script = ExtResource("1_0crb5")
+
+[node name="BG" type="TextureRect" parent="." unique_id=916405862]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_8pase")
+
+[node name="PonyRenderContainer" type="MarginContainer" parent="." unique_id=835052232]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 41
+theme_override_constants/margin_top = 65
+theme_override_constants/margin_right = 509
+theme_override_constants/margin_bottom = 205
+
+[node name="PonyBase" parent="PonyRenderContainer" unique_id=2035334340 instance=ExtResource("3_34nin")]
+position = Vector2(84, 149)
+
+[node name="NameInputContainer" type="MarginContainer" parent="." unique_id=434378050]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 123
+theme_override_constants/margin_top = 22
+theme_override_constants/margin_right = 39
+theme_override_constants/margin_bottom = 302
+
+[node name="LineEdit" type="LineEdit" parent="NameInputContainer" unique_id=756621510]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_r3hxq")
+theme_override_font_sizes/font_size = 32
+theme_override_styles/normal = SubResource("StyleBoxEmpty_0crb5")
+theme_override_styles/read_only = SubResource("StyleBoxEmpty_t8xqi")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_r3hxq")
+max_length = 32
+context_menu_enabled = false
+emoji_menu_enabled = false
+shortcut_keys_enabled = false
+middle_mouse_paste_enabled = false
+select_all_on_focus = true
+caret_blink = true
+
+[node name="ControlButtons" type="MarginContainer" parent="." unique_id=1001343834]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 22
+theme_override_constants/margin_top = 290
+theme_override_constants/margin_right = 22
+theme_override_constants/margin_bottom = 22
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ControlButtons" unique_id=1159291477]
+layout_mode = 2
+alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ControlButtons/VBoxContainer" unique_id=1403827601]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 8
+alignment = 1
+
+[node name="ImportButton" type="TextureButton" parent="ControlButtons/VBoxContainer/HBoxContainer" unique_id=1132279667 node_paths=PackedStringArray("character_creator")]
+layout_mode = 2
+texture_normal = SubResource("AtlasTexture_sgvix")
+texture_pressed = SubResource("AtlasTexture_le3id")
+texture_hover = SubResource("AtlasTexture_jbhjl")
+texture_focused = SubResource("AtlasTexture_34nin")
+script = ExtResource("6_70lj6")
+character_creator = NodePath("../../../..")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ControlButtons/VBoxContainer/HBoxContainer/ImportButton" unique_id=698266441]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 23.0
+offset_right = -23.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/separation = 4
+alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="ControlButtons/VBoxContainer/HBoxContainer/ImportButton/HBoxContainer" unique_id=479157481]
+layout_mode = 2
+size_flags_vertical = 4
+mouse_filter = 2
+texture = ExtResource("6_yqqgk")
+stretch_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="ControlButtons/VBoxContainer/HBoxContainer/ImportButton/HBoxContainer" unique_id=374578955]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+theme_override_fonts/normal_font = ExtResource("3_r3hxq")
+theme_override_font_sizes/normal_font_size = 24
+text = "Import"
+scroll_active = false
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="RandomizeButton" type="TextureButton" parent="ControlButtons/VBoxContainer/HBoxContainer" unique_id=501995095]
+layout_mode = 2
+texture_normal = SubResource("AtlasTexture_sgvix")
+texture_pressed = SubResource("AtlasTexture_le3id")
+texture_hover = SubResource("AtlasTexture_jbhjl")
+texture_focused = SubResource("AtlasTexture_34nin")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ControlButtons/VBoxContainer/HBoxContainer/RandomizeButton" unique_id=649999583]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 8.0
+offset_right = -8.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/separation = 4
+alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="ControlButtons/VBoxContainer/HBoxContainer/RandomizeButton/HBoxContainer" unique_id=1616769509]
+layout_mode = 2
+size_flags_vertical = 4
+mouse_filter = 2
+texture = ExtResource("7_70lj6")
+stretch_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="ControlButtons/VBoxContainer/HBoxContainer/RandomizeButton/HBoxContainer" unique_id=650782221]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+theme_override_fonts/normal_font = ExtResource("3_r3hxq")
+theme_override_font_sizes/normal_font_size = 24
+text = "Randomize"
+scroll_active = false
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="CreateButton" type="TextureButton" parent="ControlButtons/VBoxContainer/HBoxContainer" unique_id=333301113]
+layout_mode = 2
+texture_normal = SubResource("AtlasTexture_sgvix")
+texture_pressed = SubResource("AtlasTexture_le3id")
+texture_hover = SubResource("AtlasTexture_jbhjl")
+texture_focused = SubResource("AtlasTexture_34nin")
+script = ExtResource("9_aypou")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ControlButtons/VBoxContainer/HBoxContainer/CreateButton" unique_id=27806689]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 8.0
+offset_right = -8.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/separation = 4
+alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="ControlButtons/VBoxContainer/HBoxContainer/CreateButton/HBoxContainer" unique_id=2058394764]
+layout_mode = 2
+size_flags_vertical = 4
+mouse_filter = 2
+texture = ExtResource("8_eyesa")
+stretch_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="ControlButtons/VBoxContainer/HBoxContainer/CreateButton/HBoxContainer" unique_id=1478601613]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+theme_override_fonts/normal_font = ExtResource("3_r3hxq")
+theme_override_font_sizes/normal_font_size = 24
+text = "Start Game"
+scroll_active = false
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ExportButton" type="TextureButton" parent="ControlButtons/VBoxContainer/HBoxContainer" unique_id=690143253 node_paths=PackedStringArray("pony_base", "character_creator")]
+layout_mode = 2
+texture_normal = SubResource("AtlasTexture_sgvix")
+texture_pressed = SubResource("AtlasTexture_le3id")
+texture_hover = SubResource("AtlasTexture_jbhjl")
+texture_focused = SubResource("AtlasTexture_34nin")
+script = ExtResource("6_3yy12")
+pony_base = NodePath("../../../../PonyRenderContainer/PonyBase")
+character_creator = NodePath("../../../..")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ControlButtons/VBoxContainer/HBoxContainer/ExportButton" unique_id=752766817]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 23.0
+offset_right = -23.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/separation = 4
+alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="ControlButtons/VBoxContainer/HBoxContainer/ExportButton/HBoxContainer" unique_id=987689899]
+layout_mode = 2
+size_flags_vertical = 4
+mouse_filter = 2
+texture = ExtResource("10_ylawx")
+stretch_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="ControlButtons/VBoxContainer/HBoxContainer/ExportButton/HBoxContainer" unique_id=191267077]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+theme_override_fonts/normal_font = ExtResource("3_r3hxq")
+theme_override_font_sizes/normal_font_size = 24
+text = "Export"
+scroll_active = false
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MainUIBox" type="MarginContainer" parent="." unique_id=2141089947]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 139
+theme_override_constants/margin_top = 62
+theme_override_constants/margin_right = 30
+theme_override_constants/margin_bottom = 65
+script = ExtResource("5_jbhjl")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MainUIBox" unique_id=249691303]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = -3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MainUIBox/HBoxContainer" unique_id=2014011275]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 5
+
+[node name="BoxContainer" type="BoxContainer" parent="MainUIBox/HBoxContainer/VBoxContainer" unique_id=1802347098]
+custom_minimum_size = Vector2(0, 2)
+layout_mode = 2
+
+[node name="BodyTab" type="TextureButton" parent="MainUIBox/HBoxContainer/VBoxContainer" unique_id=156838846]
+z_index = 1
+layout_mode = 2
+toggle_mode = true
+action_mode = 0
+texture_normal = SubResource("AtlasTexture_w3r4t")
+texture_pressed = SubResource("AtlasTexture_73kj5")
+texture_focused = SubResource("AtlasTexture_ndns6")
+
+[node name="TextureRect" type="TextureRect" parent="MainUIBox/HBoxContainer/VBoxContainer/BodyTab" unique_id=1723607752]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -32.0
+offset_bottom = 32.0
+grow_horizontal = 0
+mouse_filter = 2
+texture = ExtResource("8_6n0ge")
+
+[node name="HeadTab" type="TextureButton" parent="MainUIBox/HBoxContainer/VBoxContainer" unique_id=1493463223]
+z_index = 1
+layout_mode = 2
+toggle_mode = true
+action_mode = 0
+texture_normal = SubResource("AtlasTexture_w3r4t")
+texture_pressed = SubResource("AtlasTexture_73kj5")
+texture_focused = SubResource("AtlasTexture_ndns6")
+
+[node name="TextureRect" type="TextureRect" parent="MainUIBox/HBoxContainer/VBoxContainer/HeadTab" unique_id=1427439300]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 1
+offset_right = 32.0
+offset_bottom = 32.0
+mouse_filter = 2
+texture = ExtResource("9_e2h3m")
+stretch_mode = 2
+
+[node name="ManeTab" type="TextureButton" parent="MainUIBox/HBoxContainer/VBoxContainer" unique_id=2087154997]
+z_index = 1
+layout_mode = 2
+toggle_mode = true
+action_mode = 0
+texture_normal = SubResource("AtlasTexture_w3r4t")
+texture_pressed = SubResource("AtlasTexture_73kj5")
+texture_focused = SubResource("AtlasTexture_ndns6")
+
+[node name="TextureRect" type="TextureRect" parent="MainUIBox/HBoxContainer/VBoxContainer/ManeTab" unique_id=1981296174]
+custom_minimum_size = Vector2(33, 32)
+layout_mode = 1
+offset_right = 32.0
+offset_bottom = 32.0
+mouse_filter = 2
+texture = ExtResource("10_e2h3m")
+stretch_mode = 2
+
+[node name="TailTab" type="TextureButton" parent="MainUIBox/HBoxContainer/VBoxContainer" unique_id=1828823327]
+z_index = 1
+layout_mode = 2
+toggle_mode = true
+action_mode = 0
+texture_normal = SubResource("AtlasTexture_w3r4t")
+texture_pressed = SubResource("AtlasTexture_73kj5")
+texture_focused = SubResource("AtlasTexture_ndns6")
+
+[node name="TextureRect" type="TextureRect" parent="MainUIBox/HBoxContainer/VBoxContainer/TailTab" unique_id=6679762]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -32.0
+offset_bottom = 32.0
+grow_horizontal = 0
+mouse_filter = 2
+texture = ExtResource("11_48xhy")
+stretch_mode = 2
+
+[node name="AccessoriesTab" type="TextureButton" parent="MainUIBox/HBoxContainer/VBoxContainer" unique_id=1321348219]
+z_index = 1
+layout_mode = 2
+toggle_mode = true
+action_mode = 0
+texture_normal = SubResource("AtlasTexture_w3r4t")
+texture_pressed = SubResource("AtlasTexture_73kj5")
+texture_focused = SubResource("AtlasTexture_ndns6")
+
+[node name="ButtMarkTab" type="TextureButton" parent="MainUIBox/HBoxContainer/VBoxContainer" unique_id=842588234]
+z_index = 1
+layout_mode = 2
+toggle_mode = true
+action_mode = 0
+texture_normal = SubResource("AtlasTexture_w3r4t")
+texture_pressed = SubResource("AtlasTexture_73kj5")
+texture_focused = SubResource("AtlasTexture_ndns6")
+
+[node name="MainUIBG" type="TextureRect" parent="MainUIBox/HBoxContainer" unique_id=397702282]
+layout_mode = 2
+mouse_filter = 2
+texture = ExtResource("7_34nin")
+stretch_mode = 2
+
+[node name="BodyTab" type="MarginContainer" parent="MainUIBox/HBoxContainer/MainUIBG" unique_id=640545336]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+script = ExtResource("19_eyesa")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MainUIBox/HBoxContainer/MainUIBG/BodyTab" unique_id=1272865155]
+layout_mode = 2
+
+[node name="ColorsBGRect" type="TextureRect" parent="MainUIBox/HBoxContainer/MainUIBG/BodyTab/VBoxContainer" unique_id=1663562629]
+layout_mode = 2
+texture = ExtResource("9_w3r4t")
+stretch_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="MainUIBox/HBoxContainer/MainUIBG/BodyTab/VBoxContainer/ColorsBGRect" unique_id=380911575]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 2
+
+[node name="ColorsBox" type="HBoxContainer" parent="MainUIBox/HBoxContainer/MainUIBG/BodyTab/VBoxContainer/ColorsBGRect/MarginContainer" unique_id=1392281493]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="BaseColor" parent="MainUIBox/HBoxContainer/MainUIBG/BodyTab/VBoxContainer/ColorsBGRect/MarginContainer/ColorsBox" unique_id=689424247 node_paths=PackedStringArray("target_node") instance=ExtResource("10_73kj5")]
+layout_mode = 2
+target_node = NodePath("../../../../../../../../../PonyRenderContainer/PonyBase")
+target_function = "recolor_base"
+
+[node name="Shading" parent="MainUIBox/HBoxContainer/MainUIBG/BodyTab/VBoxContainer/ColorsBGRect/MarginContainer/ColorsBox" unique_id=754509580 node_paths=PackedStringArray("target_node", "lock_source") instance=ExtResource("10_73kj5")]
+layout_mode = 2
+color_id = 1
+target_node = NodePath("../../../../../../../../../PonyRenderContainer/PonyBase")
+target_function = "recolor_base"
+has_lock = true
+lock_source = NodePath("../BaseColor")
+val_factor = 0.88
+
+[node name="Outline" parent="MainUIBox/HBoxContainer/MainUIBG/BodyTab/VBoxContainer/ColorsBGRect/MarginContainer/ColorsBox" unique_id=1037388254 node_paths=PackedStringArray("target_node", "lock_source") instance=ExtResource("10_73kj5")]
+layout_mode = 2
+color_id = 2
+target_node = NodePath("../../../../../../../../../PonyRenderContainer/PonyBase")
+target_function = "recolor_base"
+has_lock = true
+lock_source = NodePath("../BaseColor")
+val_factor = 0.75
+sat_factor = 1.4
+
+[node name="BackOutline" parent="MainUIBox/HBoxContainer/MainUIBG/BodyTab/VBoxContainer/ColorsBGRect/MarginContainer/ColorsBox" unique_id=1308526263 node_paths=PackedStringArray("target_node", "lock_source") instance=ExtResource("10_73kj5")]
+layout_mode = 2
+color_id = 3
+target_node = NodePath("../../../../../../../../../PonyRenderContainer/PonyBase")
+target_function = "recolor_base"
+has_lock = true
+lock_source = NodePath("../BaseColor")
+val_factor = 0.7
+sat_factor = 1.35
+
+[node name="HeadTab" type="MarginContainer" parent="MainUIBox/HBoxContainer/MainUIBG" unique_id=531775782]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+script = ExtResource("22_ylawx")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MainUIBox/HBoxContainer/MainUIBG/HeadTab" unique_id=1752238317]
+layout_mode = 2
+
+[node name="ColorsBGRect" type="TextureRect" parent="MainUIBox/HBoxContainer/MainUIBG/HeadTab/VBoxContainer" unique_id=1463362188]
+layout_mode = 2
+texture = ExtResource("9_w3r4t")
+stretch_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="MainUIBox/HBoxContainer/MainUIBG/HeadTab/VBoxContainer/ColorsBGRect" unique_id=1397712937]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 2
+
+[node name="ColorsBox" type="HBoxContainer" parent="MainUIBox/HBoxContainer/MainUIBG/HeadTab/VBoxContainer/ColorsBGRect/MarginContainer" unique_id=2012333700]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="EyeColor" parent="MainUIBox/HBoxContainer/MainUIBG/HeadTab/VBoxContainer/ColorsBGRect/MarginContainer/ColorsBox" unique_id=1704479453 node_paths=PackedStringArray("target_node") instance=ExtResource("10_73kj5")]
+layout_mode = 2
+target_node = NodePath("../../../../../../../../../PonyRenderContainer/PonyBase")
+target_function = "recolor_eye"
+
+[node name="ManeTab" type="MarginContainer" parent="MainUIBox/HBoxContainer/MainUIBG" unique_id=1342263873]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+script = ExtResource("11_ndns6")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MainUIBox/HBoxContainer/MainUIBG/ManeTab" unique_id=61443950]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="ColorsBGRect" type="TextureRect" parent="MainUIBox/HBoxContainer/MainUIBG/ManeTab/VBoxContainer" unique_id=45102879]
+layout_mode = 2
+texture = ExtResource("9_w3r4t")
+stretch_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="MainUIBox/HBoxContainer/MainUIBG/ManeTab/VBoxContainer/ColorsBGRect" unique_id=1323125642]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 2
+
+[node name="ColorsBox" type="HBoxContainer" parent="MainUIBox/HBoxContainer/MainUIBG/ManeTab/VBoxContainer/ColorsBGRect/MarginContainer" unique_id=1628827070]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Color0" parent="MainUIBox/HBoxContainer/MainUIBG/ManeTab/VBoxContainer/ColorsBGRect/MarginContainer/ColorsBox" unique_id=407419606 node_paths=PackedStringArray("target_node") instance=ExtResource("10_73kj5")]
+layout_mode = 2
+target_node = NodePath("../../../../../../../../../PonyRenderContainer/PonyBase")
+target_function = "recolor_mane"
+
+[node name="Color1" parent="MainUIBox/HBoxContainer/MainUIBG/ManeTab/VBoxContainer/ColorsBGRect/MarginContainer/ColorsBox" unique_id=1505279734 node_paths=PackedStringArray("target_node") instance=ExtResource("10_73kj5")]
+layout_mode = 2
+color_id = 1
+target_node = NodePath("../../../../../../../../../PonyRenderContainer/PonyBase")
+target_function = "recolor_mane"
+
+[node name="Color2" parent="MainUIBox/HBoxContainer/MainUIBG/ManeTab/VBoxContainer/ColorsBGRect/MarginContainer/ColorsBox" unique_id=1381610961 node_paths=PackedStringArray("target_node") instance=ExtResource("10_73kj5")]
+layout_mode = 2
+color_id = 2
+target_node = NodePath("../../../../../../../../../PonyRenderContainer/PonyBase")
+target_function = "recolor_mane"
+
+[node name="Color3" parent="MainUIBox/HBoxContainer/MainUIBG/ManeTab/VBoxContainer/ColorsBGRect/MarginContainer/ColorsBox" unique_id=1814031872 node_paths=PackedStringArray("target_node") instance=ExtResource("10_73kj5")]
+layout_mode = 2
+color_id = 3
+target_node = NodePath("../../../../../../../../../PonyRenderContainer/PonyBase")
+target_function = "recolor_mane"
+
+[node name="Color4" parent="MainUIBox/HBoxContainer/MainUIBG/ManeTab/VBoxContainer/ColorsBGRect/MarginContainer/ColorsBox" unique_id=1841694075 node_paths=PackedStringArray("target_node") instance=ExtResource("10_73kj5")]
+layout_mode = 2
+color_id = 4
+target_node = NodePath("../../../../../../../../../PonyRenderContainer/PonyBase")
+target_function = "recolor_mane"
+
+[node name="Color5" parent="MainUIBox/HBoxContainer/MainUIBG/ManeTab/VBoxContainer/ColorsBGRect/MarginContainer/ColorsBox" unique_id=693646124 node_paths=PackedStringArray("target_node") instance=ExtResource("10_73kj5")]
+layout_mode = 2
+color_id = 5
+target_node = NodePath("../../../../../../../../../PonyRenderContainer/PonyBase")
+target_function = "recolor_mane"
+
+[node name="Color6" parent="MainUIBox/HBoxContainer/MainUIBG/ManeTab/VBoxContainer/ColorsBGRect/MarginContainer/ColorsBox" unique_id=836757323 node_paths=PackedStringArray("target_node") instance=ExtResource("10_73kj5")]
+layout_mode = 2
+color_id = 6
+target_node = NodePath("../../../../../../../../../PonyRenderContainer/PonyBase")
+target_function = "recolor_mane"
+
+[node name="Color7" parent="MainUIBox/HBoxContainer/MainUIBG/ManeTab/VBoxContainer/ColorsBGRect/MarginContainer/ColorsBox" unique_id=1916289183 node_paths=PackedStringArray("target_node") instance=ExtResource("10_73kj5")]
+layout_mode = 2
+color_id = 7
+target_node = NodePath("../../../../../../../../../PonyRenderContainer/PonyBase")
+target_function = "recolor_mane"
+
+[node name="ManeButtonsBGRect" type="TextureRect" parent="MainUIBox/HBoxContainer/MainUIBG/ManeTab/VBoxContainer" unique_id=838586669]
+layout_mode = 2
+texture = ExtResource("12_nt8ke")
+
+[node name="MarginContainer" type="MarginContainer" parent="MainUIBox/HBoxContainer/MainUIBG/ManeTab/VBoxContainer/ManeButtonsBGRect" unique_id=1517165343]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 6
+theme_override_constants/margin_top = 6
+theme_override_constants/margin_right = 6
+theme_override_constants/margin_bottom = 6
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MainUIBox/HBoxContainer/MainUIBG/ManeTab/VBoxContainer/ManeButtonsBGRect/MarginContainer" unique_id=935011948]
+layout_mode = 2
+theme_override_constants/separation = 2
+
+[node name="Row0" type="HBoxContainer" parent="MainUIBox/HBoxContainer/MainUIBG/ManeTab/VBoxContainer/ManeButtonsBGRect/MarginContainer/VBoxContainer" unique_id=1834059654]
+layout_mode = 2
+theme_override_constants/separation = 2
+
+[node name="Row1" type="HBoxContainer" parent="MainUIBox/HBoxContainer/MainUIBG/ManeTab/VBoxContainer/ManeButtonsBGRect/MarginContainer/VBoxContainer" unique_id=1171451581]
+layout_mode = 2
+theme_override_constants/separation = 2
+
+[node name="Row2" type="HBoxContainer" parent="MainUIBox/HBoxContainer/MainUIBG/ManeTab/VBoxContainer/ManeButtonsBGRect/MarginContainer/VBoxContainer" unique_id=733134811]
+layout_mode = 2
+theme_override_constants/separation = 2
+
+[node name="Row3" type="HBoxContainer" parent="MainUIBox/HBoxContainer/MainUIBG/ManeTab/VBoxContainer/ManeButtonsBGRect/MarginContainer/VBoxContainer" unique_id=1040302147]
+layout_mode = 2
+theme_override_constants/separation = 2
+
+[node name="Row4" type="HBoxContainer" parent="MainUIBox/HBoxContainer/MainUIBG/ManeTab/VBoxContainer/ManeButtonsBGRect/MarginContainer/VBoxContainer" unique_id=1234806226]
+layout_mode = 2
+theme_override_constants/separation = 2
+
+[node name="TailTab" type="MarginContainer" parent="MainUIBox/HBoxContainer/MainUIBG" unique_id=696158821]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+script = ExtResource("17_edmsy")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MainUIBox/HBoxContainer/MainUIBG/TailTab" unique_id=223615900]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="ColorsBGRect" type="TextureRect" parent="MainUIBox/HBoxContainer/MainUIBG/TailTab/VBoxContainer" unique_id=219030236]
+layout_mode = 2
+texture = ExtResource("9_w3r4t")
+stretch_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="MainUIBox/HBoxContainer/MainUIBG/TailTab/VBoxContainer/ColorsBGRect" unique_id=1665569520]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 2
+
+[node name="ColorsBox" type="HBoxContainer" parent="MainUIBox/HBoxContainer/MainUIBG/TailTab/VBoxContainer/ColorsBGRect/MarginContainer" unique_id=787988855]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Color0" parent="MainUIBox/HBoxContainer/MainUIBG/TailTab/VBoxContainer/ColorsBGRect/MarginContainer/ColorsBox" unique_id=1441187925 node_paths=PackedStringArray("target_node") instance=ExtResource("10_73kj5")]
+layout_mode = 2
+target_node = NodePath("../../../../../../../../../PonyRenderContainer/PonyBase")
+target_function = "recolor_tail"
+
+[node name="Color1" parent="MainUIBox/HBoxContainer/MainUIBG/TailTab/VBoxContainer/ColorsBGRect/MarginContainer/ColorsBox" unique_id=1933045420 node_paths=PackedStringArray("target_node") instance=ExtResource("10_73kj5")]
+layout_mode = 2
+color_id = 1
+target_node = NodePath("../../../../../../../../../PonyRenderContainer/PonyBase")
+target_function = "recolor_tail"
+
+[node name="Color2" parent="MainUIBox/HBoxContainer/MainUIBG/TailTab/VBoxContainer/ColorsBGRect/MarginContainer/ColorsBox" unique_id=918985254 node_paths=PackedStringArray("target_node") instance=ExtResource("10_73kj5")]
+layout_mode = 2
+color_id = 2
+target_node = NodePath("../../../../../../../../../PonyRenderContainer/PonyBase")
+target_function = "recolor_tail"
+
+[node name="Color3" parent="MainUIBox/HBoxContainer/MainUIBG/TailTab/VBoxContainer/ColorsBGRect/MarginContainer/ColorsBox" unique_id=1138921956 node_paths=PackedStringArray("target_node") instance=ExtResource("10_73kj5")]
+layout_mode = 2
+color_id = 3
+target_node = NodePath("../../../../../../../../../PonyRenderContainer/PonyBase")
+target_function = "recolor_tail"
+
+[node name="Color4" parent="MainUIBox/HBoxContainer/MainUIBG/TailTab/VBoxContainer/ColorsBGRect/MarginContainer/ColorsBox" unique_id=1286957663 node_paths=PackedStringArray("target_node") instance=ExtResource("10_73kj5")]
+layout_mode = 2
+color_id = 4
+target_node = NodePath("../../../../../../../../../PonyRenderContainer/PonyBase")
+target_function = "recolor_tail"
+
+[node name="Color5" parent="MainUIBox/HBoxContainer/MainUIBG/TailTab/VBoxContainer/ColorsBGRect/MarginContainer/ColorsBox" unique_id=1698945369 node_paths=PackedStringArray("target_node") instance=ExtResource("10_73kj5")]
+layout_mode = 2
+color_id = 5
+target_node = NodePath("../../../../../../../../../PonyRenderContainer/PonyBase")
+target_function = "recolor_tail"
+
+[node name="Color6" parent="MainUIBox/HBoxContainer/MainUIBG/TailTab/VBoxContainer/ColorsBGRect/MarginContainer/ColorsBox" unique_id=1963931896 node_paths=PackedStringArray("target_node") instance=ExtResource("10_73kj5")]
+layout_mode = 2
+color_id = 6
+target_node = NodePath("../../../../../../../../../PonyRenderContainer/PonyBase")
+target_function = "recolor_tail"
+
+[node name="Color7" parent="MainUIBox/HBoxContainer/MainUIBG/TailTab/VBoxContainer/ColorsBGRect/MarginContainer/ColorsBox" unique_id=246815702 node_paths=PackedStringArray("target_node") instance=ExtResource("10_73kj5")]
+layout_mode = 2
+color_id = 7
+target_node = NodePath("../../../../../../../../../PonyRenderContainer/PonyBase")
+target_function = "recolor_tail"
+
+[node name="ManeButtonsBGRect" type="TextureRect" parent="MainUIBox/HBoxContainer/MainUIBG/TailTab/VBoxContainer" unique_id=425893437]
+layout_mode = 2
+texture = ExtResource("12_nt8ke")
+
+[node name="MarginContainer" type="MarginContainer" parent="MainUIBox/HBoxContainer/MainUIBG/TailTab/VBoxContainer/ManeButtonsBGRect" unique_id=1013832622]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 6
+theme_override_constants/margin_top = 6
+theme_override_constants/margin_right = 6
+theme_override_constants/margin_bottom = 6
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MainUIBox/HBoxContainer/MainUIBG/TailTab/VBoxContainer/ManeButtonsBGRect/MarginContainer" unique_id=1091836558]
+layout_mode = 2
+theme_override_constants/separation = 2
+
+[node name="Row0" type="HBoxContainer" parent="MainUIBox/HBoxContainer/MainUIBG/TailTab/VBoxContainer/ManeButtonsBGRect/MarginContainer/VBoxContainer" unique_id=609204453]
+layout_mode = 2
+theme_override_constants/separation = 2
+
+[node name="Row1" type="HBoxContainer" parent="MainUIBox/HBoxContainer/MainUIBG/TailTab/VBoxContainer/ManeButtonsBGRect/MarginContainer/VBoxContainer" unique_id=775319646]
+layout_mode = 2
+theme_override_constants/separation = 2
+
+[node name="Row2" type="HBoxContainer" parent="MainUIBox/HBoxContainer/MainUIBG/TailTab/VBoxContainer/ManeButtonsBGRect/MarginContainer/VBoxContainer" unique_id=625031152]
+layout_mode = 2
+theme_override_constants/separation = 2
+
+[node name="Row3" type="HBoxContainer" parent="MainUIBox/HBoxContainer/MainUIBG/TailTab/VBoxContainer/ManeButtonsBGRect/MarginContainer/VBoxContainer" unique_id=1243858414]
+layout_mode = 2
+theme_override_constants/separation = 2
+
+[node name="Row4" type="HBoxContainer" parent="MainUIBox/HBoxContainer/MainUIBG/TailTab/VBoxContainer/ManeButtonsBGRect/MarginContainer/VBoxContainer" unique_id=580505386]
+layout_mode = 2
+theme_override_constants/separation = 2
+
+[node name="AccessoriesTab" type="MarginContainer" parent="MainUIBox/HBoxContainer/MainUIBG" unique_id=934489687]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ButtMarkTab" type="MarginContainer" parent="MainUIBox/HBoxContainer/MainUIBG" unique_id=1560184353 node_paths=PackedStringArray("pony_base")]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+script = ExtResource("18_urhmi")
+pony_base = NodePath("../../../../PonyRenderContainer/PonyBase")
+
+[node name="ButtMarkBG" type="TextureRect" parent="MainUIBox/HBoxContainer/MainUIBG/ButtMarkTab" unique_id=957345153]
+layout_mode = 2
+mouse_filter = 2
+texture = ExtResource("19_ugrll")
+
+[node name="GridContainer" type="MarginContainer" parent="MainUIBox/HBoxContainer/MainUIBG/ButtMarkTab/ButtMarkBG" unique_id=1657207243]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 300
+theme_override_constants/margin_bottom = 93
+
+[node name="VContainer" type="VBoxContainer" parent="MainUIBox/HBoxContainer/MainUIBG/ButtMarkTab/ButtMarkBG/GridContainer" unique_id=301650470]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="Row0" type="HBoxContainer" parent="MainUIBox/HBoxContainer/MainUIBG/ButtMarkTab/ButtMarkBG/GridContainer/VContainer" unique_id=2126678262]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 0
+
+[node name="ButtMarkColorGridButton" parent="MainUIBox/HBoxContainer/MainUIBG/ButtMarkTab/ButtMarkBG/GridContainer/VContainer/Row0" unique_id=687301784 node_paths=PackedStringArray("butt_mark_tab") instance=ExtResource("20_ugrll")]
+layout_mode = 2
+texture_normal = SubResource("AtlasTexture_aypou")
+butt_mark_tab = NodePath("../../../../..")
+
+[node name="ButtMarkColorGridButton2" parent="MainUIBox/HBoxContainer/MainUIBG/ButtMarkTab/ButtMarkBG/GridContainer/VContainer/Row0" unique_id=795322750 node_paths=PackedStringArray("butt_mark_tab") instance=ExtResource("20_ugrll")]
+layout_mode = 2
+texture_normal = SubResource("AtlasTexture_j6rhv")
+butt_mark_tab = NodePath("../../../../..")
+
+[node name="ButtMarkColorGridButton3" parent="MainUIBox/HBoxContainer/MainUIBG/ButtMarkTab/ButtMarkBG/GridContainer/VContainer/Row0" unique_id=1042338605 node_paths=PackedStringArray("butt_mark_tab") instance=ExtResource("20_ugrll")]
+layout_mode = 2
+texture_normal = SubResource("AtlasTexture_u8yp3")
+butt_mark_tab = NodePath("../../../../..")
+
+[node name="ButtMarkColorGridButton4" parent="MainUIBox/HBoxContainer/MainUIBG/ButtMarkTab/ButtMarkBG/GridContainer/VContainer/Row0" unique_id=1239526838 node_paths=PackedStringArray("butt_mark_tab") instance=ExtResource("20_ugrll")]
+layout_mode = 2
+texture_normal = SubResource("AtlasTexture_hk5h0")
+butt_mark_tab = NodePath("../../../../..")
+
+[node name="ButtMarkColorGridButton5" parent="MainUIBox/HBoxContainer/MainUIBG/ButtMarkTab/ButtMarkBG/GridContainer/VContainer/Row0" unique_id=241064022 node_paths=PackedStringArray("butt_mark_tab") instance=ExtResource("20_ugrll")]
+layout_mode = 2
+texture_normal = SubResource("AtlasTexture_ghtwt")
+butt_mark_tab = NodePath("../../../../..")
+
+[node name="ButtMarkColorGridButton6" parent="MainUIBox/HBoxContainer/MainUIBG/ButtMarkTab/ButtMarkBG/GridContainer/VContainer/Row0" unique_id=1357444289 node_paths=PackedStringArray("butt_mark_tab") instance=ExtResource("20_ugrll")]
+layout_mode = 2
+texture_normal = SubResource("AtlasTexture_olvhj")
+butt_mark_tab = NodePath("../../../../..")
+
+[node name="ButtMarkColorGridButton7" parent="MainUIBox/HBoxContainer/MainUIBG/ButtMarkTab/ButtMarkBG/GridContainer/VContainer/Row0" unique_id=2053960992 node_paths=PackedStringArray("butt_mark_tab") instance=ExtResource("20_ugrll")]
+layout_mode = 2
+texture_normal = SubResource("AtlasTexture_pk28r")
+butt_mark_tab = NodePath("../../../../..")
+
+[node name="Row1" type="HBoxContainer" parent="MainUIBox/HBoxContainer/MainUIBG/ButtMarkTab/ButtMarkBG/GridContainer/VContainer" unique_id=1880820852]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 0
+
+[node name="ButtMarkColorGridButton" parent="MainUIBox/HBoxContainer/MainUIBG/ButtMarkTab/ButtMarkBG/GridContainer/VContainer/Row1" unique_id=1322356882 node_paths=PackedStringArray("butt_mark_tab") instance=ExtResource("20_ugrll")]
+layout_mode = 2
+texture_normal = SubResource("AtlasTexture_dw0df")
+butt_mark_tab = NodePath("../../../../..")
+
+[node name="ButtMarkColorGridButton2" parent="MainUIBox/HBoxContainer/MainUIBG/ButtMarkTab/ButtMarkBG/GridContainer/VContainer/Row1" unique_id=2140987419 node_paths=PackedStringArray("butt_mark_tab") instance=ExtResource("20_ugrll")]
+layout_mode = 2
+texture_normal = SubResource("AtlasTexture_fgqi0")
+butt_mark_tab = NodePath("../../../../..")
+
+[node name="ButtMarkColorGridButton3" parent="MainUIBox/HBoxContainer/MainUIBG/ButtMarkTab/ButtMarkBG/GridContainer/VContainer/Row1" unique_id=1024464239 node_paths=PackedStringArray("butt_mark_tab") instance=ExtResource("20_ugrll")]
+layout_mode = 2
+texture_normal = SubResource("AtlasTexture_w1gre")
+butt_mark_tab = NodePath("../../../../..")
+
+[node name="ButtMarkColorGridButton4" parent="MainUIBox/HBoxContainer/MainUIBG/ButtMarkTab/ButtMarkBG/GridContainer/VContainer/Row1" unique_id=1427783933 node_paths=PackedStringArray("butt_mark_tab") instance=ExtResource("20_ugrll")]
+layout_mode = 2
+texture_normal = SubResource("AtlasTexture_e8m35")
+butt_mark_tab = NodePath("../../../../..")
+
+[node name="ButtMarkColorGridButton5" parent="MainUIBox/HBoxContainer/MainUIBG/ButtMarkTab/ButtMarkBG/GridContainer/VContainer/Row1" unique_id=671181938 node_paths=PackedStringArray("butt_mark_tab") instance=ExtResource("20_ugrll")]
+layout_mode = 2
+texture_normal = SubResource("AtlasTexture_1mneu")
+butt_mark_tab = NodePath("../../../../..")
+
+[node name="ButtMarkColorGridButton6" parent="MainUIBox/HBoxContainer/MainUIBG/ButtMarkTab/ButtMarkBG/GridContainer/VContainer/Row1" unique_id=726789496 node_paths=PackedStringArray("butt_mark_tab") instance=ExtResource("20_ugrll")]
+layout_mode = 2
+texture_normal = SubResource("AtlasTexture_52p8k")
+butt_mark_tab = NodePath("../../../../..")
+
+[node name="ButtMarkColorGridButton7" parent="MainUIBox/HBoxContainer/MainUIBG/ButtMarkTab/ButtMarkBG/GridContainer/VContainer/Row1" unique_id=2112512775 node_paths=PackedStringArray("butt_mark_tab") instance=ExtResource("20_ugrll")]
+layout_mode = 2
+texture_normal = SubResource("AtlasTexture_ctnym")
+butt_mark_tab = NodePath("../../../../..")
+
+[node name="Row2" type="HBoxContainer" parent="MainUIBox/HBoxContainer/MainUIBG/ButtMarkTab/ButtMarkBG/GridContainer/VContainer" unique_id=1111512953]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 0
+
+[node name="ButtMarkColorGridButton" parent="MainUIBox/HBoxContainer/MainUIBG/ButtMarkTab/ButtMarkBG/GridContainer/VContainer/Row2" unique_id=680225655 node_paths=PackedStringArray("butt_mark_tab") instance=ExtResource("20_ugrll")]
+layout_mode = 2
+texture_normal = SubResource("AtlasTexture_3xqjc")
+butt_mark_tab = NodePath("../../../../..")
+
+[node name="ButtMarkColorGridButton2" parent="MainUIBox/HBoxContainer/MainUIBG/ButtMarkTab/ButtMarkBG/GridContainer/VContainer/Row2" unique_id=911352098 node_paths=PackedStringArray("butt_mark_tab") instance=ExtResource("20_ugrll")]
+layout_mode = 2
+texture_normal = SubResource("AtlasTexture_y3vdy")
+butt_mark_tab = NodePath("../../../../..")
+
+[node name="ButtMarkColorGridButton3" parent="MainUIBox/HBoxContainer/MainUIBG/ButtMarkTab/ButtMarkBG/GridContainer/VContainer/Row2" unique_id=1149452949 node_paths=PackedStringArray("butt_mark_tab") instance=ExtResource("20_ugrll")]
+layout_mode = 2
+texture_normal = SubResource("AtlasTexture_xu4wc")
+butt_mark_tab = NodePath("../../../../..")
+
+[node name="ButtMarkColorGridButton4" parent="MainUIBox/HBoxContainer/MainUIBG/ButtMarkTab/ButtMarkBG/GridContainer/VContainer/Row2" unique_id=1952857211 node_paths=PackedStringArray("butt_mark_tab") instance=ExtResource("20_ugrll")]
+layout_mode = 2
+texture_normal = SubResource("AtlasTexture_oecxi")
+butt_mark_tab = NodePath("../../../../..")
+
+[node name="ButtMarkColorGridButton5" parent="MainUIBox/HBoxContainer/MainUIBG/ButtMarkTab/ButtMarkBG/GridContainer/VContainer/Row2" unique_id=388558410 node_paths=PackedStringArray("butt_mark_tab") instance=ExtResource("20_ugrll")]
+layout_mode = 2
+texture_normal = SubResource("AtlasTexture_f33fv")
+butt_mark_tab = NodePath("../../../../..")
+
+[node name="ButtMarkColorGridButton6" parent="MainUIBox/HBoxContainer/MainUIBG/ButtMarkTab/ButtMarkBG/GridContainer/VContainer/Row2" unique_id=1970330670 node_paths=PackedStringArray("butt_mark_tab") instance=ExtResource("20_ugrll")]
+layout_mode = 2
+texture_normal = SubResource("AtlasTexture_14xjq")
+butt_mark_tab = NodePath("../../../../..")
+
+[node name="ButtMarkColorGridButton7" parent="MainUIBox/HBoxContainer/MainUIBG/ButtMarkTab/ButtMarkBG/GridContainer/VContainer/Row2" unique_id=125892428 node_paths=PackedStringArray("butt_mark_tab") instance=ExtResource("20_ugrll")]
+layout_mode = 2
+texture_normal = SubResource("AtlasTexture_lxu10")
+butt_mark_tab = NodePath("../../../../..")
+
+[node name="Row3" type="HBoxContainer" parent="MainUIBox/HBoxContainer/MainUIBG/ButtMarkTab/ButtMarkBG/GridContainer/VContainer" unique_id=847961211]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 0
+
+[node name="ButtMarkColorGridButton" parent="MainUIBox/HBoxContainer/MainUIBG/ButtMarkTab/ButtMarkBG/GridContainer/VContainer/Row3" unique_id=874738215 node_paths=PackedStringArray("butt_mark_tab") instance=ExtResource("20_ugrll")]
+layout_mode = 2
+texture_normal = SubResource("AtlasTexture_jl1nd")
+butt_mark_tab = NodePath("../../../../..")
+
+[node name="ButtMarkColorGridButton2" parent="MainUIBox/HBoxContainer/MainUIBG/ButtMarkTab/ButtMarkBG/GridContainer/VContainer/Row3" unique_id=1762472920 node_paths=PackedStringArray("butt_mark_tab") instance=ExtResource("20_ugrll")]
+layout_mode = 2
+texture_normal = SubResource("AtlasTexture_tj7bx")
+butt_mark_tab = NodePath("../../../../..")
+
+[node name="ButtMarkColorGridButton3" parent="MainUIBox/HBoxContainer/MainUIBG/ButtMarkTab/ButtMarkBG/GridContainer/VContainer/Row3" unique_id=1715328275 node_paths=PackedStringArray("butt_mark_tab") instance=ExtResource("20_ugrll")]
+layout_mode = 2
+texture_normal = SubResource("AtlasTexture_vbqis")
+butt_mark_tab = NodePath("../../../../..")
+
+[node name="ButtMarkColorGridButton4" parent="MainUIBox/HBoxContainer/MainUIBG/ButtMarkTab/ButtMarkBG/GridContainer/VContainer/Row3" unique_id=1852453343 node_paths=PackedStringArray("butt_mark_tab") instance=ExtResource("20_ugrll")]
+layout_mode = 2
+texture_normal = SubResource("AtlasTexture_2teah")
+butt_mark_tab = NodePath("../../../../..")
+
+[node name="ButtMarkColorGridButton5" parent="MainUIBox/HBoxContainer/MainUIBG/ButtMarkTab/ButtMarkBG/GridContainer/VContainer/Row3" unique_id=1950757874 node_paths=PackedStringArray("butt_mark_tab") instance=ExtResource("20_ugrll")]
+layout_mode = 2
+texture_normal = SubResource("AtlasTexture_fhodr")
+butt_mark_tab = NodePath("../../../../..")
+
+[node name="ButtMarkColorGridButton6" parent="MainUIBox/HBoxContainer/MainUIBG/ButtMarkTab/ButtMarkBG/GridContainer/VContainer/Row3" unique_id=1771214070 node_paths=PackedStringArray("butt_mark_tab") instance=ExtResource("20_ugrll")]
+layout_mode = 2
+texture_normal = SubResource("AtlasTexture_hmnra")
+butt_mark_tab = NodePath("../../../../..")
+
+[node name="ButtMarkColorGridButton7" parent="MainUIBox/HBoxContainer/MainUIBG/ButtMarkTab/ButtMarkBG/GridContainer/VContainer/Row3" unique_id=26936997 node_paths=PackedStringArray("butt_mark_tab") instance=ExtResource("20_ugrll")]
+layout_mode = 2
+texture_normal = SubResource("AtlasTexture_iw8lp")
+butt_mark_tab = NodePath("../../../../..")
+
+[node name="Row4" type="HBoxContainer" parent="MainUIBox/HBoxContainer/MainUIBG/ButtMarkTab/ButtMarkBG/GridContainer/VContainer" unique_id=1063923577]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 0
+
+[node name="ButtMarkColorGridButton" parent="MainUIBox/HBoxContainer/MainUIBG/ButtMarkTab/ButtMarkBG/GridContainer/VContainer/Row4" unique_id=609988671 node_paths=PackedStringArray("butt_mark_tab") instance=ExtResource("20_ugrll")]
+layout_mode = 2
+texture_normal = SubResource("AtlasTexture_srivw")
+butt_mark_tab = NodePath("../../../../..")
+
+[node name="ButtMarkColorGridButton2" parent="MainUIBox/HBoxContainer/MainUIBG/ButtMarkTab/ButtMarkBG/GridContainer/VContainer/Row4" unique_id=1519381702 node_paths=PackedStringArray("butt_mark_tab") instance=ExtResource("20_ugrll")]
+layout_mode = 2
+texture_normal = SubResource("AtlasTexture_2xxac")
+butt_mark_tab = NodePath("../../../../..")
+
+[node name="ButtMarkColorGridButton3" parent="MainUIBox/HBoxContainer/MainUIBG/ButtMarkTab/ButtMarkBG/GridContainer/VContainer/Row4" unique_id=1361370432 node_paths=PackedStringArray("butt_mark_tab") instance=ExtResource("20_ugrll")]
+layout_mode = 2
+texture_normal = SubResource("AtlasTexture_jfve2")
+butt_mark_tab = NodePath("../../../../..")
+
+[node name="ButtMarkColorGridButton4" parent="MainUIBox/HBoxContainer/MainUIBG/ButtMarkTab/ButtMarkBG/GridContainer/VContainer/Row4" unique_id=1041181882 node_paths=PackedStringArray("butt_mark_tab") instance=ExtResource("20_ugrll")]
+layout_mode = 2
+texture_normal = SubResource("AtlasTexture_msryn")
+butt_mark_tab = NodePath("../../../../..")
+
+[node name="ButtMarkColorGridButton5" parent="MainUIBox/HBoxContainer/MainUIBG/ButtMarkTab/ButtMarkBG/GridContainer/VContainer/Row4" unique_id=829079292 node_paths=PackedStringArray("butt_mark_tab") instance=ExtResource("20_ugrll")]
+layout_mode = 2
+texture_normal = SubResource("AtlasTexture_qlu23")
+butt_mark_tab = NodePath("../../../../..")
+
+[node name="ButtMarkColorGridButton6" parent="MainUIBox/HBoxContainer/MainUIBG/ButtMarkTab/ButtMarkBG/GridContainer/VContainer/Row4" unique_id=1183904758 node_paths=PackedStringArray("butt_mark_tab") instance=ExtResource("20_ugrll")]
+layout_mode = 2
+texture_normal = SubResource("AtlasTexture_knwfx")
+butt_mark_tab = NodePath("../../../../..")
+
+[node name="ButtMarkColorGridButton7" parent="MainUIBox/HBoxContainer/MainUIBG/ButtMarkTab/ButtMarkBG/GridContainer/VContainer/Row4" unique_id=1303221416 node_paths=PackedStringArray("butt_mark_tab") instance=ExtResource("20_ugrll")]
+layout_mode = 2
+texture_normal = SubResource("AtlasTexture_ihmby")
+butt_mark_tab = NodePath("../../../../..")
+
+[node name="Row5" type="HBoxContainer" parent="MainUIBox/HBoxContainer/MainUIBG/ButtMarkTab/ButtMarkBG/GridContainer/VContainer" unique_id=1214571592]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 0
+
+[node name="ButtMarkColorGridButton" parent="MainUIBox/HBoxContainer/MainUIBG/ButtMarkTab/ButtMarkBG/GridContainer/VContainer/Row5" unique_id=334371631 node_paths=PackedStringArray("butt_mark_tab") instance=ExtResource("20_ugrll")]
+layout_mode = 2
+texture_normal = SubResource("AtlasTexture_r0nj3")
+butt_mark_tab = NodePath("../../../../..")
+
+[node name="ButtMarkColorGridButton2" parent="MainUIBox/HBoxContainer/MainUIBG/ButtMarkTab/ButtMarkBG/GridContainer/VContainer/Row5" unique_id=1658704171 node_paths=PackedStringArray("butt_mark_tab") instance=ExtResource("20_ugrll")]
+layout_mode = 2
+texture_normal = SubResource("AtlasTexture_21usg")
+butt_mark_tab = NodePath("../../../../..")
+
+[node name="ButtMarkColorGridButton3" parent="MainUIBox/HBoxContainer/MainUIBG/ButtMarkTab/ButtMarkBG/GridContainer/VContainer/Row5" unique_id=260044211 node_paths=PackedStringArray("butt_mark_tab") instance=ExtResource("20_ugrll")]
+layout_mode = 2
+texture_normal = SubResource("AtlasTexture_kwntt")
+butt_mark_tab = NodePath("../../../../..")
+
+[node name="ButtMarkColorGridButton4" parent="MainUIBox/HBoxContainer/MainUIBG/ButtMarkTab/ButtMarkBG/GridContainer/VContainer/Row5" unique_id=552693274 node_paths=PackedStringArray("butt_mark_tab") instance=ExtResource("20_ugrll")]
+layout_mode = 2
+texture_normal = SubResource("AtlasTexture_2baa0")
+butt_mark_tab = NodePath("../../../../..")
+
+[node name="ButtMarkColorGridButton5" parent="MainUIBox/HBoxContainer/MainUIBG/ButtMarkTab/ButtMarkBG/GridContainer/VContainer/Row5" unique_id=463544572 node_paths=PackedStringArray("butt_mark_tab") instance=ExtResource("20_ugrll")]
+layout_mode = 2
+texture_normal = SubResource("AtlasTexture_aikix")
+butt_mark_tab = NodePath("../../../../..")
+
+[node name="ButtMarkColorGridButton6" parent="MainUIBox/HBoxContainer/MainUIBG/ButtMarkTab/ButtMarkBG/GridContainer/VContainer/Row5" unique_id=228337972 node_paths=PackedStringArray("butt_mark_tab") instance=ExtResource("20_ugrll")]
+layout_mode = 2
+texture_normal = SubResource("AtlasTexture_ic7f8")
+butt_mark_tab = NodePath("../../../../..")
+
+[node name="ButtMarkColorGridButton7" parent="MainUIBox/HBoxContainer/MainUIBG/ButtMarkTab/ButtMarkBG/GridContainer/VContainer/Row5" unique_id=1797206763 node_paths=PackedStringArray("butt_mark_tab") instance=ExtResource("20_ugrll")]
+layout_mode = 2
+texture_normal = SubResource("AtlasTexture_vxjan")
+butt_mark_tab = NodePath("../../../../..")
+
+[node name="Row6" type="HBoxContainer" parent="MainUIBox/HBoxContainer/MainUIBG/ButtMarkTab/ButtMarkBG/GridContainer/VContainer" unique_id=356334207]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 0
+
+[node name="ButtMarkColorGridButton" parent="MainUIBox/HBoxContainer/MainUIBG/ButtMarkTab/ButtMarkBG/GridContainer/VContainer/Row6" unique_id=1748783830 node_paths=PackedStringArray("butt_mark_tab") instance=ExtResource("20_ugrll")]
+layout_mode = 2
+texture_normal = SubResource("AtlasTexture_pfqoj")
+butt_mark_tab = NodePath("../../../../..")
+
+[node name="ButtMarkColorGridButton2" parent="MainUIBox/HBoxContainer/MainUIBG/ButtMarkTab/ButtMarkBG/GridContainer/VContainer/Row6" unique_id=642086156 node_paths=PackedStringArray("butt_mark_tab") instance=ExtResource("20_ugrll")]
+layout_mode = 2
+texture_normal = SubResource("AtlasTexture_lb7fd")
+butt_mark_tab = NodePath("../../../../..")
+
+[node name="ButtMarkColorGridButton3" parent="MainUIBox/HBoxContainer/MainUIBG/ButtMarkTab/ButtMarkBG/GridContainer/VContainer/Row6" unique_id=816881272 node_paths=PackedStringArray("butt_mark_tab") instance=ExtResource("20_ugrll")]
+layout_mode = 2
+texture_normal = SubResource("AtlasTexture_ca352")
+butt_mark_tab = NodePath("../../../../..")
+
+[node name="ButtMarkColorGridButton4" parent="MainUIBox/HBoxContainer/MainUIBG/ButtMarkTab/ButtMarkBG/GridContainer/VContainer/Row6" unique_id=1620638527 node_paths=PackedStringArray("butt_mark_tab") instance=ExtResource("20_ugrll")]
+layout_mode = 2
+texture_normal = SubResource("AtlasTexture_5y0qm")
+butt_mark_tab = NodePath("../../../../..")
+
+[node name="ButtMarkColorGridButton5" parent="MainUIBox/HBoxContainer/MainUIBG/ButtMarkTab/ButtMarkBG/GridContainer/VContainer/Row6" unique_id=294836453 node_paths=PackedStringArray("butt_mark_tab") instance=ExtResource("20_ugrll")]
+layout_mode = 2
+texture_normal = SubResource("AtlasTexture_nfxyi")
+butt_mark_tab = NodePath("../../../../..")
+
+[node name="ButtMarkColorGridButton6" parent="MainUIBox/HBoxContainer/MainUIBG/ButtMarkTab/ButtMarkBG/GridContainer/VContainer/Row6" unique_id=1855787421 node_paths=PackedStringArray("butt_mark_tab") instance=ExtResource("20_ugrll")]
+layout_mode = 2
+texture_normal = SubResource("AtlasTexture_pgxf0")
+butt_mark_tab = NodePath("../../../../..")
+
+[node name="ButtMarkColorGridButton7" parent="MainUIBox/HBoxContainer/MainUIBG/ButtMarkTab/ButtMarkBG/GridContainer/VContainer/Row6" unique_id=920756628 node_paths=PackedStringArray("butt_mark_tab") instance=ExtResource("20_ugrll")]
+layout_mode = 2
+texture_normal = SubResource("AtlasTexture_qkhvp")
+butt_mark_tab = NodePath("../../../../..")
+
+[node name="GridRender" type="TextureRect" parent="MainUIBox/HBoxContainer/MainUIBG/ButtMarkTab/ButtMarkBG/GridContainer" unique_id=1217620309]
+layout_mode = 2
+mouse_filter = 2
+texture = ExtResource("20_a61om")
+
+[node name="ControlContainer" type="MarginContainer" parent="MainUIBox/HBoxContainer/MainUIBG/ButtMarkTab" unique_id=1241365893]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 129
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_bottom = 126
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MainUIBox/HBoxContainer/MainUIBG/ButtMarkTab/ControlContainer" unique_id=1139747746]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MainUIBox/HBoxContainer/MainUIBG/ButtMarkTab/ControlContainer/VBoxContainer" unique_id=201752684]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="BrushButton" parent="MainUIBox/HBoxContainer/MainUIBG/ButtMarkTab/ControlContainer/VBoxContainer/HBoxContainer" unique_id=1178499605 node_paths=PackedStringArray("butt_mark_tab") instance=ExtResource("22_a61om")]
+layout_mode = 2
+butt_mark_tab = NodePath("../../../..")
+
+[node name="Pencil" type="TextureRect" parent="MainUIBox/HBoxContainer/MainUIBG/ButtMarkTab/ControlContainer/VBoxContainer/HBoxContainer/BrushButton" unique_id=351724258]
+layout_mode = 0
+offset_right = 32.0
+offset_bottom = 32.0
+mouse_filter = 2
+texture = SubResource("AtlasTexture_vqa4a")
+stretch_mode = 2
+
+[node name="ColorPickerButton" parent="MainUIBox/HBoxContainer/MainUIBG/ButtMarkTab/ControlContainer/VBoxContainer/HBoxContainer" unique_id=799024556 node_paths=PackedStringArray("target_node") instance=ExtResource("10_73kj5")]
+layout_mode = 2
+target_node = NodePath("../../../..")
+target_function = "set_active_color"
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="MainUIBox/HBoxContainer/MainUIBG/ButtMarkTab/ControlContainer/VBoxContainer" unique_id=1126969450]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="EraserButton" parent="MainUIBox/HBoxContainer/MainUIBG/ButtMarkTab/ControlContainer/VBoxContainer/HBoxContainer2" unique_id=2088845201 node_paths=PackedStringArray("butt_mark_tab") instance=ExtResource("22_a61om")]
+layout_mode = 2
+butt_mark_tab = NodePath("../../../..")
+mode = 1
+
+[node name="Pencil" type="TextureRect" parent="MainUIBox/HBoxContainer/MainUIBG/ButtMarkTab/ControlContainer/VBoxContainer/HBoxContainer2/EraserButton" unique_id=95559144]
+layout_mode = 0
+offset_right = 32.0
+offset_bottom = 32.0
+mouse_filter = 2
+texture = SubResource("AtlasTexture_unvh5")
+stretch_mode = 2
+
+[node name="GridButton" parent="MainUIBox/HBoxContainer/MainUIBG/ButtMarkTab/ControlContainer/VBoxContainer/HBoxContainer2" unique_id=692835937 node_paths=PackedStringArray("butt_mark_tab") instance=ExtResource("22_a61om")]
+layout_mode = 2
+butt_mark_tab = NodePath("../../../..")
+mode = 2
+
+[node name="GridIcon" type="TextureRect" parent="MainUIBox/HBoxContainer/MainUIBG/ButtMarkTab/ControlContainer/VBoxContainer/HBoxContainer2/GridButton" unique_id=845046691]
+layout_mode = 0
+offset_right = 32.0
+offset_bottom = 32.0
+mouse_filter = 2
+texture = ExtResource("24_2gb1e")
+stretch_mode = 2
+
+[node name="PalleteContainer" type="MarginContainer" parent="MainUIBox/HBoxContainer/MainUIBG/ButtMarkTab" unique_id=280207783]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 130
+theme_override_constants/margin_top = 88
+theme_override_constants/margin_right = 194
+theme_override_constants/margin_bottom = 93
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MainUIBox/HBoxContainer/MainUIBG/ButtMarkTab/PalleteContainer" unique_id=2002675761]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="Row0" type="HBoxContainer" parent="MainUIBox/HBoxContainer/MainUIBG/ButtMarkTab/PalleteContainer/VBoxContainer" unique_id=1855263881]
+custom_minimum_size = Vector2(0, 8)
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="Row1" type="HBoxContainer" parent="MainUIBox/HBoxContainer/MainUIBG/ButtMarkTab/PalleteContainer/VBoxContainer" unique_id=584270137]
+custom_minimum_size = Vector2(0, 8)
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="Row2" type="HBoxContainer" parent="MainUIBox/HBoxContainer/MainUIBG/ButtMarkTab/PalleteContainer/VBoxContainer" unique_id=26467239]
+custom_minimum_size = Vector2(0, 8)
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="Row3" type="HBoxContainer" parent="MainUIBox/HBoxContainer/MainUIBG/ButtMarkTab/PalleteContainer/VBoxContainer" unique_id=216147428]
+custom_minimum_size = Vector2(0, 8)
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[connection signal="pressed" from="ControlButtons/VBoxContainer/HBoxContainer/ImportButton" to="ControlButtons/VBoxContainer/HBoxContainer/ImportButton" method="_on_pressed"]
+[connection signal="pressed" from="ControlButtons/VBoxContainer/HBoxContainer/CreateButton" to="ControlButtons/VBoxContainer/HBoxContainer/CreateButton" method="_on_pressed"]
+[connection signal="pressed" from="ControlButtons/VBoxContainer/HBoxContainer/ExportButton" to="ControlButtons/VBoxContainer/HBoxContainer/ExportButton" method="_on_pressed"]
+[connection signal="mouse_entered" from="MainUIBox/HBoxContainer/VBoxContainer/BodyTab" to="MainUIBox" method="_on_body_tab_mouse_entered"]
+[connection signal="mouse_exited" from="MainUIBox/HBoxContainer/VBoxContainer/BodyTab" to="MainUIBox" method="_on_body_tab_mouse_exited"]
+[connection signal="toggled" from="MainUIBox/HBoxContainer/VBoxContainer/BodyTab" to="MainUIBox" method="_on_body_tab_toggled"]
+[connection signal="mouse_entered" from="MainUIBox/HBoxContainer/VBoxContainer/HeadTab" to="MainUIBox" method="_on_head_tab_mouse_entered"]
+[connection signal="mouse_exited" from="MainUIBox/HBoxContainer/VBoxContainer/HeadTab" to="MainUIBox" method="_on_head_tab_mouse_exited"]
+[connection signal="toggled" from="MainUIBox/HBoxContainer/VBoxContainer/HeadTab" to="MainUIBox" method="_on_head_tab_toggled"]
+[connection signal="mouse_entered" from="MainUIBox/HBoxContainer/VBoxContainer/ManeTab" to="MainUIBox" method="_on_mane_tab_mouse_entered"]
+[connection signal="mouse_exited" from="MainUIBox/HBoxContainer/VBoxContainer/ManeTab" to="MainUIBox" method="_on_mane_tab_mouse_exited"]
+[connection signal="toggled" from="MainUIBox/HBoxContainer/VBoxContainer/ManeTab" to="MainUIBox" method="_on_mane_tab_toggled"]
+[connection signal="mouse_entered" from="MainUIBox/HBoxContainer/VBoxContainer/TailTab" to="MainUIBox" method="_on_tail_tab_mouse_entered"]
+[connection signal="mouse_exited" from="MainUIBox/HBoxContainer/VBoxContainer/TailTab" to="MainUIBox" method="_on_tail_tab_mouse_exited"]
+[connection signal="toggled" from="MainUIBox/HBoxContainer/VBoxContainer/TailTab" to="MainUIBox" method="_on_tail_tab_toggled"]
+[connection signal="mouse_entered" from="MainUIBox/HBoxContainer/VBoxContainer/AccessoriesTab" to="MainUIBox" method="_on_accessories_tab_mouse_entered"]
+[connection signal="mouse_exited" from="MainUIBox/HBoxContainer/VBoxContainer/AccessoriesTab" to="MainUIBox" method="_on_accessories_tab_mouse_exited"]
+[connection signal="toggled" from="MainUIBox/HBoxContainer/VBoxContainer/AccessoriesTab" to="MainUIBox" method="_on_accessories_tab_toggled"]
+[connection signal="mouse_entered" from="MainUIBox/HBoxContainer/VBoxContainer/ButtMarkTab" to="MainUIBox" method="_on_butt_mark_tab_mouse_entered"]
+[connection signal="mouse_exited" from="MainUIBox/HBoxContainer/VBoxContainer/ButtMarkTab" to="MainUIBox" method="_on_butt_mark_tab_mouse_exited"]
+[connection signal="toggled" from="MainUIBox/HBoxContainer/VBoxContainer/ButtMarkTab" to="MainUIBox" method="_on_butt_mark_tab_toggled"]

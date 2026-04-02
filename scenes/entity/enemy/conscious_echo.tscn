@@ -1,6 +1,6 @@
-[gd_scene load_steps=43 format=3 uid="uid://my073joldnn2"]
+[gd_scene format=3 uid="uid://my073joldnn2"]
 
-[ext_resource type="Shader" uid="uid://u00pcqkterl1" path="res://shaders/global_materials/conscious_echo.gdshader" id="1_60ee8"]
+[ext_resource type="Shader" uid="uid://u00pcqkterl1" path="res://assets/shader/global_materials/conscious_echo.gdshader" id="1_60ee8"]
 [ext_resource type="Script" uid="uid://dwpn5kdcjyfto" path="res://scripts/entity/enemy/conscious_echo/conscious_echo.gd" id="1_xnqx8"]
 [ext_resource type="Texture2D" uid="uid://dapqfibwa4e6p" path="res://sprites/entity/enemy/lab/conscious_echo.png" id="2_xnqx8"]
 [ext_resource type="Script" uid="uid://dpg4m48o2dkqs" path="res://scripts/entity/enemy/_abstract/abstract_brain.gd" id="4_0415p"]
