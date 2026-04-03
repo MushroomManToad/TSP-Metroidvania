@@ -41,6 +41,16 @@ func load_screen_by_id(id : Menu):
 func _load_screen_internal(id : Menu):
 	GameManager.get_tree().change_scene_to_file(menu_scenes_by_id.get(id))
 
+func load_save_game(file_number):
+	game_state = GameStates.STATES.IN_GAME
+	## TODO: Connection between the LevelManager and PersistentInventory
+	# to load the correct file in the correct place with the correct data.
+	
+	# For now, just close the menu and load the demo scene.
+	if get_viewport():
+		get_viewport().gui_release_focus()
+	GameManager.LevelManager.load_scene("dev/demo_stage", Vector2(0.0, 26.0))
+
 enum RunMode {
 	QUICKSTART_0,
 	QUICKSTART_DEMO,

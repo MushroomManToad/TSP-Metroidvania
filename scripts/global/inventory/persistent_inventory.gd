@@ -106,5 +106,5 @@ func get_char_dict(file_num) -> Dictionary:
 		var json_as_dict = JSON.parse_string(json_as_text)
 		return json_as_dict
 	else:
-		push_error("ERROR READING CHARACTER FILE", str(file_num))
+		push_error("ERROR READING CHARACTER FILE ", str(file_num))
 		return {}

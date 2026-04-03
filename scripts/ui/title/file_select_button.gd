@@ -24,7 +24,7 @@ func load_save_game_prompt(page : int):
 	has_save_data = true
 	page_num = page
 	# TODO: Load Char and Progress Sprite
-	var json_as_dict = GameManager.PersistentInventory.get_char_dict(page * 3 + file_num)
+	var json_as_dict = GameManager.PersistentInventory.get_char_dict(file_number())
 	# Load Pone
 	## pony_base.pony_importer_exporter.import_pony(json_as_dict)
 	# Load Filename
@@ -35,10 +35,10 @@ func load_save_game_prompt(page : int):
 func _on_pressed() -> void:
 	if has_save_data:
 		# Load savegame into actual game
-		GameManager.start_game(file_number())
+		GameManager.RuntimeStateHandler.load_save_game(file_number())
 	else:
 		# Load file creation page with correct filenum
-		GameManager.load_character_creator_by_number(file_number())
+		GameManager.RuntimeStateHandler.load_screen_by_id(file_number())
 	pass # Replace with function body.
 
 func file_number() -> int:
