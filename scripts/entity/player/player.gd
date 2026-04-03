@@ -133,8 +133,8 @@ func get_previous_frame_velocity() -> Vector2:
 
 ## Controllers
 # Core Variables for vertical speeds.
-const JUMP_VELOCITY = -150.0
-const GRAVITY = 10
+const JUMP_VELOCITY = -300.0
+const GRAVITY = 20
 # Duration (frames) that jump can be held to 
 const MAX_JUMP_TIME : int = 11
 # Max time (frames) a jump can be buffered for
@@ -273,13 +273,13 @@ func charge_double_jump() -> void:
 func is_double_jump_charged() -> bool:
 	## TODO: Additional logic for before double jump is unlocked
 	## Or when it is disabled.
-	return double_jump_charged
+	return double_jump_charged and not is_dashing()
 
 func can_standard_jump() -> bool:
 	# True if the player is on the floor or has coyote time
 	var floor_or_coyote : bool = is_on_floor() or (not is_on_floor() and coyote_time_elapsed <= MAX_COYOTE_TIME)
 	# Can jump if above is met AND we are not in a parry
-	return floor_or_coyote and not is_parrying()
+	return floor_or_coyote and not is_parrying() and not is_dashing()
 
 func can_double_jump() -> bool:
 	# Can double jump if the above condition fails, 
@@ -299,12 +299,12 @@ func can_double_jump() -> bool:
 ##                                                                           ##
 ###############################################################################
 # Horizontal Base Walk Speed
-const WALK_SPEED : float = 100.0
+const WALK_SPEED : float = 200.0
 # When dash is held, speed increases by this multiplier on the ground
 const SPRINT_MULTIPLIER : float = 1.5
 
-const WALK_ACCEL_GROUNDED : float = 33.3
-const WALK_ACCEL_AIRBORN : float = 33.0
+const WALK_ACCEL_GROUNDED : float = 66.7
+const WALK_ACCEL_AIRBORN : float = 66.0
 
 # Directional input trackers
 var left_held : bool = false
@@ -477,7 +477,7 @@ const DASH_COOLDOWN : int = 46
 # Dash duration
 const DASH_DURATION : int = 10
 # Dash Speed 
-const DASH_SPEED : float = 300
+const DASH_SPEED : float = 450
 
 # Dash buffer tracker - consumed on Dash started
 var dash_buffered : bool = false

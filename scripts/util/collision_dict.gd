@@ -1,0 +1,62 @@
+class_name CollisionDict
+
+extends Node
+
+static var TEMPLATE : Holder = Holder.new(
+	0b00000000_00000000_00000000_00000000,
+	0b00000000_00000000_00000000_00000000
+)
+
+static var GROUND : Holder = Holder.new(
+	0b00000000_00000000_00000100_00000000,
+	0b00000000_00000000_00100000_00100010
+)
+
+static var PLAYER_COLLISION : Holder = Holder.new(
+	0b00000000_00000000_00000000_00000010,
+	0b00000000_00000000_00101100_00000000
+)
+
+static var PLAYER_HURTBOX : Holder = Holder.new(
+	0b00000000_00000000_00000000_00000100,
+	0b00000000_00000000_00000001_10000000
+)
+
+static var PLAYER_ATTACK : Holder = Holder.new(
+	0b00000000_00000000_00000000_00001000,
+	0b00000000_00000000_00101100_01000000
+)
+
+static var ENEMY_ATTACK_PARRAYABLE : Holder = Holder.new(
+	0b00000000_00000000_00000000_10000000,
+	0b00000000_00000000_00000000_00010100
+)
+
+static var ENEMY_ATTACK_NON_PARRAYABLE : Holder = Holder.new(
+	0b00000000_00000000_00000001_00000000,
+	0b00000000_00000000_00000000_00000100
+)
+
+static var INTERACTABLE_AREA : Holder = Holder.new(
+	0b00000000_00000000_00010000_00000000,
+	0b00000000_00000000_01000000_00000000
+)
+
+static var PLAYER_INTERACT_BOX : Holder = Holder.new(
+	0b00000000_00000000_01000000_00000000,
+	0b00000000_00000000_00010000_00000000
+)
+
+class Holder:
+	var layer : int
+	var mask : int
+	
+	func _init(_layer : int, _mask : int) -> void:
+		layer = _layer
+		mask = _mask
+	
+	func get_layer() -> int:
+		return layer
+	
+	func get_mask() -> int:
+		return mask

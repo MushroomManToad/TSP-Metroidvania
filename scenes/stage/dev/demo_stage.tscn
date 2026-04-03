@@ -1,6 +1,7 @@
-[gd_scene load_steps=7 format=4 uid="uid://bmsd00gckc4m7"]
+[gd_scene format=4 uid="uid://bmsd00gckc4m7"]
 
 [ext_resource type="Texture2D" uid="uid://27hwfuugy3k6" path="res://sprites/tile/demo_floor_tile.png" id="1_lauy8"]
+[ext_resource type="Script" uid="uid://u4j2hhar111c" path="res://scripts/common/ground.gd" id="2_3nqlq"]
 [ext_resource type="PackedScene" uid="uid://i3hv5ygany10" path="res://scenes/object/dev/dev_door.tscn" id="2_dqr1d"]
 [ext_resource type="PackedScene" uid="uid://my073joldnn2" path="res://scenes/entity/enemy/conscious_echo.tscn" id="4_3nqlq"]
 [ext_resource type="PackedScene" uid="uid://desh8eqdth02q" path="res://scenes/entity/enemy/slime_crawler.tscn" id="4_dqr1d"]
@@ -17,23 +18,24 @@ physics_layer_0/collision_layer = 1024
 physics_layer_0/collision_mask = 254
 sources/0 = SubResource("TileSetAtlasSource_80uj1")
 
-[node name="DemoStage" type="Node2D"]
+[node name="DemoStage" type="Node2D" unique_id=293576558]
 
-[node name="Ground" type="TileMapLayer" parent="."]
+[node name="Ground" type="TileMapLayer" parent="." unique_id=1558824784]
 tile_map_data = PackedByteArray("AAD5/wcAAAAAAAAAAAD6/wcAAAAAAAAAAAD7/wcAAAAAAAAAAAD8/wcAAAAAAAAAAAD9/wcAAAAAAAAAAAD+/wcAAAAAAAAAAAD//wcAAAAAAAAAAAD4/wcAAAAAAAAAAAD3/wcAAAAAAAAAAAD2/wcAAAAAAAAAAAAAAAcAAAAAAAAAAAABAAcAAAAAAAAAAAACAAcAAAAAAAAAAAADAAcAAAAAAAAAAAAEAAcAAAAAAAAAAAAFAAcAAAAAAAAAAAAGAAcAAAAAAAAAAAAHAAcAAAAAAAAAAAAIAAcAAAAAAAAAAAAJAAcAAAAAAAAAAAAKAAcAAAAAAAAAAAALAAcAAAAAAAAAAAAMAAcAAAAAAAAAAAANAAcAAAAAAAAAAAAOAAcAAAAAAAAAAAAPAAcAAAAAAAAAAAAQAAcAAAAAAAAAAAARAAcAAAAAAAAAAAASAAcAAAAAAAAAAAATAAcAAAAAAAAAAAAUAAcAAAAAAAAAAAAVAAcAAAAAAAAAAAAWAAcAAAAAAAAAAAAXAAcAAAAAAAAAAAAYAAcAAAAAAAAAAAAZAAcAAAAAAAAAAAAaAAcAAAAAAAAAAAAbAAcAAAAAAAAAAAAcAAcAAAAAAAAAAAAdAAcAAAAAAAAAAAAeAAcAAAAAAAAAAAD1/wcAAAAAAAAAAAD0/wcAAAAAAAAAAADz/wcAAAAAAAAAAADy/wcAAAAAAAAAAADx/wcAAAAAAAAAAADw/wcAAAAAAAAAAADv/wcAAAAAAAAAAADu/wcAAAAAAAAAAADt/wcAAAAAAAAAAADs/wcAAAAAAAAAAADr/wcAAAAAAAAAAAD6/wYAAAAAAAAAAAD2/wUAAAAAAAAAAADz/wQAAAAAAAAAAADw/wMAAAAAAAAAAADt/wIAAAAAAAAAAADq/wEAAAAAAAAAAADn/wAAAAAAAAAAAADq/wcAAAAAAAAAAADp/wcAAAAAAAAAAADo/wcAAAAAAAAAAADn/wcAAAAAAAAAAADm/wcAAAAAAAAAAADl/wcAAAAAAAAAAADk/wcAAAAAAAAAAAADAAMAAAAAAAAAAAAFAP//AAAAAAAAAAAHAPv/AAAAAAAAAAAJAPf/AAAAAAAAAAALAPP/AAAAAAAAAAANAO//AAAAAAAAAAA5AAcAAAAAAAAAAAA6AAcAAAAAAAAAAAA7AAcAAAAAAAAAAAA8AAcAAAAAAAAAAAA9AAcAAAAAAAAAAAA+AAcAAAAAAAAAAAA/AAcAAAAAAAAAAABAAAcAAAAAAAAAAABBAAcAAAAAAAAAAABCAAcAAAAAAAAAAABDAAcAAAAAAAAAAABEAAcAAAAAAAAAAAAMAAIAAAAAAAAAAAANAAIAAAAAAAAAAAAOAAIAAAAAAAAAAAAPAAIAAAAAAAAAAAAQAAIAAAAAAAAAAAARAAIAAAAAAAAAAABHAAcAAAAAAAAAAABIAAYAAAAAAAAAAABHAAUAAAAAAAAAAABIAAQAAAAAAAAAAABHAAMAAAAAAAAAAABKAAIAAAAAAAAAAABLAAEAAAAAAAAAAABKAAAAAAAAAAAAAABLAP//AAAAAAAAAABKAP7/AAAAAAAAAABHAP3/AAAAAAAAAABIAPz/AAAAAAAAAABHAPv/AAAAAAAAAABIAPr/AAAAAAAAAABHAPn/AAAAAAAAAABKAPj/AAAAAAAAAABLAPf/AAAAAAAAAABKAPb/AAAAAAAAAABLAPX/AAAAAAAAAABKAPT/AAAAAAAAAABHAPP/AAAAAAAAAABIAPL/AAAAAAAAAABHAPH/AAAAAAAAAABIAPD/AAAAAAAAAABHAO//AAAAAAAAAABKAO7/AAAAAAAAAABLAO3/AAAAAAAAAABKAOz/AAAAAAAAAABLAOv/AAAAAAAAAABKAOr/AAAAAAAAAAA=")
 tile_set = SubResource("TileSet_wjt6y")
+script = ExtResource("2_3nqlq")
 
-[node name="dev_door" parent="." instance=ExtResource("2_dqr1d")]
+[node name="dev_door" parent="." unique_id=1167765282 instance=ExtResource("2_dqr1d")]
 position = Vector2(55, 40)
 scene_to_load = "dev/platformer_demo"
 player_spawn_position = Vector2(-33, -16)
 
-[node name="SlimeCrawler" parent="." instance=ExtResource("4_dqr1d")]
+[node name="SlimeCrawler" parent="." unique_id=978811094 instance=ExtResource("4_dqr1d")]
 position = Vector2(117, 13)
 
-[node name="ConsciousEcho" parent="." instance=ExtResource("4_3nqlq")]
+[node name="ConsciousEcho" parent="." unique_id=1244704284 instance=ExtResource("4_3nqlq")]
 position = Vector2(235, 55)
 
-[node name="dev_door2" parent="." instance=ExtResource("2_dqr1d")]
+[node name="dev_door2" parent="." unique_id=1208034316 instance=ExtResource("2_dqr1d")]
 position = Vector2(-19, 40)
 scene_to_load = "reaping_grounds/reaping_grounds_crater"

@@ -25,7 +25,7 @@ func _on_ready():
 			pass
 		RunMode.QUICKSTART_DEMO:
 			## Loads demo_scene
-			GameManager.LevelManager.load_scene("dev/demo_stage", Vector2(0.0, 26.0))
+			GameManager.LevelManager.load_scene("dev/demo_scene_64", Vector2(0.0, 26.0))
 			game_state = GameStates.STATES.IN_GAME
 		RunMode.TITLE:
 			## Loads from Title Screen (DEFAULT. ALWAYS EXPORT WITH THIS.)
@@ -49,7 +49,7 @@ func load_save_game(file_number):
 	# For now, just close the menu and load the demo scene.
 	if get_viewport():
 		get_viewport().gui_release_focus()
-	GameManager.LevelManager.load_scene("dev/demo_stage", Vector2(0.0, 26.0))
+	GameManager.LevelManager.load_scene("dev/demo_scene_64", Vector2(0.0, 26.0))
 
 enum RunMode {
 	QUICKSTART_0,
