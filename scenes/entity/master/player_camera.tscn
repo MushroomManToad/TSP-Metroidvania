@@ -4,7 +4,6 @@
 
 [node name="PlayerCamera" type="Camera2D" unique_id=872098950]
 process_callback = 0
-limit_bottom = 64
 position_smoothing_enabled = true
 position_smoothing_speed = 8.0
 script = ExtResource("1_rbfk0")

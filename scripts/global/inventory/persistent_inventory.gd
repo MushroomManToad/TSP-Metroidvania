@@ -32,14 +32,17 @@ func on_ready():
 	Map.on_ready(self)
 	WorldData.on_ready(self)
 
+func file_exists(file_num : int) -> bool:
+	return FileAccess.file_exists(get_save_filepath(file_num))
+
 ## Primary function called when a save file is loaded
-func load_game(id):
-	if not FileAccess.file_exists("user://save" + str(id) + ".floof"):
-		push_error("A CRITICAL ERROR HAS OCCURRED: SAVE FILE NOT FOUND!")
+func load_game(file_num : int):
+	if not FileAccess.file_exists(get_save_filepath(file_num)):
+		push_error("A CRITICAL ERROR HAS OCCURRED: SAVE FILE NOT FOUND! #", file_num)
 		## TODO: Try backup file
 		return
 	
-	var save_file = FileAccess.open("user://save" + str(id) + ".floof", FileAccess.READ)
+	var save_file = FileAccess.open(get_save_filepath(file_num), FileAccess.READ)
 	
 	var array_of_data = []
 	
@@ -69,8 +72,8 @@ func load_game(id):
 		WorldData.load_data(array_of_data[5])
 
 ## Primary function called when the game is saved
-func save_game(id):
-	var save_file = FileAccess.open("user://save" + str(id) + ".floof", FileAccess.WRITE)
+func save_game(file_num : int):
+	var save_file = FileAccess.open(get_save_filepath(file_num), FileAccess.WRITE)
 	if save_file:
 		# Additional Data
 		save_file.store_line(JSON.stringify(AdditionalData.get_save_data()))
@@ -85,3 +88,23 @@ func save_game(id):
 		# World Data
 		save_file.store_line(JSON.stringify(WorldData.get_save_data()))
 		save_file.close()
+
+# Helper function to guarantee filepath is consistent
+func get_save_filepath(file_num : int) -> String:
+	return "user://save" + str(file_num) + ".floof"
+
+# Helper function to get the player's avatar file
+func get_char_filepath(file_num : int) -> String:
+	return "user://save" + str(file_num) + ".char"
+
+# Helper function (used externally) to get the JSON dictionary for
+# character loading for a furry from a given save file_num
+# TODO: Use #get_char_dict_name to get a specific character's dict
+func get_char_dict(file_num) -> Dictionary:
+	if FileAccess.file_exists(get_char_filepath(file_num)):
+		var json_as_text = FileAccess.get_file_as_string(get_char_filepath(file_num))
+		var json_as_dict = JSON.parse_string(json_as_text)
+		return json_as_dict
+	else:
+		push_error("ERROR READING CHARACTER FILE", str(file_num))
+		return {}

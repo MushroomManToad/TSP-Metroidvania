@@ -12,9 +12,6 @@ var PersistentInventory: Persistent_Inventory
 # THIS CLASS MANAGES RUNTIME STATE SWITCHES. GAME LAUNCH MODE HERE.
 var RuntimeStateHandler : Runtime_State_Handler
 
-## Game State Tracker
-var game_state : int = GameStates.STATES.IN_GAME
-
 ## Instantiable Variables
 const PAUSE_SCREEN = preload("res://scenes/ui/pause_screen.tscn")
 
@@ -49,7 +46,7 @@ func _physics_process(_delta: float) -> void:
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("Pause"):
 		# Only run the pause check loop if we are in-game
-		match game_state:
+		match RuntimeStateHandler.game_state:
 			GameStates.STATES.IN_GAME:
 				if !get_tree().paused:
 					PersistentInventory.save_game(1)

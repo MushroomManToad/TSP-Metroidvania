@@ -10,8 +10,7 @@ var has_save_data : bool = false
 @export var file_num : int
 var page_num : int = 0
 
-@onready var pony_name: RichTextLabel = $SaveDisplay/VBoxContainer/MarginContainer2/Name
-@onready var pony_base: PonyBase = $SaveDisplay/VBoxContainer/MarginContainer/PonyBase
+@onready var file_name: RichTextLabel = $SaveDisplay/VBoxContainer/MarginContainer2/Name
 
 func load_new_file_prompt(page : int):
 	new_file.visible = true
@@ -24,24 +23,14 @@ func load_save_game_prompt(page : int):
 	save_display.visible = true
 	has_save_data = true
 	page_num = page
-	# Load Horse and Progress Sprite
-	if FileAccess.file_exists(get_pony_filepath(page)):
-		var json_as_text = FileAccess.get_file_as_string(get_pony_filepath(page))
-		var json_as_dict = JSON.parse_string(json_as_text)
-		if json_as_dict is Dictionary:
-			# Load Pone
-			pony_base.pony_importer_exporter.import_pony(json_as_dict)
-			# Load Filename
-			pony_name.text = json_as_dict.get(PonyImporterExporter.id_pony_name, "FAILED TO LOAD NAME")
-	else:
-		pony_name.text = "ERROR READING FILE"
+	# TODO: Load Char and Progress Sprite
+	var json_as_dict = GameManager.PersistentInventory.get_char_dict(page * 3 + file_num)
+	# Load Pone
+	## pony_base.pony_importer_exporter.import_pony(json_as_dict)
+	# Load Filename
+	## pony_name.text = json_as_dict.get(PonyImporterExporter.id_pony_name, "FAILED TO LOAD NAME")
 	## TODO: Load Save Progress Sprites/Data
 	pass
-
-func get_pony_filepath(page : int) -> String:
-	return GameManager.USER + GameManager.saves_local_path + "/" + \
-		GameManager.SAVE_MANAGER.save_name + str(page * 3 + file_num) + \
-		GameManager.SAVE_MANAGER.pony_ext
 
 func _on_pressed() -> void:
 	if has_save_data:

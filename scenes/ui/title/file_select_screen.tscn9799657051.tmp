@@ -87,6 +87,7 @@ texture_hover = SubResource("AtlasTexture_7et63")
 texture_disabled = SubResource("AtlasTexture_b7ktr")
 texture_focused = SubResource("AtlasTexture_jdf40")
 script = ExtResource("4_oc50i")
+file_num = null
 
 [node name="NewFile" type="MarginContainer" parent="MarginContainer/VBoxContainer/File1" unique_id=2125914029]
 visible = false

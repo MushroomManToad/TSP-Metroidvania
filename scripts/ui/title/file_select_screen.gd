@@ -94,4 +94,4 @@ func load_page_by_number(page_num : int):
 		file_3.load_new_file_prompt(page_num)
 
 func save_file_exists(id : int) -> bool:
-	return GameManager.SAVE_MANAGER.file_exists(id)
+	return GameManager.PersistentInventory.file_exists(id)

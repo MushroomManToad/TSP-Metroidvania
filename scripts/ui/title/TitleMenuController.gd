@@ -65,7 +65,7 @@ func start_game():
 	start_button.toggle_mode = false
 	start_button.button_pressed = false
 	
-	GameManager.load_file_select_screen()
+	GameManager.RuntimeStateHandler.load_screen_by_id(Runtime_State_Handler.Menu.FILE_SELECT)
 
 func open_settings():
 	settings_button.toggle_mode = false
