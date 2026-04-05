@@ -30,6 +30,8 @@ region = Rect2(0, 32, 128, 32)
 [node name="TitleScreen" type="Node" unique_id=309030268]
 
 [node name="Objects" type="Node2D" parent="." unique_id=1556749193]
+position = Vector2(640, 360)
+scale = Vector2(2, 2)
 
 [node name="Background" type="Sprite2D" parent="Objects" unique_id=1596435106]
 texture = ExtResource("1_cbih2")
@@ -81,8 +83,11 @@ layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_right = -640.0
+offset_bottom = -360.0
 grow_horizontal = 2
 grow_vertical = 2
+scale = Vector2(2, 2)
 
 [node name="VBoxContainer" type="VBoxContainer" parent="UI/UI" unique_id=586842711]
 layout_mode = 1

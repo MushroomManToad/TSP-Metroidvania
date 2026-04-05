@@ -1,8 +1,8 @@
 extends CanvasLayer
 
-@onready var file_1: FileSelectButton = $MarginContainer/VBoxContainer/File1
-@onready var file_2: FileSelectButton = $MarginContainer/VBoxContainer/File2
-@onready var file_3: FileSelectButton = $MarginContainer/VBoxContainer/File3
+@onready var file_1: FileSelectButton = $UI/MarginContainer/VBoxContainer/File1
+@onready var file_2: FileSelectButton = $UI/MarginContainer/VBoxContainer/File2
+@onready var file_3: FileSelectButton = $UI/MarginContainer/VBoxContainer/File3
 
 var pressed_button : TextureButton
 

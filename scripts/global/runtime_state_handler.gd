@@ -39,7 +39,7 @@ func load_screen_by_id(id : Menu):
 
 # Helper function for loading the title screen
 func _load_screen_internal(id : Menu):
-	GameManager.get_tree().change_scene_to_file(menu_scenes_by_id.get(id))
+	GameManager.GAME.set_ui_layer(menu_scenes_by_id.get(id))
 
 func load_save_game(file_number):
 	game_state = GameStates.STATES.IN_GAME

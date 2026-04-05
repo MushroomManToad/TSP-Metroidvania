@@ -1,3 +1,22 @@
 [gd_scene format=3 uid="uid://ix7cg6fl6a7g"]
 
-[node name="Empty" type="Node2D"]
+[ext_resource type="Script" uid="uid://dhwueebtpxunj" path="res://scripts/global/game.gd" id="1_dhfj1"]
+
+[node name="Game" type="Node" unique_id=1720701876]
+script = ExtResource("1_dhfj1")
+
+[node name="MainViewport" type="SubViewportContainer" parent="." unique_id=1277802778]
+texture_filter = 1
+offset_right = 40.0
+offset_bottom = 40.0
+scale = Vector2(2, 2)
+
+[node name="Viewport" type="SubViewport" parent="MainViewport" unique_id=1455467031]
+handle_input_locally = false
+canvas_item_default_texture_filter = 0
+size = Vector2i(640, 360)
+render_target_update_mode = 4
+
+[node name="GameRoot" type="Node2D" parent="MainViewport/Viewport" unique_id=909849959]
+
+[node name="GUI" type="CanvasLayer" parent="." unique_id=173014565]

@@ -1,7 +1,9 @@
 class_name Level_Manager
 
+# If existing, stores the player, camera, and stage respectively
 var player : PlayerController
 var player_camera : PlayerCamera
+var loaded_scene : Node
 
 # Variables for scene reloading - track the variables passed to load scene for
 # later reloading
@@ -12,9 +14,7 @@ const PLAYER = preload("uid://csdluako5yquq")
 const PLAYER_CAMERA = preload("uid://cpytagekewbib")
 
 func on_ready():
-	# Camera should be loaded dynamically and should persist across levels
-	player_camera = PLAYER_CAMERA.instantiate()
-	GameManager.get_tree().root.add_child(player_camera)
+	pass
 
 ## TODO: Eventually the "total unload" logic here will be passed onto the
 ## biome loader for faster scene loading per-biome. When that is done,
@@ -30,7 +30,7 @@ func load_scene(scene_name : String, player_spawn_pos : Vector2):
 		passable_player_data = PlayerData.PlayerDataPacket.create_with_defaults()
 	## TODO: Read in scene semi-persistent data (if it exists, or create new)
 	## Load new scene (this method unloads the previous scene completely.)
-	GameManager.get_tree().change_scene_to_file("scenes/stage/" + scene_name + ".tscn")
+	GameManager.GAME.load_main_scene(scene_name)
 	## Load new Player
 	player = PLAYER.instantiate()
 	# Set player spawn position as passed
@@ -38,8 +38,14 @@ func load_scene(scene_name : String, player_spawn_pos : Vector2):
 	# Pass Player appropriate player data
 	player.player_data.load_data_from_packet(passable_player_data)
 	# Add as child to tree
-	GameManager.get_tree().root.add_child(player)
+	GameManager.GAME.load_player(player)
 	# TODO: Temp call just so the camera still follows the player
+	
+	# Camera should be loaded dynamically
+	if player_camera:
+		player_camera.queue_free()
+	player_camera = PLAYER_CAMERA.instantiate()
+	GameManager.GAME.load_camera(player_camera)
 	player_camera.target = player
 	## TODO: Pass scene appropriate scene semi-persistent data
 	

@@ -12,6 +12,8 @@ var PersistentInventory: Persistent_Inventory
 # THIS CLASS MANAGES RUNTIME STATE SWITCHES. GAME LAUNCH MODE HERE.
 var RuntimeStateHandler : Runtime_State_Handler
 
+var GAME : Game
+
 ## Instantiable Variables
 const PAUSE_SCREEN = preload("res://scenes/ui/pause_screen.tscn")
 

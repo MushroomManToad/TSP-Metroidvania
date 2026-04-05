@@ -35,6 +35,7 @@ func load_save_game_prompt(page : int):
 func _on_pressed() -> void:
 	if has_save_data:
 		# Load savegame into actual game
+		GameManager.GAME.clean_ui()
 		GameManager.RuntimeStateHandler.load_save_game(file_number())
 	else:
 		# Load file creation page with correct filenum
