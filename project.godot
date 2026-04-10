@@ -27,8 +27,10 @@ GameManager="*res://scripts/global/game_manager.gd"
 
 window/size/viewport_width=1280
 window/size/viewport_height=720
+window/size/mode=4
 window/stretch/mode="viewport"
 window/stretch/scale_mode="integer"
+window/snap/snap_2d_transforms_to_pixel=false
 
 [dotnet]
 
@@ -127,3 +129,4 @@ Pause={
 [rendering]
 
 textures/canvas_textures/default_texture_filter=0
+2d/snap/snap_2d_transforms_to_pixel=true

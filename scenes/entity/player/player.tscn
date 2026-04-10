@@ -7,6 +7,7 @@
 [ext_resource type="Script" uid="uid://d1kykym85lg4y" path="res://scripts/entity/player/player_hurt_box.gd" id="5_njr5w"]
 [ext_resource type="Script" uid="uid://pn31uq1r2dh5" path="res://scripts/entity/player/player_sprite.gd" id="6_bu3a2"]
 [ext_resource type="Texture2D" uid="uid://dhu5v1oc854ds" path="res://sprites/entity/player/player_t_pose.png" id="7_bu3a2"]
+[ext_resource type="Script" uid="uid://6qkyuurc08ex" path="res://scripts/common/animated_sprite_c_2d.gd" id="8_jhnb8"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wnwc1"]
 size = Vector2(18, 45)
@@ -100,6 +101,7 @@ animations = [{
 [node name="Player" type="CharacterBody2D" unique_id=1377581810 node_paths=PackedStringArray("player_sprite", "attack_box", "attack_collision_shape", "player_data", "player_hurtbox", "player_interact_box")]
 collision_layer = 2
 collision_mask = 11264
+floor_snap_length = 0.0
 script = ExtResource("1_bnb2f")
 player_sprite = NodePath("PlayerSprite")
 attack_box = NodePath("AttackBox")
@@ -160,11 +162,13 @@ anim_player = NodePath("PlayerSpriteAnimPlayer")
 libraries/ = SubResource("AnimationLibrary_q5dhb")
 autoplay = &"player_idle"
 
-[node name="PlayerSpriteMain" type="AnimatedSprite2D" parent="PlayerSprite" unique_id=996815277]
+[node name="PlayerSpriteMain" type="AnimatedSprite2D" parent="PlayerSprite" unique_id=1080085688]
 position = Vector2(0, -27)
 sprite_frames = SubResource("SpriteFrames_x2cqc")
 animation = &"player_idle"
 autoplay = "player_idle"
+script = ExtResource("8_jhnb8")
+metadata/_custom_type_script = "uid://6qkyuurc08ex"
 
 [connection signal="jumped" from="." to="PlayerData" method="_on_player_jumped"]
 [connection signal="take_damage" from="HurtBox" to="PlayerData" method="_on_take_damage"]

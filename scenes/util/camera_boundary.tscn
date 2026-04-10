@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://cfvi75uuqvlw5"]
+
+[ext_resource type="Script" uid="uid://m26sl6wc7qo3" path="res://scripts/object/generic/camera_boundary.gd" id="1_piep6"]
+
+[node name="CameraBoundary" type="Node2D" unique_id=212158660]
+script = ExtResource("1_piep6")

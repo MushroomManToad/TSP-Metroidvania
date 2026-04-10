@@ -144,7 +144,7 @@ const MAX_JUMP_BUFFER_TIME : int = 10
 # Max coyote time (frames)
 const MAX_COYOTE_TIME : int = 6
 # Maximum fall velocity
-const MAX_FALL_SPEED : float = 1000.0
+const MAX_FALL_SPEED : float = 1020.0
 
 # True when jump has been pressed and not yet consumed by jump start.
 var jump_buffered : bool = false
@@ -188,7 +188,7 @@ func jump_physics_process(_delta: float) -> void:
 		vel_gravity.y += GRAVITY + (GRAVITY * 0.5 if velocity.y < 0 else 0.0)
 		vel_gravity.y = min(vel_gravity.y, MAX_FALL_SPEED)
 	else:
-		vel_gravity.y = 0.0
+		vel_gravity.y = 80.0
 		charge_double_jump()
 
 	# First frame of jump should be shorter, and this sets up the player being

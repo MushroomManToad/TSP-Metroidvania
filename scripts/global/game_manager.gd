@@ -12,6 +12,8 @@ var PersistentInventory: Persistent_Inventory
 # THIS CLASS MANAGES RUNTIME STATE SWITCHES. GAME LAUNCH MODE HERE.
 var RuntimeStateHandler : Runtime_State_Handler
 
+var GAME_SIZE : Vector2 = Vector2(640, 360)
+
 var GAME : Game
 
 ## Instantiable Variables

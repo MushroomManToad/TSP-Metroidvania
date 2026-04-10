@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://d2pk8dts03j41"]
+
+[ext_resource type="Script" uid="uid://snpbh531r6gn" path="res://scripts/common/sprite_c_2d.gd" id="1_0dstv"]
+
+[node name="SpriteC2D" type="Sprite2D" unique_id=241690173]
+script = ExtResource("1_0dstv")

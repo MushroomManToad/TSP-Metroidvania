@@ -4,6 +4,7 @@ extends Node
 
 @onready var game_root: Node2D = $MainViewport/Viewport/GameRoot
 @onready var gui: CanvasLayer = $GUI
+@onready var main_viewport: ViewportController = $MainViewport
 
 func _ready() -> void:
 	GameManager.GAME = self

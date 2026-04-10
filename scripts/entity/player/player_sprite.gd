@@ -8,7 +8,7 @@ const PLAYER_RUN : String = "player_run"
 
 # Import Variables
 @export var player : PlayerController
-@export var sprite_main: AnimatedSprite2D
+@export var sprite_main: AnimatedSpriteC2D
 @export var anim_player : AnimationPlayer
 
 ## Current state in the machine (set in ready for default state)

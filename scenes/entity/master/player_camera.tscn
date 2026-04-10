@@ -1,8 +1,11 @@
 [gd_scene format=3 uid="uid://cpytagekewbib"]
 
-[ext_resource type="Script" uid="uid://bn0dugb8upkr5" path="res://scripts/global/player_camera.gd" id="1_rbfk0"]
+[ext_resource type="Script" uid="uid://cpgeaodl4bj4n" path="res://scripts/global/player_camera.gd" id="1_172ln"]
 
-[node name="PlayerCamera" type="Camera2D" unique_id=872098950]
+[node name="CameraAnchor" type="Node2D" unique_id=525336041]
+script = ExtResource("1_172ln")
+
+[node name="PlayerCamera" type="Camera2D" parent="." unique_id=872098950]
+process_priority = 99
 process_callback = 0
 position_smoothing_speed = 8.0
-script = ExtResource("1_rbfk0")

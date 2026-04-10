@@ -1,20 +1,23 @@
 [gd_scene format=3 uid="uid://ix7cg6fl6a7g"]
 
 [ext_resource type="Script" uid="uid://dhwueebtpxunj" path="res://scripts/global/game.gd" id="1_dhfj1"]
+[ext_resource type="Script" uid="uid://cgj74ywdk7vrr" path="res://scripts/global/viewport_controller.gd" id="3_wvc1g"]
 
 [node name="Game" type="Node" unique_id=1720701876]
 script = ExtResource("1_dhfj1")
 
 [node name="MainViewport" type="SubViewportContainer" parent="." unique_id=1277802778]
 texture_filter = 1
-offset_right = 40.0
-offset_bottom = 40.0
+custom_minimum_size = Vector2(640, 360)
+offset_right = 1280.0
+offset_bottom = 720.0
 scale = Vector2(2, 2)
+script = ExtResource("3_wvc1g")
 
 [node name="Viewport" type="SubViewport" parent="MainViewport" unique_id=1455467031]
 handle_input_locally = false
 canvas_item_default_texture_filter = 0
-size = Vector2i(640, 360)
+size = Vector2i(1280, 720)
 render_target_update_mode = 4
 
 [node name="GameRoot" type="Node2D" parent="MainViewport/Viewport" unique_id=909849959]
