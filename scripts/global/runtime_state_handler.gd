@@ -3,7 +3,7 @@ class_name Runtime_State_Handler
 extends Node
 
 ## SET THIS VARIABLE TO AFFECT HOW THE GAME LAUNCHES
-var run_mode : RunMode = RunMode.TITLE
+var run_mode : RunMode = RunMode.QUICKSTART_DEMO
 
 ## Game State Tracker
 var game_state : int

@@ -9,7 +9,8 @@ var DEFAULT_SCALE : float = 2.0
 func _ready() -> void:
 	sync_pos_to_scale()
 
-func _process(delta: float) -> void:
+func _rescale(new_scale : float) -> void:
+	scale = Vector2(new_scale, new_scale)
 	sync_pos_to_scale()
 
 func sync_pos_to_scale():
