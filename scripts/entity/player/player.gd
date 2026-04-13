@@ -190,10 +190,6 @@ func jump_physics_process(_delta: float) -> void:
 	else:
 		vel_gravity.y = 80.0
 		charge_double_jump()
-	
-	# Bonus thing to reset look timers while jumping
-	if not is_on_floor():
-		reset_look_timers()
 
 	# First frame of jump should be shorter, and this sets up the player being
 	# in the air for the rest of the jump listener 
@@ -316,14 +312,6 @@ var right_held : bool = false
 var up_held : bool = false
 var down_held : bool = false
 
-# Variables used for camera up-tilt and down-tilt
-const LOOK_TIMER_MIN = 60
-var look_up_timer : int = 0
-var look_down_timer : int = 0
-func reset_look_timers():
-	look_up_timer = 0
-	look_down_timer = 0
-
 # -1 or 1 (Facing.transform) when sprinting, 0 otherwise.
 # Set on holding dash button while on the ground on a frame where walk is calcutlated
 # And on the last frame of a dash.
@@ -342,22 +330,6 @@ func walk_physics_process(_delta : float):
 		# Get the input direction and handle the movement/deceleration.
 		# Leave this as an input call for realtime strength reading for controller
 		var stick_strength := clampf(Input.get_axis("Left", "Right"), -1.0, 1.0)
-		
-		# Handle look up and down walking. Should only run while stationary
-		if stick_strength < 0.001 and is_on_floor():
-			# Up
-			if up_held:
-				look_up_timer += 1
-			else:
-				look_up_timer = 0
-			# Down
-			if down_held:
-				look_down_timer += 1
-			else:
-				look_down_timer = 0
-		else:
-			# Otherwise reset look timers
-			reset_look_timers()
 		
 		# Variable that determines the current walking  strength and direction.
 		## Value is amount horizontal movement changes from the previous frame.
@@ -395,9 +367,6 @@ func walk_physics_process(_delta : float):
 				vel_walking.x = move_toward(previous_frame_vel.x, 0, walking_affect)
 				# When decelerating or not moving, set flag
 				is_giving_walking_input = false
-	else:
-		# If is not stationary and able to walk, reset look timers
-		reset_look_timers()
 
 ## Function to check if walking logic should be used this frame
 func can_walk() -> bool:
@@ -479,8 +448,14 @@ func walk_speed(stick_strength : float) -> float:
 		sprint_direction = 0
 	return vel
 
+# TODO: This must be robust to make sure the state is *actually* walk.
 func is_walking() -> bool:
 	return is_giving_walking_input
+
+# If the player is genuinely walking, but the dash button is held AND
+# sprint_direction matches their facing direction, then they're actually sprinting.
+func is_sprinting() -> bool:
+	return is_walking() and dash_held and sprint_direction == Facing.transform(facing)
 
 # Returns true when the player shouldn't be slowed (i.e. ice floors, 
 # parrying in air, etc.)
@@ -577,8 +552,6 @@ func dash_physics_process(_delta : float) -> void:
 		# Set dash direction based on facing direction for remembering it 
 		# through potential momentum/input updates
 		dash_direction = facing
-		# Reset Look Timers on Dash Started
-		reset_look_timers()
 	
 	# If we are in a dash, then do the dash.
 	# This check relies on dash_duration_elapsed.
@@ -746,9 +719,6 @@ func attack_physics_process(_delta : float):
 			# in case an attack ever needs to be cancelled for other reasons
 			# (i.e. taking damage)
 			end_attack()
-		# Reset Look Timers while attacking 
-		# (VERY IMPORTANT, PREVENTS CAMERA FROM BEING DUMB WHILE ATTACKING UP)
-		reset_look_timers()
 
 # Capture Attack Input
 func attack_input(event : InputEvent) -> bool:
@@ -841,9 +811,6 @@ func parry_physics_process(_delta : float):
 	if parry_buffered and can_parry():
 		# Set parry variables
 		start_parry()
-		
-		# Reset look timers on parry
-		reset_look_timers()
 		
 	# If an parry is buffered but invalid, increment buffer timer
 	elif parry_buffered:

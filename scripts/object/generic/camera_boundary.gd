@@ -9,8 +9,11 @@ func _ready() -> void:
 @export var boundary_rect: Rect2 = Rect2(-320, -180, 640, 360):
 	set(v): boundary_rect = v; queue_redraw()
 
-@export var color: Color = Color(1, 0.3, 0.3, 0.85):
-	set(v): color = v; queue_redraw()
+@export var boundary_color: Color = Color(0, 0.3, 1.0, 0.85):
+	set(v): boundary_color = v; queue_redraw()
+
+@export var look_boundary_color: Color = Color(1.0, 0.1, 0.1, 0.85):
+	set(v): look_boundary_color = v; queue_redraw()
 
 @export var line_width: float = 2.0:
 	set(v): line_width = v; queue_redraw()
@@ -23,13 +26,19 @@ func _draw() -> void:
 		return
 	var r := boundary_rect
 	
-	draw_rect(r, color, false, line_width)
+	draw_rect(r, boundary_color, false, line_width)
 	# Draw corner ticks for clarity
-	_draw_corners(r)
+	_draw_corners(r, boundary_color)
+	
+	# Look Border Rect
+	var r2 : Rect2 = r.grow(16)
+	# Second Rect
+	draw_rect(r2, look_boundary_color, false, line_width)
+	# Draw corner ticks for clarity
+	_draw_corners(r2, look_boundary_color)
 
-func _draw_corners(r: Rect2) -> void:
+func _draw_corners(r: Rect2, c : Color) -> void:
 	var tick := 12.0
-	var c := color
 	var w := line_width + 1.0
 	# Top-left
 	draw_line(r.position, r.position + Vector2(tick, 0), c, w)
