@@ -1,0 +1,3 @@
+class_name CameraFollowFocusObject
+
+extends Node2D

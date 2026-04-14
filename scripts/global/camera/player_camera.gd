@@ -1,0 +1,92 @@
+class_name PlayerCamera
+
+extends Node2D
+
+var target : PlayerController
+# Roughly 1/2 player height for camera centering.
+var player_height_offset : int = 24
+
+# Hard Limits passed from camera boundaries on load
+var hard_limits: LimitRect
+
+# Child objects for reference
+@onready var look: CameraLook = $Look
+@onready var focus_object: CameraFollowFocusObject = $Look/FocusObject
+@onready var left_right: CameraLeftRight = $Look/FocusObject/Left_Right
+@onready var player_camera: CameraEdgeSnap = $Look/FocusObject/Left_Right/PlayerCamera
+
+func _process(delta: float) -> void:
+	## First, center on the player
+	var current_position : Vector2 = center_on_player()
+	debug_cam_target_center = current_position
+	## Then, take the adjustments from whether they're looking left or right
+	current_position = left_right.get_left_right(target, current_position, delta)
+	debug_cam_lr = current_position
+	## Now, snap to edge to get a true position
+	current_position = snap_to_edge(current_position)
+	# TODO: Debug
+	## Next, get the pull of focus_objects
+	# TODO: Focus Objects
+	# TODO: Debug
+	## Snap to edges again
+	current_position = snap_to_edge(current_position)
+	# TODO: Debug
+	## Finally, get the look up/down offset (Includes extended edge snapping)
+	current_position = look.get_look_vector(target, current_position, delta, self)
+	# TODO: Debug
+
+	# TODO: Debug
+	
+	## Finally, assign to global position
+	# TODO: Maybe don't use look for this. I only do for debug 
+	look.global_position = current_position
+	## DEBUG Draw Queue
+	if get_tree().debug_collisions_hint:
+		queue_redraw()
+
+# Center on the player (add player height offset so it centers on player center)
+func center_on_player() -> Vector2:
+	if target:
+		# Return the target's center (negative is up)
+		return target.global_position - Vector2(0, player_height_offset)
+	# Default to doing nothing
+	return global_position
+
+func snap_to_edge(current_position : Vector2) -> Vector2:
+	# TODO: docs
+	var y_bot = hard_limits.limit_bot - GameManager.GAME_SIZE.y / 2. # TODO: Scale
+	var y_top = hard_limits.limit_top + GameManager.GAME_SIZE.y / 2. # TODO: Scale
+	
+	var x_left = hard_limits.limit_left + GameManager.GAME_SIZE.x / 2.
+	var x_right = hard_limits.limit_right - GameManager.GAME_SIZE.x / 2.
+	
+	var ret_val = current_position
+	ret_val.y = clamp(ret_val.y, y_top, y_bot)
+	ret_val.x = clamp(ret_val.x, x_left, x_right)
+	return ret_val
+
+class LimitRect:
+	var limit_top : int = -1000000
+	var limit_bot : int = 1000000
+	var limit_left : int = -1000000
+	var limit_right : int = 1000000
+	
+	func _init(top, bot, left, right):
+		limit_top = top
+		limit_bot = bot
+		limit_left = left
+		limit_right = right
+
+var debug_cam_target_center : Vector2
+var debug_cam_lr : Vector2
+
+## Used for debug when collision shapes are shown, also shows the camera details.
+func _draw():
+	if not get_tree().debug_collisions_hint:
+		return
+	# Debug player target pos
+	draw_arc(debug_cam_target_center, 10, 0, TAU, 64, Color.WHITE, 1.0)
+	draw_line(debug_cam_target_center - Vector2(15, 0), debug_cam_target_center + Vector2(15, 0), Color.WHITE, 1.0)
+	draw_line(debug_cam_target_center - Vector2(0, 15), debug_cam_target_center + Vector2(0, 15), Color.WHITE, 1.0)
+	
+	draw_arc(debug_cam_lr, 5, 0, TAU, 64, Color.WEB_PURPLE, 1.0)
