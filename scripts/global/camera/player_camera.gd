@@ -18,15 +18,21 @@ var hard_limits: LimitRect
 func _process(delta: float) -> void:
 	## First, center on the player
 	var current_position : Vector2 = center_on_player()
+	## Also, set current zoom to the default rather than true current, 
+	## Since this MUST reset every frame if nothing acts on it
+	var current_scale : float = GameManager.GAME.main_viewport.DEFAULT_SCALE
 	debug_cam_target_center = current_position
 	## Then, take the adjustments from whether they're looking left or right
 	current_position = left_right.get_left_right(target, current_position, delta)
 	debug_cam_lr = current_position
 	## Now, snap to edge to get a true position
-	current_position = snap_to_edge(current_position)
+	#current_position = snap_to_edge(current_position)
 	# TODO: Debug
 	## Next, get the pull of focus_objects
-	# TODO: Focus Objects
+	var foo : CameraFollowFocusObject.FocusObjectOffsetHolder = \
+			focus_object.get_focus_object_affect(target, current_position, current_scale, self)
+	current_position = foo.pos
+	current_scale = foo.zoom
 	# TODO: Debug
 	## Snap to edges again
 	current_position = snap_to_edge(current_position)
@@ -40,6 +46,8 @@ func _process(delta: float) -> void:
 	## Finally, assign to global position
 	# TODO: Maybe don't use look for this. I only do for debug 
 	look.global_position = current_position
+	## And assign to current zoom
+	GameManager.GAME.main_viewport.rescale(current_scale)
 	## DEBUG Draw Queue
 	if get_tree().debug_collisions_hint:
 		queue_redraw()
@@ -54,11 +62,14 @@ func center_on_player() -> Vector2:
 
 func snap_to_edge(current_position : Vector2) -> Vector2:
 	# TODO: docs
-	var y_bot = hard_limits.limit_bot - GameManager.GAME_SIZE.y / 2. # TODO: Scale
-	var y_top = hard_limits.limit_top + GameManager.GAME_SIZE.y / 2. # TODO: Scale
+	var def_scale = GameManager.GAME.main_viewport.DEFAULT_SCALE
+	var curr_scale = GameManager.GAME.main_viewport.curr_scale
 	
-	var x_left = hard_limits.limit_left + GameManager.GAME_SIZE.x / 2.
-	var x_right = hard_limits.limit_right - GameManager.GAME_SIZE.x / 2.
+	var y_bot = hard_limits.limit_bot - ((GameManager.GAME_SIZE.y * def_scale) / (2. * curr_scale))
+	var y_top = hard_limits.limit_top + ((GameManager.GAME_SIZE.y * def_scale) / (2. * curr_scale))
+	
+	var x_left = hard_limits.limit_left + ((GameManager.GAME_SIZE.x * def_scale) / (2. * curr_scale))
+	var x_right = hard_limits.limit_right - ((GameManager.GAME_SIZE.x * def_scale) / (2. * curr_scale))
 	
 	var ret_val = current_position
 	ret_val.y = clamp(ret_val.y, y_top, y_bot)
@@ -76,6 +87,9 @@ class LimitRect:
 		limit_bot = bot
 		limit_left = left
 		limit_right = right
+
+func add_focus_object(fo : FocusObject):
+	focus_object.add_focus_object(fo)
 
 var debug_cam_target_center : Vector2
 var debug_cam_lr : Vector2

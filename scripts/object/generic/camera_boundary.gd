@@ -2,8 +2,9 @@
 extends Node2D
 
 func _ready() -> void:
-	if GameManager.LevelManager.player_camera:
-		apply_to_camera(GameManager.LevelManager.player_camera)
+	if not Engine.is_editor_hint():
+		if GameManager.LevelManager.player_camera:
+			apply_to_camera(GameManager.LevelManager.player_camera)
 
 ## The boundary rect, in this node's local space
 @export var boundary_rect: Rect2 = Rect2(-320, -180, 640, 360):

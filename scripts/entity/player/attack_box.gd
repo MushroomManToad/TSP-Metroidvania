@@ -8,16 +8,22 @@ var attack_damage : float = 0.0
 @export var player : PlayerController
 @onready var attack_collision_shape: CollisionShape2D = $AttackCollisionShape
 
+@export_group("BB Dimensions (W, H, X, Y)")
+@export var up_bounding_box : Vector4 = Vector4(16, 14.5, 0, -8.75)
+@export var down_bounding_box : Vector4 = Vector4(16, 14, 0, 16)
+@export var left_bounding_box : Vector4 = Vector4(13, 17, -8.5, 2.5)
+@export var right_bounding_box : Vector4 = Vector4(13, 17, 8.5, 2.5)
+
 ## Player Knockbacks in various directions
-var PK_LEFT_GROUND : Vector2 = Vector2(140.0, 0.0)
-var PK_RIGHT_GROUND : Vector2 = Vector2(-140.0, 0.0)
+var PK_LEFT_GROUND : Vector2 = Vector2(300.0, 0.0)
+var PK_RIGHT_GROUND : Vector2 = Vector2(-300.0, 0.0)
 var PK_UP_GROUND : Vector2 = Vector2(0.0, 70.0)
 var PK_DOWN_GROUND : Vector2 = Vector2(0.0, -200.0)
 
-var PK_LEFT_AIR : Vector2 = Vector2(140.0, -70.0)
-var PK_RIGHT_AIR : Vector2 = Vector2(-140.0, -70.0)
-var PK_UP_AIR : Vector2 = Vector2(0.0, 70.0)
-var PK_DOWN_AIR : Vector2 = Vector2(0.0, -200.0)
+var PK_LEFT_AIR : Vector2 = Vector2(420.0, -300.0)
+var PK_RIGHT_AIR : Vector2 = Vector2(-420.0, -300.0)
+var PK_UP_AIR : Vector2 = Vector2(0.0, 150.0)
+var PK_DOWN_AIR : Vector2 = Vector2(0.0, -400.0)
 
 var GROUND_KNOCKBACK_SCALAR : float = 0.5
 
@@ -177,21 +183,15 @@ func start_new_attack():
 	# First, parameterize the position of the attack box by direction.
 	# Yes, these are hard-coded. There are only four of them, and I'll have to
 	# adjust them from somewhere, so why not here in the spawn function.
-	var attack_bb = RectangleShape2D.new()
 	match attack_direction:
 		CardinalDirections.UP:
-			attack_bb.size = Vector2(16, 14.5)
-			attack_collision_shape.position = Vector2(0, -8.75)
+			_set_bb_size_and_pos(up_bounding_box)
 		CardinalDirections.DOWN:
-			attack_bb.size = Vector2(16, 14)
-			attack_collision_shape.position = Vector2(0, 16)
+			_set_bb_size_and_pos(down_bounding_box)
 		CardinalDirections.LEFT:
-			attack_bb.size = Vector2(13, 17)
-			attack_collision_shape.position = Vector2(-8.5, 2.5)
+			_set_bb_size_and_pos(left_bounding_box)
 		CardinalDirections.RIGHT:
-			attack_bb.size = Vector2(13, 17)
-			attack_collision_shape.position = Vector2(8.5, 2.5)
-	attack_collision_shape.shape = attack_bb
+			_set_bb_size_and_pos(right_bounding_box)
 	# Clear out the old hit flags/list on the attack box
 	hit_list.clear()
 	# Finally, actually enable the attack box. 
@@ -199,6 +199,13 @@ func start_new_attack():
 	visible = true
 	monitorable = true
 	monitoring = true
+
+## Helper method to reduce repeated code that sets bounding box size and pos.
+func _set_bb_size_and_pos(data_vec : Vector4):
+	var attack_bb = RectangleShape2D.new()
+	attack_bb.size = Vector2(data_vec.x, data_vec.y)
+	attack_collision_shape.position = Vector2(data_vec.z, data_vec.w)
+	attack_collision_shape.shape = attack_bb
 
 ## Helper method for ending an attack. Disables the attack box and collision.
 func end_attack():

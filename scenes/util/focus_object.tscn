@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://cbntp3aygpwnn"]
+
+[ext_resource type="Script" uid="uid://c155lv7256iaa" path="res://scripts/util/focus_object.gd" id="1_ybv2y"]
+
+[node name="FocusObject" type="Node2D" unique_id=223886247]
+script = ExtResource("1_ybv2y")

@@ -147,6 +147,9 @@ monitoring = false
 monitorable = false
 script = ExtResource("3_n66fu")
 player = NodePath("..")
+up_bounding_box = Vector4(32, 32, 0, -32)
+left_bounding_box = Vector4(32, 40, -20, -8)
+right_bounding_box = Vector4(32, 40, 20, -8)
 
 [node name="AttackCollisionShape" type="CollisionShape2D" parent="AttackBox" unique_id=874120211]
 position = Vector2(0, 16)

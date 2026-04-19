@@ -64,8 +64,9 @@ func get_look_vector(target : PlayerController, current_position : Vector2, delt
 			target_pos = Vector2(0, (- GameManager.GAME_SIZE.y / 2) + look_screen_inset)
 		1:
 			target_pos = Vector2(0, (GameManager.GAME_SIZE.y / 2) - look_screen_inset)
-	# Now, if target_pos is non-zero, clamp it to extended screen edges
+	# Now, if target_pos is non-zero, clamp it to player, then extended screen edges
 	if target_pos != Vector2(0, 0):
+		target_pos = clamp_to_player_pos(target, current_position, target_pos, cam)
 		target_pos = snap_to_edges_extended(current_position, target_pos, cam)
 	# Finally, re-run the tween if this is a new target position
 	if target_pos != current_target_pos:
@@ -75,15 +76,28 @@ func get_look_vector(target : PlayerController, current_position : Vector2, delt
 		target_pos_tween.custom_step(delta)
 	return current_position + current_look_pos
 
+func clamp_to_player_pos(target : PlayerController, current_pos : Vector2, target_pos : Vector2, cam : PlayerCamera) -> Vector2:
+	var ret_val : Vector2 = current_pos + target_pos
+	# DOWN
+	if get_look_direction() > 0:
+		ret_val.y = min(ret_val.y, target.global_position.y - cam.player_height_offset * 2. + GameManager.GAME_SIZE.y / 2.)
+	# UP
+	else:
+		ret_val.y = max(ret_val.y, target.global_position.y - GameManager.GAME_SIZE.y / 2.)
+	return ret_val - current_pos
+
 # Same as snap function in base, but with extended limits
 func snap_to_edges_extended(current_position : Vector2, target_pos : Vector2, cam : PlayerCamera) -> Vector2:
+	var def_scale = GameManager.GAME.main_viewport.DEFAULT_SCALE
+	var curr_scale = GameManager.GAME.main_viewport.curr_scale
+	
 	var result_pos = current_position + target_pos
 	# TODO: docs
-	var y_bot = cam.hard_limits.limit_bot + 16 - GameManager.GAME_SIZE.y / 2. # TODO: Scale
-	var y_top = cam.hard_limits.limit_top - 16 + GameManager.GAME_SIZE.y / 2. # TODO: Scale
+	var y_bot = cam.hard_limits.limit_bot + 16 - ((GameManager.GAME_SIZE.y * def_scale) / (2. * curr_scale))
+	var y_top = cam.hard_limits.limit_top - 16 + ((GameManager.GAME_SIZE.y * def_scale) / (2. * curr_scale))
 	
-	var x_left = cam.hard_limits.limit_left + GameManager.GAME_SIZE.x / 2.
-	var x_right = cam.hard_limits.limit_right - GameManager.GAME_SIZE.x / 2.
+	var x_left = cam.hard_limits.limit_left + ((GameManager.GAME_SIZE.x * def_scale) / (2. * curr_scale))
+	var x_right = cam.hard_limits.limit_right - ((GameManager.GAME_SIZE.x * def_scale) / (2. * curr_scale))
 
 	result_pos.y = clamp(result_pos.y, y_top, y_bot)
 	result_pos.x = clamp(result_pos.x, x_left, x_right)

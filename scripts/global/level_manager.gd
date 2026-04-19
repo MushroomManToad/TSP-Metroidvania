@@ -41,7 +41,7 @@ func load_scene(scene_name : String, player_spawn_pos : Vector2):
 	GameManager.GAME.load_player(player)
 	# TODO: Temp call just so the camera still follows the player
 	
-	# Camera should be loaded dynamically
+	# Camera should be loaded dynamically, but refreshed each time a scene is loaded
 	if player_camera:
 		player_camera.queue_free()
 	player_camera = PLAYER_CAMERA.instantiate()
