@@ -8,6 +8,9 @@ var attack_damage : float = 0.0
 @export var player : PlayerController
 @onready var attack_collision_shape: CollisionShape2D = $AttackCollisionShape
 
+## Affects how much the knockback is reduced when striking terrain
+@export var GROUND_KNOCKBACK_SCALAR : float = 0.25
+
 @export_group("BB Dimensions (W, H, X, Y)")
 @export var up_bounding_box : Vector4 = Vector4(16, 14.5, 0, -8.75)
 @export var down_bounding_box : Vector4 = Vector4(16, 14, 0, 16)
@@ -15,17 +18,19 @@ var attack_damage : float = 0.0
 @export var right_bounding_box : Vector4 = Vector4(13, 17, 8.5, 2.5)
 
 ## Player Knockbacks in various directions
-var PK_LEFT_GROUND : Vector2 = Vector2(300.0, 0.0)
-var PK_RIGHT_GROUND : Vector2 = Vector2(-300.0, 0.0)
-var PK_UP_GROUND : Vector2 = Vector2(0.0, 70.0)
-var PK_DOWN_GROUND : Vector2 = Vector2(0.0, -200.0)
+@export_group("Knockback: Grounded")
+@export var PK_LEFT_GROUND : Vector2 = Vector2(300.0, 0.0)
+@export var PK_RIGHT_GROUND : Vector2 = Vector2(-300.0, 0.0)
+@export var PK_UP_GROUND : Vector2 = Vector2(0.0, 70.0)
+@export var PK_DOWN_GROUND : Vector2 = Vector2(0.0, -200.0)
 
-var PK_LEFT_AIR : Vector2 = Vector2(420.0, -300.0)
-var PK_RIGHT_AIR : Vector2 = Vector2(-420.0, -300.0)
-var PK_UP_AIR : Vector2 = Vector2(0.0, 150.0)
-var PK_DOWN_AIR : Vector2 = Vector2(0.0, -400.0)
+@export_group("Knockback: Airborn")
+@export var PK_LEFT_AIR : Vector2 = Vector2(420.0, -300.0)
+@export var PK_RIGHT_AIR : Vector2 = Vector2(-420.0, -300.0)
+@export var PK_UP_AIR : Vector2 = Vector2(0.0, 70.0)
+@export var PK_DOWN_AIR : Vector2 = Vector2(0.0, -400.0)
 
-var GROUND_KNOCKBACK_SCALAR : float = 0.5
+
 
 # Variable used to track what has been hit so far
 # Primarily used to ensure nothing is hit repeatedly.
@@ -52,7 +57,6 @@ func _on_body_shape_entered(body_rid: RID, body: Node2D, _body_shape_index: int,
 		if CollisionUtility.is_on_layer(body_collision_layer_map, CollisionUtility.Layers.GROUND):
 			on_ground_hit()
 		## TODO: For layers not the ground, cancel dash on attack landing
-		
 		hit_list.append(body)
 
 
@@ -72,10 +76,11 @@ func _on_area_shape_entered(_body_rid: RID, body: Area2D, _body_shape_index: int
 func on_enemy_hit(body : Area2D) -> void:
 	# The knockback - only if this box has not already knocked back
 	if not knockback_lock:
-		# Pogos stop an ongoing jump to prevent some weird double-height pogos
+		# Down-attacks stop an ongoing jump to prevent some weird double-height knockback
 		if attack_direction == CardinalDirections.DOWN:
-			player.set_clear_y(true)
 			player.cancel_jump()
+		# The y-value must be cleared regardless for the launch frame.
+		player.set_clear_y(true)
 		player.enqueue_attack_launch(get_player_knockback_velocity_by_direction())
 		knockback_lock = true
 	
@@ -99,7 +104,10 @@ func on_ground_hit():
 	# A little back on horizontal
 	# Nothing on down.
 	var dir : Vector2 = get_player_knockback_velocity_by_direction()
-	player.enqueue_attack_launch(Vector2(GROUND_KNOCKBACK_SCALAR * dir.x , 0.0 if attack_direction == CardinalDirections.DOWN else dir.y))
+	if attack_direction == CardinalDirections.UP:
+		player.enqueue_attack_launch(Vector2(0.0, GROUND_KNOCKBACK_SCALAR * dir.y))
+	else:
+		player.enqueue_attack_launch(Vector2(GROUND_KNOCKBACK_SCALAR * dir.x , 0.0))
 
 func set_attack_direction(direction : int):
 	attack_direction = direction
@@ -181,8 +189,6 @@ func start_new_attack():
 	set_attack_direction(player.attack_direction)
 	set_attack_damage(player.player_data.attack_damage)
 	# First, parameterize the position of the attack box by direction.
-	# Yes, these are hard-coded. There are only four of them, and I'll have to
-	# adjust them from somewhere, so why not here in the spawn function.
 	match attack_direction:
 		CardinalDirections.UP:
 			_set_bb_size_and_pos(up_bounding_box)
