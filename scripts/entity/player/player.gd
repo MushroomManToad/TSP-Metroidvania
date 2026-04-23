@@ -330,6 +330,9 @@ func walk_physics_process(_delta : float):
 		# Get the input direction and handle the movement/deceleration.
 		# Leave this as an input call for realtime strength reading for controller
 		var stick_strength := clampf(Input.get_axis("Left", "Right"), -1.0, 1.0)
+		# Now scale this to the deadzone
+		# We also snap to 1.0 because it just plain feels better
+		stick_strength = sign(stick_strength) * (0.0 if abs(stick_strength) < 0.2 else 1.0)
 		
 		# Variable that determines the current walking  strength and direction.
 		## Value is amount horizontal movement changes from the previous frame.
