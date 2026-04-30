@@ -23,6 +23,8 @@ const PAUSE_SCREEN = preload("res://scenes/ui/pause_screen.tscn")
 func _ready() -> void:
 	# Disable Pausible State Immediately -- we never want this node to be paused
 	process_mode = Node.PROCESS_MODE_ALWAYS
+	## Use to set fullscreen
+	#DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
 
 func _delayed_ready():
 	# Initiate each of the sub-system variables (we do this here to prevent

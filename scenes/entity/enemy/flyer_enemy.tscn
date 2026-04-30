@@ -1,11 +1,11 @@
-[gd_scene load_steps=11 format=3 uid="uid://b6dy362m4ph6e"]
+[gd_scene format=3 uid="uid://b6dy362m4ph6e"]
 
 [ext_resource type="Script" uid="uid://cdq5ndfy4ngpy" path="res://scripts/entity/enemy/flyer_enemy.gd" id="1_0wohd"]
 [ext_resource type="Texture2D" uid="uid://cnwlrlk5efcbh" path="res://sprites/entity/enemy/lab/flyer.png" id="2_a5pul"]
 [ext_resource type="Script" uid="uid://b5uk252ectcq3" path="res://scripts/entity/enemy/hurtbox.gd" id="2_ke65q"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ja140"]
-size = Vector2(10, 10)
+size = Vector2(17, 18)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_y323u"]
 atlas = ExtResource("2_a5pul")
@@ -44,29 +44,31 @@ animations = [{
 }]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_j6uy4"]
-radius = 5.0
 
-[node name="FlyerEnemy" type="CharacterBody2D"]
+[node name="FlyerEnemy" type="CharacterBody2D" unique_id=1245634288]
 collision_layer = 32
 collision_mask = 11264
 script = ExtResource("1_0wohd")
 max_hp = 1000.0
 
-[node name="Hurtbox" type="Area2D" parent="." node_paths=PackedStringArray("enemy")]
+[node name="Hurtbox" type="Area2D" parent="." unique_id=936302930 node_paths=PackedStringArray("enemy")]
 collision_layer = 64
 collision_mask = 12
 script = ExtResource("2_ke65q")
 enemy = NodePath("..")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox" unique_id=522159025]
+position = Vector2(-0.5, 0)
 shape = SubResource("RectangleShape2D_ja140")
+debug_color = Color(0.80488515, 0.07350116, 0.81750023, 0.41960785)
 
-[node name="EnemySprite" type="AnimatedSprite2D" parent="."]
+[node name="EnemySprite" type="AnimatedSprite2D" parent="." unique_id=1146246238]
+scale = Vector2(2, 2)
 sprite_frames = SubResource("SpriteFrames_ii4hd")
 autoplay = "default"
 frame_progress = 0.100301
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1426655171]
 shape = SubResource("CircleShape2D_j6uy4")
 
 [connection signal="area_shape_entered" from="Hurtbox" to="." method="_on_hurtbox_area_shape_entered"]

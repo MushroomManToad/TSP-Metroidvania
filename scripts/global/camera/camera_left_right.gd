@@ -36,6 +36,8 @@ func get_left_right(target : PlayerController, current_position : Vector2, delta
 	var target_pos : Vector2 = Vector2(Facing.transform(target.facing) * Vector2(player_sprint_direction_offset if target.is_sprinting() else player_direction_offset, 0))
 	if target_pos != current_target_lr_pos:
 		animate(target_pos)
-	if target_pos_tween:
+	# Step the tween when it exists
+	# But do not step if the player is not moving to hide jitter.
+	if target_pos_tween and abs(target.previous_frame_vel.x) > 0.0:
 		target_pos_tween.custom_step(delta)
 	return current_position + current_lr_pos

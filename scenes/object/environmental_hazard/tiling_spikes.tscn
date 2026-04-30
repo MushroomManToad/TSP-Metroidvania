@@ -1,0 +1,46 @@
+[gd_scene format=3 uid="uid://duhw235r0r7lu"]
+
+[ext_resource type="Shader" uid="uid://is48614a05ky" path="res://assets/shader/global_materials/tiled_object.gdshader" id="1_lb3cm"]
+[ext_resource type="Texture2D" uid="uid://sw1mumeqckkl" path="res://sprites/object/environmental-hazard/spikes_x64.png" id="2_0ugki"]
+[ext_resource type="Script" uid="uid://dtxly7wdi5hdt" path="res://scripts/object/environmental_hazard/tiling_spikes.gd" id="3_0ugki"]
+[ext_resource type="Script" uid="uid://ci7ak8gbctny4" path="res://scripts/object/generic/hazard_respawn_box.gd" id="4_vjyy0"]
+[ext_resource type="Script" uid="uid://clwu7n6mjwflp" path="res://scripts/object/environmental_hazard/pogoable_box.gd" id="5_ifv64"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_vjyy0"]
+resource_local_to_scene = true
+shader = ExtResource("1_lb3cm")
+shader_parameter/texture_to_tile = ExtResource("2_0ugki")
+shader_parameter/tile_repeat = Vector2(1, 1)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0ugki"]
+size = Vector2(64, 35)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ifv64"]
+size = Vector2(64, 44)
+
+[node name="Spikes" type="Sprite2D" unique_id=326425540]
+material = SubResource("ShaderMaterial_vjyy0")
+texture = ExtResource("2_0ugki")
+script = ExtResource("3_0ugki")
+
+[node name="HazardRespawnBox" type="Area2D" parent="." unique_id=347481426]
+script = ExtResource("4_vjyy0")
+is_directional = true
+damage = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HazardRespawnBox" unique_id=1756462752]
+position = Vector2(0, 14.5)
+shape = SubResource("RectangleShape2D_0ugki")
+debug_color = Color(0.9529412, 0, 0.078431375, 0.41960785)
+
+[node name="PogoableBox" type="Area2D" parent="." unique_id=2061977587]
+script = ExtResource("5_ifv64")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PogoableBox" unique_id=613870492]
+position = Vector2(0, 10)
+shape = SubResource("RectangleShape2D_ifv64")
+
+[connection signal="area_shape_entered" from="HazardRespawnBox" to="HazardRespawnBox" method="_on_area_shape_entered"]
+[connection signal="area_shape_exited" from="HazardRespawnBox" to="HazardRespawnBox" method="_on_area_shape_exited"]
+[connection signal="body_shape_entered" from="HazardRespawnBox" to="HazardRespawnBox" method="_on_body_shape_entered"]
+[connection signal="body_shape_exited" from="HazardRespawnBox" to="HazardRespawnBox" method="_on_body_shape_exited"]

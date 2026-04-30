@@ -11,6 +11,12 @@ var vel_launch : Vector2 = Vector2(0.0, 0.0)
 # Access with getter and setter
 var previous_frame_vel : Vector2 = Vector2(0.0, 0.0)
 
+# True if was on floor on the previous frame. False otherwise.
+var previous_frame_on_floor : bool = false
+
+# True if player was running into a wall on the previous frame. False otherwise.
+var previous_frame_on_wall : bool = false
+
 # Current I-Frames
 var i_frames : int = 0
 
@@ -75,6 +81,9 @@ func _physics_process(delta: float) -> void:
 	# Post-calculations.
 	set_previous_frame_velocity(velocity)
 	
+	## Update on_floor for next frame
+	previous_frame_on_floor = is_on_floor()
+	
 	# Fixes lag making movement inconsistent (without this, CPU lag
 	# could give additional jump height or make other movement inconsistent)
 	# Needed because move_and_slide uses delta in its calculations.
@@ -82,10 +91,13 @@ func _physics_process(delta: float) -> void:
 	# Let the velocity interact with Godot Physics Engine
 	move_and_slide()
 	
+	previous_frame_on_wall = false
+	
 	# Cancel horizontal momentum on wall collide.
 	if is_on_wall():
 		if -get_wall_normal().x == Facing.transform(facing):
 			set_previous_frame_velocity(Vector2(0.0, get_previous_frame_velocity().y))
+			previous_frame_on_wall = true
 
 ###### Used for input capture ######
 # We use this variant to ensure the GUI input capture happens first automatically
@@ -144,7 +156,7 @@ const MAX_JUMP_BUFFER_TIME : int = 10
 # Max coyote time (frames)
 const MAX_COYOTE_TIME : int = 6
 # Maximum fall velocity
-const MAX_FALL_SPEED : float = 1020.0
+const MAX_FALL_SPEED : float = 650.0
 
 # True when jump has been pressed and not yet consumed by jump start.
 var jump_buffered : bool = false
@@ -201,6 +213,10 @@ func jump_physics_process(_delta: float) -> void:
 		elif can_double_jump():
 			start_jump(- JUMP_VELOCITY / 4.0)
 			double_jump_charged = false
+		# If dashing but has dashed off the ledge
+		elif is_dashing() and not is_on_floor() and previous_frame_on_floor:
+			cancel_dash()
+			start_jump(JUMP_VELOCITY)
 		# While not on floor, start tracking how long the jump has been
 		# buffered and destroy jump buffer if buffered too long
 		else:
@@ -458,7 +474,7 @@ func is_walking() -> bool:
 # If the player is genuinely walking, but the dash button is held AND
 # sprint_direction matches their facing direction, then they're actually sprinting.
 func is_sprinting() -> bool:
-	return is_walking() and dash_held and sprint_direction == Facing.transform(facing)
+	return is_walking() and dash_held and sprint_direction == Facing.transform(facing) and not previous_frame_on_wall
 
 # Returns true when the player shouldn't be slowed (i.e. ice floors, 
 # parrying in air, etc.)

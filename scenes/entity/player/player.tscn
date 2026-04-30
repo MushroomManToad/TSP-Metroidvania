@@ -110,8 +110,9 @@ player_data = NodePath("PlayerData")
 player_hurtbox = NodePath("HurtBox")
 player_interact_box = NodePath("InteractBox")
 
-[node name="PlayerData" type="Node2D" parent="." unique_id=1282015072]
+[node name="PlayerData" type="Node2D" parent="." unique_id=1282015072 node_paths=PackedStringArray("player")]
 script = ExtResource("4_4fs46")
+player = NodePath("..")
 
 [node name="PlayerCollisionShape" type="CollisionShape2D" parent="." unique_id=1046406412]
 position = Vector2(0, -22.5)

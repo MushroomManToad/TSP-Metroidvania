@@ -15,6 +15,8 @@ var hard_limits: LimitRect
 @onready var left_right: CameraLeftRight = $Look/FocusObject/Left_Right
 @onready var player_camera: CameraEdgeSnap = $Look/FocusObject/Left_Right/PlayerCamera
 
+var fpa : Vector2 = Vector2(0.0, 0.0)
+
 func _process(delta: float) -> void:
 	## First, center on the player
 	var current_position : Vector2 = center_on_player()
@@ -45,7 +47,11 @@ func _process(delta: float) -> void:
 	
 	## Finally, assign to global position
 	# TODO: Maybe don't use look for this. I only do for debug 
-	look.global_position = current_position
+	#fpa += current_position - look.global_position
+	
+	look.global_position = current_position #look.global_position + Vector2(int(fpa.x), int(fpa.y))
+	
+	#fpa = Vector2(fposmod(fpa.x, 1.0), fposmod(fpa.y, 1.0))
 	## And assign to current zoom
 	GameManager.GAME.main_viewport.rescale(current_scale)
 	## DEBUG Draw Queue

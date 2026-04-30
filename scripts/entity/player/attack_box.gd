@@ -93,7 +93,7 @@ func on_enemy_hit(body : Area2D) -> void:
 	player.charge_double_jump()
 	
 	# Run any logic from the enemy's side when it gets attacked
-	# Should always be true, but this is a nice Godot cast
+	# Runs on enemies, but not on pogoables such as spikes
 	if body is EnemyHitbox:
 		body.get_enemy().on_attacked(self)
 

@@ -1,12 +1,12 @@
-[gd_scene load_steps=2 format=3 uid="uid://c0l754b5hdtkr"]
+[gd_scene format=3 uid="uid://c0l754b5hdtkr"]
 
 [ext_resource type="Script" uid="uid://dpqrw2x1isfim" path="res://scripts/ui/pause_screen.gd" id="1_milqs"]
 
-[node name="PauseScreen" type="CanvasLayer"]
+[node name="PauseScreen" type="CanvasLayer" unique_id=1250481041]
 process_mode = 2
 script = ExtResource("1_milqs")
 
-[node name="PauseContainer" type="Control" parent="."]
+[node name="PauseContainer" type="Control" parent="." unique_id=1215986008]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -14,7 +14,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="MarginContainer" type="MarginContainer" parent="PauseContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="PauseContainer" unique_id=837545267]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -22,31 +22,31 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="ColorRect" type="ColorRect" parent="PauseContainer/MarginContainer"]
+[node name="ColorRect" type="ColorRect" parent="PauseContainer/MarginContainer" unique_id=640213961]
 layout_mode = 2
 color = Color(0.45098, 0.45098, 0.45098, 0.380392)
 
-[node name="MarginContainer" type="MarginContainer" parent="PauseContainer/MarginContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="PauseContainer/MarginContainer" unique_id=1776303285]
 layout_mode = 2
 theme_override_constants/margin_left = 100
 theme_override_constants/margin_top = 100
 theme_override_constants/margin_right = 100
 theme_override_constants/margin_bottom = 100
 
-[node name="VBoxContainer" type="VBoxContainer" parent="PauseContainer/MarginContainer/MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="PauseContainer/MarginContainer/MarginContainer" unique_id=1513330109]
 layout_mode = 2
 
-[node name="Resume" type="Button" parent="PauseContainer/MarginContainer/MarginContainer/VBoxContainer"]
+[node name="Resume" type="Button" parent="PauseContainer/MarginContainer/MarginContainer/VBoxContainer" unique_id=357683407]
 layout_mode = 2
 size_flags_vertical = 3
 text = "Resume"
 
-[node name="Reload Scene" type="Button" parent="PauseContainer/MarginContainer/MarginContainer/VBoxContainer"]
+[node name="Reload Scene" type="Button" parent="PauseContainer/MarginContainer/MarginContainer/VBoxContainer" unique_id=1167068925]
 layout_mode = 2
 size_flags_vertical = 3
 text = "Reload Scene"
 
-[node name="Exit" type="Button" parent="PauseContainer/MarginContainer/MarginContainer/VBoxContainer"]
+[node name="Exit" type="Button" parent="PauseContainer/MarginContainer/MarginContainer/VBoxContainer" unique_id=2029646785]
 layout_mode = 2
 size_flags_vertical = 3
 text = "Exit"

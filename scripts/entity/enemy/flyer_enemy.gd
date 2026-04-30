@@ -2,7 +2,7 @@ extends AbstractEnemy
 
 var internal_velocity : Vector2 = Vector2(0.0, 0.0)
 
-var knockback_amount : Vector2 = Vector2(500.0, 500.0)
+@export var knockback_amount : float = 1500.0
 
 func _sub_physics_process(_delta: float) -> void:
 	# Perma-heal the flyer
