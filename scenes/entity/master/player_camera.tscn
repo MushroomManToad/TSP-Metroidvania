@@ -4,6 +4,7 @@
 [ext_resource type="Script" uid="uid://b7ulngapwxdrv" path="res://scripts/global/camera/camera_look.gd" id="2_172ln"]
 [ext_resource type="Script" uid="uid://x1l4dfkxi7q5" path="res://scripts/global/camera/camera_follow_focus_object.gd" id="3_jnnx5"]
 [ext_resource type="Script" uid="uid://b8oi8es2bl411" path="res://scripts/global/camera/camera_left_right.gd" id="4_nnp5w"]
+[ext_resource type="Script" uid="uid://b06uq7vnk5o72" path="res://scripts/global/camera/camera_fall_drift.gd" id="5_1h8p4"]
 [ext_resource type="Script" uid="uid://biscedodvqicg" path="res://scripts/global/camera/camera_edge_snap.gd" id="5_ih6ew"]
 
 [node name="CameraAnchor" type="Node2D" unique_id=525336041]
@@ -18,7 +19,10 @@ script = ExtResource("3_jnnx5")
 [node name="Left_Right" type="Node2D" parent="Look/FocusObject" unique_id=727836668]
 script = ExtResource("4_nnp5w")
 
-[node name="PlayerCamera" type="Camera2D" parent="Look/FocusObject/Left_Right" unique_id=872098950]
+[node name="FallDrift" type="Node2D" parent="Look/FocusObject/Left_Right" unique_id=11913615]
+script = ExtResource("5_1h8p4")
+
+[node name="PlayerCamera" type="Camera2D" parent="Look/FocusObject/Left_Right/FallDrift" unique_id=872098950]
 process_priority = 99
 process_callback = 0
 position_smoothing_speed = 2.0

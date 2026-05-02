@@ -13,7 +13,8 @@ var hard_limits: LimitRect
 @onready var look: CameraLook = $Look
 @onready var focus_object: CameraFollowFocusObject = $Look/FocusObject
 @onready var left_right: CameraLeftRight = $Look/FocusObject/Left_Right
-@onready var player_camera: CameraEdgeSnap = $Look/FocusObject/Left_Right/PlayerCamera
+@onready var fall_drift: CameraFallDrift = $Look/FocusObject/Left_Right/FallDrift
+@onready var player_camera: CameraEdgeSnap = $Look/FocusObject/Left_Right/FallDrift/PlayerCamera
 
 var fpa : Vector2 = Vector2(0.0, 0.0)
 
@@ -26,6 +27,8 @@ func _process(delta: float) -> void:
 	debug_cam_target_center = current_position
 	## Then, take the adjustments from whether they're looking left or right
 	current_position = left_right.get_left_right(target, current_position, delta)
+	## Then take the falling adjustment
+	current_position = fall_drift.get_down_drift(target, current_position, delta)
 	debug_cam_lr = current_position
 	## Now, snap to edge to get a true position
 	#current_position = snap_to_edge(current_position)

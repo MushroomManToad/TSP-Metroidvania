@@ -1,0 +1,164 @@
+[gd_scene format=3 uid="uid://besklj6jbinm0"]
+
+[ext_resource type="Script" uid="uid://ca2t5y6eeg5pm" path="res://scripts/ui/settings/settings_menu.gd" id="1_mhswj"]
+[ext_resource type="Texture2D" uid="uid://7rte3mwsdfj6" path="res://sprites/ui/settings/settings_menu_bg.png" id="1_qwcqe"]
+[ext_resource type="Texture2D" uid="uid://dumlgvbogv36f" path="res://sprites/ui/settings/settings_tab_button.png" id="3_x3vyp"]
+[ext_resource type="Script" uid="uid://dbevsrwejmhjo" path="res://scripts/ui/settings/tab_buttons_container.gd" id="3_yu862"]
+[ext_resource type="Script" uid="uid://cww602vnr4ivw" path="res://scripts/ui/settings/settings_tab_button.gd" id="5_ywggk"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_mhswj"]
+load_path = "res://.godot/imported/settings_tab_button.png-58cf483ecece3ec9bb2704d913261f19.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_x3vyp"]
+atlas = SubResource("CompressedTexture2D_mhswj")
+region = Rect2(0, 0, 128, 112)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0b1cv"]
+atlas = ExtResource("3_x3vyp")
+region = Rect2(0, 112, 128, 112)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yu862"]
+atlas = ExtResource("3_x3vyp")
+region = Rect2(0, 224, 128, 112)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_0b1cv"]
+load_path = "res://.godot/imported/settings_tab_button.png-58cf483ecece3ec9bb2704d913261f19.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ywggk"]
+atlas = SubResource("CompressedTexture2D_0b1cv")
+region = Rect2(0, 336, 128, 112)
+
+[node name="Settings Menu" type="CanvasLayer" unique_id=540044083 node_paths=PackedStringArray("back_button")]
+script = ExtResource("1_mhswj")
+back_button = NodePath("Root (Screen)/BG/TabButtonsContainer/HBoxContainer/HBoxContainer/Button")
+
+[node name="Root (Screen)" type="Control" parent="." unique_id=253899338]
+process_mode = 3
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="BG" type="TextureRect" parent="Root (Screen)" unique_id=1175180894]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_qwcqe")
+
+[node name="TabButtonsContainer" type="MarginContainer" parent="Root (Screen)/BG" unique_id=298030446 node_paths=PackedStringArray("buttons_registry")]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 64
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 64
+theme_override_constants/margin_bottom = 588
+script = ExtResource("3_yu862")
+buttons_registry = [NodePath("HBoxContainer/AudioTabButton"), NodePath("HBoxContainer/GameplayTabButton"), NodePath("HBoxContainer/GraphicsTab"), NodePath("HBoxContainer/BindingsTab")]
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Root (Screen)/BG/TabButtonsContainer" unique_id=2110542951]
+layout_mode = 2
+
+[node name="AudioTabButton" type="TextureButton" parent="Root (Screen)/BG/TabButtonsContainer/HBoxContainer" unique_id=1387808819]
+layout_mode = 2
+toggle_mode = true
+action_mode = 0
+texture_normal = SubResource("AtlasTexture_x3vyp")
+texture_pressed = SubResource("AtlasTexture_0b1cv")
+texture_hover = SubResource("AtlasTexture_yu862")
+texture_focused = SubResource("AtlasTexture_ywggk")
+script = ExtResource("5_ywggk")
+
+[node name="GameplayTabButton" type="TextureButton" parent="Root (Screen)/BG/TabButtonsContainer/HBoxContainer" unique_id=406690986]
+layout_mode = 2
+toggle_mode = true
+action_mode = 0
+texture_normal = SubResource("AtlasTexture_x3vyp")
+texture_pressed = SubResource("AtlasTexture_0b1cv")
+texture_hover = SubResource("AtlasTexture_yu862")
+texture_focused = SubResource("AtlasTexture_ywggk")
+script = ExtResource("5_ywggk")
+
+[node name="GraphicsTab" type="TextureButton" parent="Root (Screen)/BG/TabButtonsContainer/HBoxContainer" unique_id=2079126442 node_paths=PackedStringArray("node_to_enable")]
+layout_mode = 2
+toggle_mode = true
+action_mode = 0
+texture_normal = SubResource("AtlasTexture_x3vyp")
+texture_pressed = SubResource("AtlasTexture_0b1cv")
+texture_hover = SubResource("AtlasTexture_yu862")
+texture_focused = SubResource("AtlasTexture_ywggk")
+script = ExtResource("5_ywggk")
+node_to_enable = NodePath("../../../ScreenContainer/GraphicsContianer")
+
+[node name="BindingsTab" type="TextureButton" parent="Root (Screen)/BG/TabButtonsContainer/HBoxContainer" unique_id=831902029]
+layout_mode = 2
+toggle_mode = true
+action_mode = 0
+texture_normal = SubResource("AtlasTexture_x3vyp")
+texture_pressed = SubResource("AtlasTexture_0b1cv")
+texture_hover = SubResource("AtlasTexture_yu862")
+texture_focused = SubResource("AtlasTexture_ywggk")
+script = ExtResource("5_ywggk")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Root (Screen)/BG/TabButtonsContainer/HBoxContainer" unique_id=1802141414]
+layout_mode = 2
+size_flags_horizontal = 3
+alignment = 2
+
+[node name="Button" type="Button" parent="Root (Screen)/BG/TabButtonsContainer/HBoxContainer/HBoxContainer" unique_id=163563119]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+size_flags_vertical = 4
+text = "EXIT"
+
+[node name="ScreenContainer" type="MarginContainer" parent="Root (Screen)/BG" unique_id=958012774]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 32
+theme_override_constants/margin_top = 132
+theme_override_constants/margin_right = 32
+theme_override_constants/margin_bottom = 32
+
+[node name="GraphicsContianer" type="VBoxContainer" parent="Root (Screen)/BG/ScreenContainer" unique_id=70452755]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Root (Screen)/BG/ScreenContainer/GraphicsContianer" unique_id=914957486]
+layout_mode = 2
+
+[node name="OptionButton" type="OptionButton" parent="Root (Screen)/BG/ScreenContainer/GraphicsContianer/HBoxContainer" unique_id=1721117583]
+layout_mode = 2
+selected = 1
+item_count = 3
+popup/item_0/text = "640x360"
+popup/item_0/id = 0
+popup/item_1/text = "1280x720"
+popup/item_1/id = 1
+popup/item_2/text = "1920x1080"
+popup/item_2/id = 2
+
+[connection signal="mouse_entered" from="Root (Screen)/BG/TabButtonsContainer/HBoxContainer/AudioTabButton" to="Root (Screen)/BG/TabButtonsContainer/HBoxContainer/AudioTabButton" method="_on_tab_button_mouse_entered"]
+[connection signal="mouse_exited" from="Root (Screen)/BG/TabButtonsContainer/HBoxContainer/AudioTabButton" to="Root (Screen)/BG/TabButtonsContainer/HBoxContainer/AudioTabButton" method="_on_tab_button_mouse_exited"]
+[connection signal="toggled" from="Root (Screen)/BG/TabButtonsContainer/HBoxContainer/AudioTabButton" to="Root (Screen)/BG/TabButtonsContainer/HBoxContainer/AudioTabButton" method="_on_toggled"]
+[connection signal="mouse_entered" from="Root (Screen)/BG/TabButtonsContainer/HBoxContainer/GameplayTabButton" to="Root (Screen)/BG/TabButtonsContainer/HBoxContainer/GameplayTabButton" method="_on_tab_button_mouse_entered"]
+[connection signal="mouse_exited" from="Root (Screen)/BG/TabButtonsContainer/HBoxContainer/GameplayTabButton" to="Root (Screen)/BG/TabButtonsContainer/HBoxContainer/GameplayTabButton" method="_on_tab_button_mouse_exited"]
+[connection signal="toggled" from="Root (Screen)/BG/TabButtonsContainer/HBoxContainer/GameplayTabButton" to="Root (Screen)/BG/TabButtonsContainer/HBoxContainer/GameplayTabButton" method="_on_toggled"]
+[connection signal="mouse_entered" from="Root (Screen)/BG/TabButtonsContainer/HBoxContainer/GraphicsTab" to="Root (Screen)/BG/TabButtonsContainer/HBoxContainer/GraphicsTab" method="_on_tab_button_mouse_entered"]
+[connection signal="mouse_exited" from="Root (Screen)/BG/TabButtonsContainer/HBoxContainer/GraphicsTab" to="Root (Screen)/BG/TabButtonsContainer/HBoxContainer/GraphicsTab" method="_on_tab_button_mouse_exited"]
+[connection signal="toggled" from="Root (Screen)/BG/TabButtonsContainer/HBoxContainer/GraphicsTab" to="Root (Screen)/BG/TabButtonsContainer/HBoxContainer/GraphicsTab" method="_on_toggled"]
+[connection signal="mouse_entered" from="Root (Screen)/BG/TabButtonsContainer/HBoxContainer/BindingsTab" to="Root (Screen)/BG/TabButtonsContainer/HBoxContainer/BindingsTab" method="_on_tab_button_mouse_entered"]
+[connection signal="mouse_exited" from="Root (Screen)/BG/TabButtonsContainer/HBoxContainer/BindingsTab" to="Root (Screen)/BG/TabButtonsContainer/HBoxContainer/BindingsTab" method="_on_tab_button_mouse_exited"]
+[connection signal="toggled" from="Root (Screen)/BG/TabButtonsContainer/HBoxContainer/BindingsTab" to="Root (Screen)/BG/TabButtonsContainer/HBoxContainer/BindingsTab" method="_on_toggled"]

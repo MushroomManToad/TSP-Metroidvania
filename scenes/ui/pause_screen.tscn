@@ -41,6 +41,11 @@ layout_mode = 2
 size_flags_vertical = 3
 text = "Resume"
 
+[node name="Settings" type="Button" parent="PauseContainer/MarginContainer/MarginContainer/VBoxContainer" unique_id=1134196537]
+layout_mode = 2
+size_flags_vertical = 3
+text = "Settings"
+
 [node name="Reload Scene" type="Button" parent="PauseContainer/MarginContainer/MarginContainer/VBoxContainer" unique_id=1167068925]
 layout_mode = 2
 size_flags_vertical = 3
@@ -52,5 +57,6 @@ size_flags_vertical = 3
 text = "Exit"
 
 [connection signal="pressed" from="PauseContainer/MarginContainer/MarginContainer/VBoxContainer/Resume" to="." method="_on_resume_pressed"]
+[connection signal="pressed" from="PauseContainer/MarginContainer/MarginContainer/VBoxContainer/Settings" to="." method="_on_settings_pressed"]
 [connection signal="pressed" from="PauseContainer/MarginContainer/MarginContainer/VBoxContainer/Reload Scene" to="." method="_on_reload_scene_pressed"]
 [connection signal="pressed" from="PauseContainer/MarginContainer/MarginContainer/VBoxContainer/Exit" to="." method="_on_exit_pressed"]

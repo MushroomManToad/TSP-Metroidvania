@@ -25,6 +25,8 @@ func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	## Use to set fullscreen
 	#DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
+	## Use to set screen size
+	DisplayServer.window_set_size(Vector2i(1280, 720))
 
 func _delayed_ready():
 	# Initiate each of the sub-system variables (we do this here to prevent
@@ -55,6 +57,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		match RuntimeStateHandler.game_state:
 			GameStates.STATES.IN_GAME:
 				if !get_tree().paused:
+					## TODO: Remove save on pause??
 					PersistentInventory.save_game(1)
 					# Set Pause State on Escape Pressed
 					get_tree().paused = true

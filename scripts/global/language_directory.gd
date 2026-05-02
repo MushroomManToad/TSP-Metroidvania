@@ -4,7 +4,7 @@ class_name Language_Directory
 var loaded_dictionary : Dictionary
 
 func on_ready():
-	load_dictionary_from_language(GameManager.GameSettings.LANGUAGE)
+	load_dictionary_from_language(GameManager.GameSettings.LANGUAGE.val as int)
 
 # Given a language, sets the loaded dictionary to that language
 func load_dictionary_from_language(lang : int):
@@ -25,3 +25,6 @@ func load_dictionary_from_language(lang : int):
 		elif csv_row.size() > 1:
 			print("Dumped language entry with name \"", csv_row[0], "\".")
 	file.close()
+
+func get_translation_by_key(key : String) -> String:
+	return loaded_dictionary.get(key)
