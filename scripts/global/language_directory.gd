@@ -4,7 +4,9 @@ class_name Language_Directory
 var loaded_dictionary : Dictionary
 
 func on_ready():
-	load_dictionary_from_language(GameManager.GameSettings.LANGUAGE.val as int)
+	pass
+	## This is now called from the settings class
+	#load_dictionary_from_language(GameManager.GameSettings.LANGUAGE.val as int)
 
 # Given a language, sets the loaded dictionary to that language
 func load_dictionary_from_language(lang : int):
@@ -26,5 +28,10 @@ func load_dictionary_from_language(lang : int):
 			print("Dumped language entry with name \"", csv_row[0], "\".")
 	file.close()
 
-func get_translation_by_key(key : String) -> String:
-	return loaded_dictionary.get(key)
+func translate(key : String) -> String:
+	if loaded_dictionary.has(key):
+		return loaded_dictionary.get(key)
+	# Default to the passed value if key is not present. 
+	# This should be obvious in-game, but also print a warn.
+	push_warning("Translation key ", key, " not found in dictionary ", str(GameManager.GameSettings.LANGUAGE))
+	return key

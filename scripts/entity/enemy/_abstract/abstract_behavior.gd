@@ -13,7 +13,7 @@ var remaining_time : int
 var is_first_frame : bool = false
 
 ## Loops each frame to run the behavior. Override in behavior class.
-func _process_behavior(delta : float) -> void:
+func _process_behavior(_delta : float) -> void:
 	pass
 
 ## Override to do special behavior when the Behavior is started.

@@ -19,7 +19,7 @@ func _ready():
 	collision_layer = CollisionDict.HAZARD_RESPAWN_BOX.get_layer()
 	collision_mask = CollisionDict.HAZARD_RESPAWN_BOX.get_mask()
 
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	for area_and_timer : AreaAndTimer in colliding_areas:
 		## Player control: if moving not the direction hazard is facing, do nothing
 		## If moving into hazard, count up to 3 frames. If still in collider on 3rd frame,
@@ -53,11 +53,11 @@ func is_player_moving_into_spikes(player : PlayerController) -> bool:
 				return player.velocity.x >= 0
 	return true
 
-func _on_body_shape_entered(body_rid: RID, body: Node2D, body_shape_index: int, local_shape_index: int) -> void:
+func _on_body_shape_entered(_body_rid: RID, body: Node2D, _body_shape_index: int, _local_shape_index: int) -> void:
 	# Track bodies on enter
 	colliding_bodies.append(BodyAndTimer.new(body, 0))
 
-func _on_body_shape_exited(body_rid: RID, body: Node2D, body_shape_index: int, local_shape_index: int) -> void:
+func _on_body_shape_exited(_body_rid: RID, body: Node2D, _body_shape_index: int, _local_shape_index: int) -> void:
 	# Remove body from being tracked on exit
 	var flag : int = -1
 	
@@ -69,11 +69,11 @@ func _on_body_shape_exited(body_rid: RID, body: Node2D, body_shape_index: int, l
 	if flag != -1:
 		colliding_bodies.remove_at(flag)
 
-func _on_area_shape_entered(area_rid: RID, area: Area2D, area_shape_index: int, local_shape_index: int) -> void:
+func _on_area_shape_entered(_area_rid: RID, area: Area2D, _area_shape_index: int, _local_shape_index: int) -> void:
 	# Track areas on enter
 	colliding_areas.append(AreaAndTimer.new(area, 0))
 
-func _on_area_shape_exited(area_rid: RID, area: Area2D, area_shape_index: int, local_shape_index: int) -> void:
+func _on_area_shape_exited(_area_rid: RID, area: Area2D, _area_shape_index: int, _local_shape_index: int) -> void:
 	var flag : int = -1
 	
 	# Remove area from being tracked on exit

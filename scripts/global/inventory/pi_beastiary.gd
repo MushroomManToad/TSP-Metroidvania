@@ -47,9 +47,9 @@ class DictionaryEntry:
 	# Additional flavor text after entry is completed
 	var v_desc_unlock
 	
-	func _init(v_name : String, max_kills : int):
-		self.v_name = v_name
-		self.max_kills = max_kills
+	func _init(_v_name : String, _max_kills : int):
+		self.v_name = _v_name
+		self.max_kills = _max_kills
 		self.v_desc_base = v_name + "_desc_base"
 		self.v_desc_unlock = v_name + "_desc_unlock"
 	

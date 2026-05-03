@@ -124,7 +124,7 @@ func animate(target_pos : Vector2):
 	# Define the new Tween with Quadradic In/Out easing to prevent jarring wiggle and easing at ends.
 	target_pos_tween = create_tween().bind_node(self).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN_OUT)
 	# Tween on the physics loop. Not... great for visuals, but prevents frame jitter.
-	target_pos_tween.set_process_mode(0)
+	target_pos_tween.set_process_mode(Tween.TWEEN_PROCESS_PHYSICS)
 	# Start the transition on the correct property with duration
 	target_pos_tween.tween_property(self, "current_look_pos", target_pos, transition_duration)
 	# Set this variable to track when there is a new target aimed for (since this is inaccessible from Tween)

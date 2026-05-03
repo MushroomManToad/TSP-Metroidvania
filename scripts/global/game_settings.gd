@@ -124,10 +124,15 @@ func read_in_from_file():
 
 func sync_to_real_values():
 	## AUDIO
-	
+	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("Master"), linear_to_db(MASTER_VOLUME.val))
+	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("Music"), linear_to_db(MUSIC_VOLUME.val))
+	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("SFX"), linear_to_db(SFX_VOLUME.val))
+	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("Protagonist"), linear_to_db(PROTAG_VOLUME.val))
+	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("NPC"), linear_to_db(NPC_VOLUME.val))
+	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("Ambient"), linear_to_db(AMBIENT_VOLUME.val))
 	
 	## GAMEPLAY
-	
+	GameManager.LanguageDirectory.load_dictionary_from_language(LANGUAGE.val)
 	
 	## GRAPHICS
 	DisplayServer.window_set_size(Vector2i(RESOLUTION.val.x as int, RESOLUTION.val.y as int))

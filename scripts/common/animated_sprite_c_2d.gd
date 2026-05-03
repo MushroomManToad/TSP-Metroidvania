@@ -7,7 +7,7 @@ var base_pos: Vector2 = Vector2.ZERO  # replaces position, set this instead
 func _ready() -> void:
 	base_pos = position
 
-func _process(delta):
+func _process(_delta):
 	#var parent_world_pos = get_parent().global_position
 	#var snap_correction = (parent_world_pos + base_pos).round() - (parent_world_pos + base_pos)
 	#position = base_pos + snap_correction

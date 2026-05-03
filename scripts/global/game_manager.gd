@@ -32,10 +32,10 @@ func _delayed_ready():
 	# Initiate each of the sub-system variables (we do this here to prevent
 	# pre-load memory errors)
 	# Additionally, run each of their ready functions in order
-	GameSettings = Game_Settings.new()
-	GameSettings.on_ready()
 	LanguageDirectory = Language_Directory.new()
 	LanguageDirectory.on_ready()
+	GameSettings = Game_Settings.new()
+	GameSettings.on_ready()
 	LevelManager = Level_Manager.new()
 	LevelManager.on_ready()
 	PersistentInventory = Persistent_Inventory.new()

@@ -5,6 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://dumlgvbogv36f" path="res://sprites/ui/settings/settings_tab_button.png" id="3_x3vyp"]
 [ext_resource type="Script" uid="uid://dbevsrwejmhjo" path="res://scripts/ui/settings/tab_buttons_container.gd" id="3_yu862"]
 [ext_resource type="Script" uid="uid://cww602vnr4ivw" path="res://scripts/ui/settings/settings_tab_button.gd" id="5_ywggk"]
+[ext_resource type="Script" uid="uid://hu0a56a3vmdl" path="res://scripts/util/translation_component.gd" id="6_ywggk"]
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_mhswj"]
 load_path = "res://.godot/imported/settings_tab_button.png-58cf483ecece3ec9bb2704d913261f19.ctex"
@@ -139,7 +140,44 @@ layout_mode = 2
 [node name="HBoxContainer" type="HBoxContainer" parent="Root (Screen)/BG/ScreenContainer/GraphicsContianer" unique_id=914957486]
 layout_mode = 2
 
-[node name="OptionButton" type="OptionButton" parent="Root (Screen)/BG/ScreenContainer/GraphicsContianer/HBoxContainer" unique_id=1721117583]
+[node name="ResolutionContainer" type="HBoxContainer" parent="Root (Screen)/BG/ScreenContainer/GraphicsContianer/HBoxContainer" unique_id=2000863722]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="Root (Screen)/BG/ScreenContainer/GraphicsContianer/HBoxContainer/ResolutionContainer" unique_id=113843967]
+layout_mode = 2
+text = "settingsscreen.resolution"
+script = ExtResource("6_ywggk")
+translatable_properties = Array[String](["text"])
+
+[node name="OptionButton" type="OptionButton" parent="Root (Screen)/BG/ScreenContainer/GraphicsContianer/HBoxContainer/ResolutionContainer" unique_id=1721117583]
+layout_direction = 2
+layout_mode = 2
+selected = 1
+item_count = 3
+popup/item_0/text = "settingsscreen.resolution1"
+popup/item_0/id = 0
+popup/item_1/text = "settingsscreen.resolution2"
+popup/item_1/id = 1
+popup/item_2/text = "settingsscreen.resolution3"
+popup/item_2/id = 2
+script = ExtResource("6_ywggk")
+translatable_properties = Array[String](["popup/item_0/text", "popup/item_1/text", "popup/item_2/text"])
+
+[node name="VBoxContainer2" type="HBoxContainer" parent="Root (Screen)/BG/ScreenContainer/GraphicsContianer/HBoxContainer" unique_id=709562254]
+layout_mode = 2
+size_flags_horizontal = 3
+alignment = 2
+
+[node name="Label" type="Label" parent="Root (Screen)/BG/ScreenContainer/GraphicsContianer/HBoxContainer/VBoxContainer2" unique_id=358865989]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "settingsscreen.displaymode"
+script = ExtResource("6_ywggk")
+translatable_properties = Array[String](["text"])
+
+[node name="OptionButton" type="OptionButton" parent="Root (Screen)/BG/ScreenContainer/GraphicsContianer/HBoxContainer/VBoxContainer2" unique_id=1516254826]
+layout_direction = 3
 layout_mode = 2
 selected = 1
 item_count = 3
@@ -149,6 +187,38 @@ popup/item_1/text = "1280x720"
 popup/item_1/id = 1
 popup/item_2/text = "1920x1080"
 popup/item_2/id = 2
+
+[node name="VBoxContainer3" type="HBoxContainer" parent="Root (Screen)/BG/ScreenContainer/GraphicsContianer/HBoxContainer" unique_id=625267219]
+layout_mode = 2
+size_flags_horizontal = 3
+alignment = 2
+
+[node name="Label" type="Label" parent="Root (Screen)/BG/ScreenContainer/GraphicsContianer/HBoxContainer/VBoxContainer3" unique_id=573598393]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "settingsscreen.displaymode"
+script = ExtResource("6_ywggk")
+
+[node name="OptionButton" type="OptionButton" parent="Root (Screen)/BG/ScreenContainer/GraphicsContianer/HBoxContainer/VBoxContainer3" unique_id=320682746]
+layout_direction = 3
+layout_mode = 2
+selected = 1
+item_count = 3
+popup/item_0/text = "640x360"
+popup/item_0/id = 0
+popup/item_1/text = "1280x720"
+popup/item_1/id = 1
+popup/item_2/text = "1920x1080"
+popup/item_2/id = 2
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="Root (Screen)/BG/ScreenContainer/GraphicsContianer" unique_id=2139060222]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="Root (Screen)/BG/ScreenContainer/GraphicsContianer" unique_id=1664540794]
+custom_minimum_size = Vector2(0, 96)
+layout_mode = 2
+alignment = 2
 
 [connection signal="mouse_entered" from="Root (Screen)/BG/TabButtonsContainer/HBoxContainer/AudioTabButton" to="Root (Screen)/BG/TabButtonsContainer/HBoxContainer/AudioTabButton" method="_on_tab_button_mouse_entered"]
 [connection signal="mouse_exited" from="Root (Screen)/BG/TabButtonsContainer/HBoxContainer/AudioTabButton" to="Root (Screen)/BG/TabButtonsContainer/HBoxContainer/AudioTabButton" method="_on_tab_button_mouse_exited"]

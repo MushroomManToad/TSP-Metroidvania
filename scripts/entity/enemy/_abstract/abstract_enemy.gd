@@ -31,7 +31,7 @@ func _sub_ready() -> void:
 	pass
 
 ## CALL TO DO PHYSICS PROCESSING IN SUBCLASS
-func _sub_physics_process(delta : float) -> void:
+func _sub_physics_process(_delta : float) -> void:
 	pass
 
 # Function called by player attack box when it hits this enemy
